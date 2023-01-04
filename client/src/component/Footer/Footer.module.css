@@ -1,0 +1,18 @@
+.navbarBox {
+    position: relative;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background-color: #1fab89;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 3px solid white;
+  }
+  
+  .navbarBox p {
+    color: hsl(244, 31%, 52%);
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+  }

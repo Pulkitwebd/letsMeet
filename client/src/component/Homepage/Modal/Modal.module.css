@@ -1,0 +1,31 @@
+.modal {
+  background-color: white;
+  height: 80vh;
+  width: 60vw;
+  margin: auto;
+  margin-top: 7.5vh;
+  padding: 20px;
+}
+
+.modal {
+  background-color: gb(15 14 14 / 75%) !important;
+}
+
+.modalCloseBtn {
+  float: right;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.headingCreateEvent {
+  text-align: center;
+  z-index: 0;
+  margin-bottom: 40px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,107 @@
+.signinPage {
+  height: 90vh;
+  display: flex;
+}
+
+.greenBackground {
+  background-color: #1fab89;
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.whiteBackground {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  background-color: #f5f5f5;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.greenPart {
+  width: 70%;
+  height: 85%;
+  background-color: #1fab89;
+  border-radius: 10px 0 0 10px;
+  -webkit-box-shadow: 0px -1px 6px 1px #2fd4aba8;
+  -moz-box-shadow: 0px -1px 6px 1px #2fd4aba8;
+  box-shadow: 0px -1px 6px 1px #2fd4aba8;
+}
+
+.whitePart {
+  border-radius: 0px 10px 10px 0;
+  background-color: #f5f5f5;
+  width: 80%;
+  height: 85%;
+  -webkit-box-shadow: 0px -1px 6px 1px rgba(143, 135, 143, 0.164);
+  -moz-box-shadow: 0px -1px 6px 1px rgba(143, 135, 143, 0.164);
+  box-shadow: 0px -1px 6px 1px rgba(143, 135, 143, 0.164);
+}
+
+.loginName {
+  text-align: center;
+  margin: 100px 0 50px 0;
+}
+
+.invalidCred {
+  text-align: center;
+  color: red;
+  margin-bottom: 30px;
+}
+.mainForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainForm div {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+}
+
+.mainForm div input {
+  background-color: transparent;
+}
+
+.forgotPassword {
+  display: flex;
+  align-items: flex-end;
+  margin-top: -20px;
+}
+
+.forgotPassword span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #1fab89;
+}
+
+.loginBtn {
+  padding: 10px 20px;
+  background-color: #1fab89;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  letter-spacing: 1px;
+  margin-top: 30px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.resetPasswordName {
+  text-align: center;
+  margin: 100px 0 30px 0;
+}
+
+.askingMailId{
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+  margin-right: 11px;
+}
+
+

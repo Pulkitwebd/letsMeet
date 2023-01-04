@@ -1,0 +1,163 @@
+.signup_page {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  /* background-color: #d8fbe9; */
+  align-items: center;
+  /* z-index: -5; */
+}
+
+.rightCircle {
+  position: absolute;
+  right: 0;
+  top: 0;
+  clip-path: ellipse(39% 40% at 100% 0%);
+  height: 40rem;
+  width: 50rem;
+  background-color: #1fab89;
+  z-index: -1;
+}
+
+.mainSignupBox {
+  height: 90vh;
+  width: 85%;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  background-color: white;
+  z-index: 1;
+  border: 20px solid white;
+  border-radius: 10px;
+  display: flex;
+}
+
+.picture {
+  width: 49%;
+  height: 100%;
+  background-color: white;
+  margin-right: 1%;
+  border-radius: 10px;
+}
+
+.picture div:first-child div:first-child div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.picture div:first-child {
+  height: 100%;
+}
+
+.formMainBox {
+  margin-left: 1%;
+  width: 49%;
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  /* overflow: hidden; */
+}
+
+.getStarted {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.alreadyAccount {
+  text-align: center;
+  margin-top: 10px;
+  color: #333431;
+}
+
+.alreadyAccount span {
+  color: #1fab89;
+  cursor: pointer;
+}
+
+.formCover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  /* align-items: flex-start; */
+}
+
+.formCover form {
+  width: 70%;
+}
+
+.formCover form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  border: none;
+  padding: 10px 5px 10px 0;
+  border-bottom: 2px solid #1fab89;
+  margin-bottom: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.onErrorInput {
+  border: none;
+  padding: 10px 5px 10px 0;
+  border-bottom: 2px solid red;
+}
+
+.errorMsg {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.buttonsCover {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.backButton {
+  padding: 10px 10px;
+  background-color: #1fab89;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.nextButton {
+  padding: 10px 10px;
+  background-color: #1fab89;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.leftCircle {
+  background-color: #1fab89;
+  z-index: -1;
+  position: absolute;
+  height: 40rem;
+  width: 50rem;
+  bottom: 0;
+  left: 0;
+  clip-path: ellipse(39% 40% at 0% 100%);
+}
+
+.step1,
+.step2,
+.step3 {
+  display: flex;
+  flex-direction: column;
+}
