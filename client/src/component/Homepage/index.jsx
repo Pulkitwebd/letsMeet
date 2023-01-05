@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
+import { useJwt } from "react-jwt";
 import classes from "./Homepage.module.css";
 import Category from "./FilterSection/Category";
 import City from "./FilterSection/City";
@@ -13,8 +14,17 @@ import CreateEventModal from "./Modal/CreateEventModal";
 const Homepage = () => {
   const [showModal, setShowModal] = useState(false);
 
+  const { decodedToken, isExpired, reEvaluateToken  } = useJwt(localStorage.getItem("token"));
+  console.log("decodedToken", decodedToken);
+  
   const toggleModal = () => {
-    setShowModal(!showModal);
+    reEvaluateToken(localStorage.getItem("token"));
+    if (!isExpired) {
+      setShowModal(!showModal);
+    }else{
+      setShowModal(false)
+      window.alert("Token is expired, please login again, if don't have account signup")
+    }
   };
 
   return (

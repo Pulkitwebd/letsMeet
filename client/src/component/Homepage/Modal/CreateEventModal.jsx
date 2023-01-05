@@ -14,6 +14,7 @@ const CreateEventModal = (props) => {
       <Modal
         isOpen={props.showModal}
         // onAfterOpen={afterOpenModal}
+        ariaHideApp={false}
         onRequestClose={props.showModal}
         className={classes.modal}
         contentLabel="Example Modal"

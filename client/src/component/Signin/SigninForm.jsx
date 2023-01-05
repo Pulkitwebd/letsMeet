@@ -6,7 +6,6 @@ import { Formik, Form } from "formik";
 import { validation } from "./validation";
 import Axios from "axios";
 
-
 const SigninForm = ({ showPassPage }) => {
   const [invalidCredential, setInvalidCredential] = useState(false);
   const navigate = useNavigate();
@@ -34,9 +33,9 @@ const SigninForm = ({ showPassPage }) => {
             password: values.password,
           })
             .then(function (res) {
+              console.log(res)
               if ((res.status = 200)) {
-                console.log("token", res.data.tokens[0].token);
-                
+                localStorage.setItem("token", res.data.token);
                 navigate("/");
               }
             })

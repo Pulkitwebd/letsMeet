@@ -8,9 +8,7 @@ const AuthTokenSlice = createSlice({
   },
   reducers: {
     verifyToken(state, action) {
-      //   state.token = action.payload;
-      let token = localStorage.getItem("token");
-      state.token = token;
+      
     },
   },
 });

@@ -8,7 +8,7 @@ function generateAuthToken(user) {
     },
     process.env.TOKEN_KEY,
     {
-      expiresIn: "120s",
+      expiresIn: "24h",
     }
   );
   return token;
