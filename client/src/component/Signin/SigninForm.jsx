@@ -1,18 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TextField from "../Shared/TextField";
 import classes from "./Signin.module.css";
 import { Formik, Form } from "formik";
 import { validation } from "./validation";
-import Axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { login, reset } from "../../Redux/Auth/authSlice";
 
 const SigninForm = ({ showPassPage }) => {
-  const [invalidCredential, setInvalidCredential] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [invalidCredential, setInvalidCredential] = useState(false);
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
   const showForgotPasswordComp = () => {
     showPassPage(true);
   };
+
+  useEffect(() => {
+    if (isError) {
+      console.log("isError", isError);
+      setInvalidCredential(true)
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, message, navigate, dispatch]);
 
   return (
     <>
@@ -28,22 +48,7 @@ const SigninForm = ({ showPassPage }) => {
         initialValues={{ email: "", password: "" }}
         validationSchema={validation}
         onSubmit={(values) => {
-          Axios.post("http://localhost:3001/api/auth/login", {
-            email: values.email,
-            password: values.password,
-          })
-            .then(function (res) {
-              console.log(res)
-              if ((res.status = 200)) {
-                localStorage.setItem("token", res.data.token);
-                navigate("/");
-              }
-            })
-            .catch(function (error) {
-              if (error) {
-                setInvalidCredential(true);
-              }
-            });
+          dispatch(login(values));
         }}
       >
         {(formik) => (

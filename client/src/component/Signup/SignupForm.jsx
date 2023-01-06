@@ -1,14 +1,19 @@
-import React, { useState } from "react";
-import TextField from "../Shared/TextField";
+import React, { useState , useEffect} from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
+import TextField from "../Shared/TextField";
 import classes from "./Signup.module.css";
 import { validateStep1, validateStep2 } from "./Validation";
-import Axios from "axios";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { register, reset } from "../../Redux/Auth/authSlice";
 
 const SignupForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
   const [data, setData] = useState({
     firstname: "",
@@ -20,30 +25,30 @@ const SignupForm = () => {
     phone: "",
   });
 
-  const [currentStep, setCurrentStep] = useState(0);
+  useEffect(() => {
+    if (isError) {
+      console.log("isError", isError);
+    }
+
+    if (isSuccess || user) {
+      navigate("/");
+    }
+
+    dispatch(reset());
+  }, [user, isError, message, navigate, dispatch]);
 
   const makeRequest = (formData) => {
-    // axios POST request
-    Axios.post("http://localhost:3001/api/auth/register", formData)
-      .then(function (res) {
-        if (res.status == 201) {
-          const response = JSON.parse(res.request.response);
-          const decoded = jwt_decode(response.token);
-          localStorage.setItem("token", response.token);
-          console.log(decoded, response.user);
-          navigate("/");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    dispatch(register(formData));
   };
+
+  const [currentStep, setCurrentStep] = useState(0);
 
   const handleNextStep = (newData, final = false) => {
     setData((prev) => ({ ...prev, ...newData }));
 
     if (final) {
       makeRequest(newData);
+      // setFormData(newData);
       return;
     }
     setCurrentStep((prev) => prev + 1);

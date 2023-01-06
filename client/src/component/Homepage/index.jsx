@@ -14,11 +14,11 @@ import CreateEventModal from "./Modal/CreateEventModal";
 const Homepage = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const { decodedToken, isExpired, reEvaluateToken  } = useJwt(localStorage.getItem("token"));
+  const { decodedToken, isExpired, reEvaluateToken  } = useJwt(localStorage.getItem("user"));
   console.log("decodedToken", decodedToken);
   
   const toggleModal = () => {
-    reEvaluateToken(localStorage.getItem("token"));
+    reEvaluateToken(localStorage.getItem("user"));
     if (!isExpired) {
       setShowModal(!showModal);
     }else{

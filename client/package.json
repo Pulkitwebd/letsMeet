@@ -1,6 +1,7 @@
 {
   "name": "letmeet",
   "version": "0.1.0",
+  "proxy": "http://localhost:3001",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
@@ -28,6 +29,7 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.0",
+    "react-toastify": "^9.1.1",
     "stream": "^0.0.2",
     "swiper": "^8.4.3",
     "util": "^0.12.5",

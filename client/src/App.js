@@ -8,7 +8,7 @@ import Message from "./component/Message/index";
 import Signup from "./component/Signup/Signup";
 import Signin from "./component/Signin/Signin";
 import Footer from "./component/Footer/Footer";
-import ResetPassword from "./component/ResetPassword/ResetPassword";
+import ResetPassword from "./component/ResetPassword/ResetPassword"; 
 
 const App = () => {
   return (
