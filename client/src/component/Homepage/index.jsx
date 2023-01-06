@@ -10,20 +10,30 @@ import DateOfEvent from "./FilterSection/DateOfEvent";
 import Localities from "./FilterSection/Localities";
 import Card from "./EventsSection/Card";
 import CreateEventModal from "./Modal/CreateEventModal";
+import { useSelector } from "react-redux";
 
 const Homepage = () => {
+  const { user } = useSelector((state) => state.auth);
+
   const [showModal, setShowModal] = useState(false);
 
-  const { decodedToken, isExpired, reEvaluateToken  } = useJwt(localStorage.getItem("user"));
-  console.log("decodedToken", decodedToken);
-  
+  const userlocalStorage = JSON.parse(localStorage.getItem("user"));
+
+  const { decodeToken, isExpired, reEvaluateToken } = useJwt(
+    user === null || userlocalStorage === null ? null : userlocalStorage.token
+  );
+
   const toggleModal = () => {
-    reEvaluateToken(localStorage.getItem("user"));
-    if (!isExpired) {
-      setShowModal(!showModal);
-    }else{
-      setShowModal(false)
-      window.alert("Token is expired, please login again, if don't have account signup")
+    if (user !== null) {
+      reEvaluateToken(userlocalStorage.token);
+      if (!isExpired) {
+        setShowModal(!showModal);
+      }
+    } else {
+      setShowModal(false);
+      window.alert(
+        "Token is expired, please login again, if don't have account signup"
+      );
     }
   };
 
