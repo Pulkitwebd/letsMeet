@@ -20,6 +20,7 @@ SwiperCore.use([Keyboard, Autoplay]);
 
 const Signup = () => {
   console.log("hello world");
+  console.log("hiii sandhiya");
   return (
     <div className={classes.signup_page}>
       <div className={classes.rightCircle} />
