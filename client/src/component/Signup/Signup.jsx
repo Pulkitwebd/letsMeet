@@ -17,7 +17,9 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper";
 SwiperCore.use([Keyboard, Autoplay]);
 
+
 const Signup = () => {
+  console.log("hello world");
   return (
     <div className={classes.signup_page}>
       <div className={classes.rightCircle} />
