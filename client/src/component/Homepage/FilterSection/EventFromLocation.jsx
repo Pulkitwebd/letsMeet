@@ -2,7 +2,6 @@ import React from "react";
 import Slider from "@mui/material/Slider";
 import classes from "../Homepage.module.css";
 
-
 const EventFromLocation = () => {
   const [range, setRange] = React.useState([0, 5]);
 
@@ -13,6 +12,7 @@ const EventFromLocation = () => {
   function valuetext(value) {
     return `${value}°C`;
   }
+
   return (
     <div className={classes.eventFromLocation}>
       <h1>Event from your location</h1>

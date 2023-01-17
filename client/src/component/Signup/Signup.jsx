@@ -57,7 +57,6 @@ const Signup = () => {
           </div>
         </div>
       </div>
-
       <div className={classes.leftCircle} />
     </div>
   );

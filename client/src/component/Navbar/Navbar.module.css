@@ -16,8 +16,30 @@
   display: flex;
   width: 60%;
   height: 100%;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.navlinks div {
+  margin-right: 70px;
+}
+
+.navlinks div:first-child{
+  margin-left: 90px;
+}
+
+.active {
+  color: white;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+}
+
+.link {
+  color: #1330ed;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  text-decoration: none;
 }
 
 .loginSignup_box {
@@ -28,6 +50,82 @@
   align-items: center;
 }
 
+.logout_box {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+}
 
+.profile{
+  border-radius: 50%;
+  height : 50px;
+  width : 50px;
+  background-color: aliceblue;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
 
+.profile img {
+  height : 50px;
+  width : 50px;
+}
 
+@media only screen and (min-width: 0px) and (max-width: 768px) {
+  .navlinks {
+    display: none;
+  }
+  .navbar {
+    height: 50px;
+
+    justify-content: space-between;
+  }
+  .logo {
+    display: none;
+  }
+  .hambergerMenu {
+    padding-left: 10px;
+  }
+  .hambergerMenu svg {
+    height: 40px;
+    width: 40px;
+  }
+  .logout_box div a {
+    padding-right: 5px;
+  }
+  .logout_box div {
+    display: flex;
+    align-items: center;
+  }
+
+  .logoutImg {
+    height: 20px;
+    padding-right: 20px;
+  }
+  .loginSignup_box {
+    width: 40% !important;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .hambergerMenu {
+    display: none;
+  }
+  .logout_box div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end !important;
+  }
+  .logout_box div a {
+    margin-right: 10px;
+  }
+  .logoutImg {
+    height: 20px;
+    cursor: pointer;
+  }
+}
