@@ -52,7 +52,7 @@ const City = () => {
       setLatitude(position.coords.latitude);
     });
 
-    if (latitude != 0 && longitude != 0) {
+    if (latitude !== 0 && longitude !== 0) {
       let final_endpoint = `${API_endpoint}lat=${latitude}&lon=${longitude}&exclude=hourly,daily&appid=${API_key}`;
       axios.get(final_endpoint).then((res) => {
         setCurrentCity(res.data.name);

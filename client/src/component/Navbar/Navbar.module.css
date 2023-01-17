@@ -80,21 +80,17 @@
   .navlinks {
     display: none;
   }
-
   .navbar {
     height: 50px;
 
     justify-content: space-between;
   }
-
   .logo {
     display: none;
   }
-
   .hambergerMenu {
     padding-left: 10px;
   }
-
   .hambergerMenu svg {
     height: 40px;
     width: 40px;
@@ -102,7 +98,6 @@
   .logout_box div a {
     padding-right: 5px;
   }
-
   .logout_box div {
     display: flex;
     align-items: center;
@@ -112,7 +107,6 @@
     height: 20px;
     padding-right: 20px;
   }
-
   .loginSignup_box {
     width: 40% !important;
   }
@@ -122,17 +116,14 @@
   .hambergerMenu {
     display: none;
   }
-
   .logout_box div {
     display: flex;
     align-items: center;
     justify-content: flex-end !important;
   }
-
   .logout_box div a {
     margin-right: 10px;
   }
-
   .logoutImg {
     height: 20px;
     cursor: pointer;
