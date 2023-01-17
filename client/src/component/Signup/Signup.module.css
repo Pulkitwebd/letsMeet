@@ -145,7 +145,7 @@ input:focus {
 }
 
 .leftCircle {
-  background-color: #1fab89;
+  background-color:#1fab89;
   z-index: -1;
   position: absolute;
   height: 40rem;
@@ -160,4 +160,38 @@ input:focus {
 .step3 {
   display: flex;
   flex-direction: column;
+}
+/*----------------------mobile---------*/
+@media only screen and (min-width:0px) and (max-width: 576px){
+  .picture{
+    display: none;
+   }
+  .mainSignupBox{
+    height: 80vh !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .formMainBox{
+    width:90% !important;
+  }
+}
+/*---------------------------tablet-------------------------------*/
+@media only screen and (min-width:576px) and (max-width: 768px) {
+  .picture
+  {
+    display: none;
+  }
+  .mainSignupBox{
+    height: 75vh !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .formCover form {
+    width: 100%;
+  }
+  .formMainBox{
+    width:70% !important;
+  }
 }

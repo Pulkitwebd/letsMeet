@@ -104,4 +104,37 @@
   margin-right: 11px;
 }
 
+@media only screen and (min-width:0px) and (max-width: 576px){
+  .whitePart {
+    
+    width: 90%;
+    height: 85%;
+   }
+   .greenPart {
+    width: 50%;
+    height: 85%;
+   }
+   .mainForm{
+    float: center;
+   }
 
+   
+   
+}
+
+
+
+@media only screen and (min-width:576px) and (max-width: 768px) {
+  .whitePart {
+    width: 90%;
+    height: 85%;
+  }
+  .greenPart {
+    width: 50%;
+    height: 85%;
+   }
+   .mainForm{
+    float: center;
+   }
+
+}

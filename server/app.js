@@ -5,7 +5,7 @@ const authRoutes = require("./Routes/authRoutes.js");
 const reset_forgotPasswordRoute = require("./Routes/reset_forgotPasswordRoute.js")
 const dotenv = require('dotenv');
 const cors = require("cors");
-const feedRoutes = require("./Routes/feedRoutes.js") 
+const feedRoutes = require("./Routes/feedRoutes.js") ;
 dotenv.config();
 
 mongoose.connect(
@@ -40,3 +40,4 @@ app.use("/api/feed", feedRoutes)
 server.listen(PORT, () => {
   console.log(`Port is running at ${PORT}`);
 });
+
