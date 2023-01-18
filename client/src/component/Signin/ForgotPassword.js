@@ -8,7 +8,7 @@ import Axios from "axios";
 const ForgotPassword = ({ showPassPage }) => {
   return (
     <div>
-      <h1 className={classes.resetPasswordName}>Reset Your Password</h1>
+      <h2 className={classes.resetPasswordName}>Reset Your Password</h2>
       <p className={classes.askingMailId}>
         Enter your email. We'll send you a link to reset your password.
       </p>

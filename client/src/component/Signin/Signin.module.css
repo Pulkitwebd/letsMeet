@@ -98,35 +98,41 @@
 }
 
 .askingMailId{
-  text-align: center;
-  letter-spacing: 1px;
+ letter-spacing: 1px;
   margin-bottom: 25px;
   margin-right: 11px;
 }
 
-@media only screen and (min-width:0px) and (max-width: 576px){
+@media only screen and (min-width:0px) and (max-width: 575px){
   .whitePart {
-    
     width: 90%;
     height: 85%;
    }
+   .whiteBackground{
+    width: 95%;
+   }
    .greenPart {
-    width: 50%;
-    height: 85%;
+    display: none;
+    width: 0% !important;
+   }
+   .greenBackground{
+    width: 5%;
    }
    .mainForm{
     float: center;
    }
-
-   
-   
+   .resetPasswordName{
+    padding: 0 30px 0 30px;
+   }
+   .askingMailId{
+    letter-spacing: 0px !important;
+    margin-left: 15%;
+    }
 }
-
-
 
 @media only screen and (min-width:576px) and (max-width: 768px) {
   .whitePart {
-    width: 90%;
+    width: 80%;
     height: 85%;
   }
   .greenPart {
@@ -136,5 +142,71 @@
    .mainForm{
     float: center;
    }
+   .resetPasswordName{
+    padding: 0 10px 0 10px;
+   }
+   .askingMailId{
+    letter-spacing: 0px !important;
+    margin-left: 15%;
+    }
+  }
 
-}
+  @media only screen and (min-width:768px) and (max-width:1024px) {
+    .whitePart {
+      width: 70%;
+      height: 85%;
+    }
+    .greenPart {
+      width: 60%;
+      height: 85%;
+     }
+     .greenBackground{
+      width: 60%;
+     }
+     .whiteBackground{
+      width: 90%;
+     }
+     .mainForm{
+      float: center;
+     }
+     .resetPasswordName{
+      text-align: center;
+      padding: 0 20px 0 20px;
+     }
+     .askingMailId{
+      letter-spacing: 0px !important;
+      margin-left: 17%;
+     }
+    }
+  @media only screen and (min-width:1024px) {
+  .whitePart {
+    width: 80%;
+    height: 85%;
+  }
+  .greenPart {
+    width: 70%;
+    height: 85%;
+   }
+   .greenBackground{
+    width: 40%;
+   }
+   .whiteBackground{
+    width: 60%;
+   }
+   .mainForm{
+    float: center;
+   }
+   .resetPasswordName{
+    padding: 0 10px 0 10px;
+   }
+   .askingMailId{
+    letter-spacing: 0px !important;
+    margin-left: 17%;
+   }
+   }
+  
+
+  
+    
+  
+
