@@ -50,6 +50,16 @@ const Navbar = () => {
             Messages
           </NavLink>
         </div>
+        <div className={classes.link}>
+          <NavLink
+            to="/blog"
+            className={`${
+              pathname === "/message" ? classes.active : classes.link
+            }`}
+          >
+            Blogs
+          </NavLink>
+        </div>
       </div>
       {user ? (
         <div className={classes.logout_box}>

@@ -64,6 +64,7 @@ const Homepage = () => {
             </div>
 
             <Grid container className={classes.cardGrid}>
+            
               <Grid item xs={8} md={4}>
                 <Card />
               </Grid>

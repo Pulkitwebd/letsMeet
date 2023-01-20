@@ -8,6 +8,7 @@ import Signup from "./component/Signup/Signup";
 import Signin from "./component/Signin/Signin";
 import Footer from "./component/Footer/Footer";
 import ResetPassword from "./component/ResetPassword/ResetPassword";
+import Blogs from "./component/Blogs/index"
 import PrivateRoute from "./PrivateRoute";
 import "./App.css";
 
@@ -24,6 +25,7 @@ const App = () => {
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/signin" element={<Signin />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
+        <Route exact path="/blog" element={<Blogs />} />
       </Routes>
       <Footer />
     </>
