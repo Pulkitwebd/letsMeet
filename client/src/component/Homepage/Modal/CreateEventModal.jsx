@@ -8,13 +8,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Formik, Form } from "formik";
 import { useSelector } from "react-redux";
-import axios from "axios";
 import Select from "react-select";
 import validation from "./EventFormValidation";
 import CustomTextField from "../../Shared/TextField";
 import indianStates from "./StateNames";
 import cityNames from "./CityNames";
-
+import category from "./Category";
+import axios from "axios";
+import { captureRejectionSymbol } from "stream";
 
 const CreateEventModal = (props) => {
   const [value, setValue] = useState(dayjs("2023-04-07"));
@@ -39,6 +40,17 @@ const CreateEventModal = (props) => {
     setShowModal(false);
   };
 
+  const currentTimeStamp = new Date();
+  const formattedTimeStamp = `${currentTimeStamp.getFullYear()}-${(
+    "0" +
+    (currentTimeStamp.getMonth() + 1)
+  ).slice(-2)}-${("0" + currentTimeStamp.getDate()).slice(-2)} ${(
+    "0" + currentTimeStamp.getHours()
+  ).slice(-2)}:${("0" + currentTimeStamp.getMinutes()).slice(-2)}:${(
+    "0" + currentTimeStamp.getSeconds()
+  ).slice(-2)}`;
+
+  console.log(formattedTimeStamp);
   return (
     <Modal
       isOpen={props.showModal}
@@ -59,24 +71,34 @@ const CreateEventModal = (props) => {
           area: "",
           city: "",
           state: "",
+          category: "",
           personNeeded: "",
         }}
         validationSchema={validation}
         onSubmit={(values) => {
-          values.meetDate = value.$d;
-          values.postingDate = new Date();
+          let createEvent = {
+            user_id: values.organiser_user_id,
+            postingDate: formattedTimeStamp,
+            meetDate: value.$d,
+            address: {
+              houseNoflatNo: values.houseNo,
+              landmark: values.landmark,
+              area: values.area,
+              city: values.city,
+              state: values.state,
+            },
+            personNeeded: values.personNeeded,
+            category: values.category,
+          };
 
-          // values.address = {
-          //   landmark: values.landmark,
-          //   houseNo: values.houseNo,
-          //   area: values.area,
-          //   city: selectedValuesOfSelectCom.city,
-          //   state: selectedValuesOfSelectCom.state,
-          // };
-
-          // values.personNeeded = selectedValuesOfSelectCom.personNeeded;
-
-          console.log("values", values);
+          axios
+            .post("/api/feed/feedPost", createEvent)
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }}
       >
         {(formik) => (
@@ -110,12 +132,27 @@ const CreateEventModal = (props) => {
               isDisabled={true}
             />
 
+            <div>
+              <label>Category : </label>
+              <Select
+                name="category"
+                options={category}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                onChange={(category) =>
+                  formik.setFieldValue("category", category.value)
+                }
+              />
+              {formik.touched.category && formik.errors.category ? (
+                <div style={{ color: "red" }}>{formik.errors.category}</div>
+              ) : null}
+            </div>
+
             <CustomTextField
               type="number"
               name="personNeeded"
               label="Person Needed : "
               placeholder=""
-              // isDisabled={true}
             />
 
             <CustomTextField

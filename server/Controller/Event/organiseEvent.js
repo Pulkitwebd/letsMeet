@@ -7,9 +7,7 @@ const feedPost = async (req, res) => {
       user_id,
       postingDate,
       meetDate,
-      locationOfMeet,
-      currentUserLocation,
-      city,
+      address,
       personNeeded,
       category,
     } = req.body;
@@ -33,9 +31,7 @@ const feedPost = async (req, res) => {
         user_id,
         postingDate,
         meetDate,
-        locationOfMeet,
-        currentUserLocation,
-        city,
+        address,
         personNeeded,
         category,
       });

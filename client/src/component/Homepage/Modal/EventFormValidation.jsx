@@ -6,7 +6,8 @@ const validation = yup.object({
   area : yup.string().required("Area is required!"),
   city : yup.string().required("City is required!"),
   state : yup.string().required("State is required!"),
-  personNeeded : yup.string().required("Person Needed is required!")
+  personNeeded : yup.string().required("Person Needed is required!"),
+  category : yup.string().required("Category Needed is required!")
 });
 
 export default validation;
