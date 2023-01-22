@@ -1,4 +1,6 @@
 const indianStates = [
+  { value: "Madhya Pradesh", label: "Madhya Pradesh" },
+  { value: "Kerala", label: "Kerala" },
   { value: "Andhra Pradesh", label: "Andhra Pradesh" },
   { value: "Arunachal Pradesh", label: "Arunachal Pradesh" },
   { value: "Assam", label: "Assam" },
@@ -10,8 +12,6 @@ const indianStates = [
   { value: "Himachal Pradesh", label: "Himachal Pradesh" },
   { value: "Jharkhand", label: "Jharkhand" },
   { value: "Karnataka", label: "Karnataka" },
-  { value: "Kerala", label: "Kerala" },
-  { value: "Madhya Pradesh", label: "Madhya Pradesh" },
   { value: "Maharashtra", label: "Maharashtra" },
   { value: "Manipur", label: "Manipur" },
   { value: "Meghalaya", label: "Meghalaya" },
