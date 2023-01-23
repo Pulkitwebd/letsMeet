@@ -3,30 +3,12 @@ const User = require("../../Schemas/userSchema.js");
 
 const feedPost = async (req, res) => {
   try {
-    const {
-      user_id,
-      postingDate,
-      meetDate,
-      address,
-      personNeeded,
-      category,
-    } = req.body;
+    const { user_id, postingDate, meetDate, address, personNeeded, category, organiserName } =
+      req.body;
 
     const userExists = await User.findOne({ _id: user_id });
 
     if (userExists) {
-      const multipleCategoriesAvailable = [
-        "Cricket",
-        "Chess",
-        "Travel",
-        "Badminton",
-      ];
-
-      var found = multipleCategoriesAvailable.includes(category);
-      if (!found) {
-        return res.status(409).send(`${category} category is not available`);
-      }
-
       const event = await Feed.create({
         user_id,
         postingDate,
@@ -34,6 +16,7 @@ const feedPost = async (req, res) => {
         address,
         personNeeded,
         category,
+        organiserName
       });
 
       res.status(201).json({ success: true, event: event });

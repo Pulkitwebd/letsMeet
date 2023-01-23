@@ -15,11 +15,15 @@ const feedSchema = mongoose.Schema({
     type: Number,
   },
 
-  meetDate : {
+  meetDate: {
     type: String,
   },
 
   category: {
+    type: String,
+  },
+
+  organiserName: {
     type: String,
   },
 });

@@ -11,14 +11,15 @@ const feedSchema = Joi.object({
   postingDate: Joi.string().required(),
   meetDate: Joi.string().required(),
   address: Joi.object({
-    landmark : Joi.string().required(),
+    landmark: Joi.string().required(),
     houseNoflatNo: Joi.string().required(),
-    area : Joi.string().required(),
+    area: Joi.string().required(),
     city: Joi.string().required(),
     state: Joi.string().required(),
   }).required(),
   personNeeded: Joi.number().required(),
   category: Joi.string().required(),
+  organiserName: Joi.string().required(),
 });
 
 router.post(

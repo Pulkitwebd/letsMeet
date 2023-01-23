@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { useJwt } from "react-jwt";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import classes from "./Homepage.module.css";
 import Category from "./FilterSection/Category";
 import City from "./FilterSection/City";
 import EventFromLocation from "./FilterSection/EventFromLocation";
 import DateOfEvent from "./FilterSection/DateOfEvent";
 import Localities from "./FilterSection/Localities";
-import Card from "./EventsSection/Card";
 import CreateEventModal from "./Modal/CreateEventModal";
-import { useSelector } from "react-redux";
-import cards from "./EventsSection/cardsJson";
+import "react-toastify/dist/ReactToastify.css";
+import Card from "./EventsSection/Card";
 
 const Homepage = () => {
   const { user } = useSelector((state) => state.auth);
 
   const [showModal, setShowModal] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [events, setEvents] = useState("");
 
   const userlocalStorage = JSON.parse(localStorage.getItem("user"));
 
@@ -24,24 +28,53 @@ const Homepage = () => {
     user === null || userlocalStorage === null ? null : userlocalStorage.token
   );
 
-  const toggleModal = () => {
+  const toggleModal = (createdEventStatus, createdEventData) => {
     if (user !== null) {
       reEvaluateToken(userlocalStorage.token);
       if (!isExpired) {
         setShowModal(!showModal);
+        if (createdEventStatus == 201) {
+          // createEventStatus is coming from modal page on successfully event creation
+          setShowToast(true);
+          toast.success("Event is created! Successfully", {
+            closeOnClick: true,
+            draggable: true,
+            pauseOnHover: false,
+            autoClose: 2000,
+          });
+        }
       }
     } else {
       setShowModal(false);
-      window.alert(
-        "Token is expired, please login again, if don't have account signup"
-      );
+      // if not login user then showing toast
+      setShowToast(true);
+      toast.error("Please Login To create Event", {
+        closeOnClick: true,
+        draggable: true,
+        pauseOnHover: false,
+        autoClose: 2000,
+      });
     }
   };
-  console.log(cards);
+
+  useEffect(() => {
+    axios
+      .get(`/api/feed/allEvents?pageNumber=0`)
+      .then((res) => {
+        console.log(res.data.data.data);
+        setEvents(res.data.data.data);
+      })
+      .catch((err) => {
+        console.log("error while fetching the events", err);
+      });
+  }, []);
+
+  console.log(events);
   return (
     <>
       <Grid container>
         <CreateEventModal showModal={showModal} toggleModal={toggleModal} />
+        {showToast ? <ToastContainer /> : ""}
         <Grid item xs={4} md={3} lg={3}>
           <div className={classes.filterSection}>
             <Category />
@@ -65,37 +98,13 @@ const Homepage = () => {
             </div>
 
             <Grid container className={classes.cardGrid}>
-              {cards.map((card) => {
+              {events  && events.map((event, id) => {
                 return (
-                  <Grid item xs={8} md={4} >
-                    <Card pulkit={card} />
+                  <Grid item xs={8} md={4} key={id}>
+                    <Card event={event} />
                   </Grid>
                 );
               })}
-              {/* <Grid item xs={4} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={4} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={8} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={4} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={4} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={8} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={4} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={4} md={4}>
-                <Card />
-              </Grid> */}
             </Grid>
           </div>
         </Grid>

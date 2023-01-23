@@ -15,12 +15,13 @@ import indianStates from "./StateNames";
 import cityNames from "./CityNames";
 import category from "./Category";
 import axios from "axios";
-import { captureRejectionSymbol } from "stream";
+import { useNavigate } from "react-router-dom";
 
 const CreateEventModal = (props) => {
   const [value, setValue] = useState(dayjs("2023-04-07"));
   const [showModal, setShowModal] = useState(props.showModal);
   const [userDetails, setUserDetails] = useState({});
+  const navigate = useNavigate();
 
   //getting data of user from redux
   const { user } = useSelector((state) => state.auth);
@@ -50,7 +51,6 @@ const CreateEventModal = (props) => {
     "0" + currentTimeStamp.getSeconds()
   ).slice(-2)}`;
 
-  console.log(formattedTimeStamp);
   return (
     <Modal
       isOpen={props.showModal}
@@ -66,6 +66,7 @@ const CreateEventModal = (props) => {
       <Formik
         initialValues={{
           organiser_user_id: user ? user.user._id : "",
+          organiserName: user ? userDetails.userFullName : "",
           landmark: "",
           houseNo: "",
           area: "",
@@ -77,6 +78,7 @@ const CreateEventModal = (props) => {
         validationSchema={validation}
         onSubmit={(values) => {
           let createEvent = {
+            organiserName: values.organiserName,
             user_id: values.organiser_user_id,
             postingDate: formattedTimeStamp,
             meetDate: value.$d,
@@ -94,7 +96,9 @@ const CreateEventModal = (props) => {
           axios
             .post("/api/feed/feedPost", createEvent)
             .then((response) => {
-              console.log(response);
+              if (response.status == 201) {
+                props.toggleModal(response.status, response.data.event);
+              }
             })
             .catch((error) => {
               console.log(error);
@@ -104,17 +108,19 @@ const CreateEventModal = (props) => {
         {(formik) => (
           <Form onSubmit={formik.handleSubmit}>
             <label>Schedule Event Date and time : </label>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateTimePicker
-                renderInput={(props) => <TextField {...props} />}
-                label=""
-                value={value}
-                onChange={(newValue) => {
-                  setValue(newValue);
-                }}
-                name="Time"
-              />
-            </LocalizationProvider>
+            <div style={{ marginTop: "5px" }}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  renderInput={(props) => <TextField {...props} />}
+                  label=""
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                  }}
+                  name="Time"
+                />
+              </LocalizationProvider>
+            </div>
 
             <CustomTextField
               type="text"
@@ -122,6 +128,7 @@ const CreateEventModal = (props) => {
               label="Full Name : "
               placeholder={`${userDetails.userFullName}`}
               isDisabled={true}
+              style={{ marginTop: "10px" }}
             />
 
             <CustomTextField
@@ -132,12 +139,11 @@ const CreateEventModal = (props) => {
               isDisabled={true}
             />
 
-            <div>
+            <div className={classes.categorySelect}>
               <label>Category : </label>
               <Select
                 name="category"
                 options={category}
-                className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={(category) =>
                   formik.setFieldValue("category", category.value)
@@ -176,12 +182,11 @@ const CreateEventModal = (props) => {
               placeholder=""
             />
 
-            <div>
+            <div className={classes.categorySelect}>
               <label>City : </label>
               <Select
                 name="city"
                 options={cityNames}
-                className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={(city) => formik.setFieldValue("city", city.value)}
               />
@@ -190,13 +195,12 @@ const CreateEventModal = (props) => {
               ) : null}
             </div>
 
-            <div>
+            <div className={classes.categorySelect}>
               <label>State : </label>
               <Select
                 name="state"
                 options={indianStates}
                 onChange={(state) => formik.setFieldValue("state", state.value)}
-                className="basic-multi-select"
                 classNamePrefix="select"
               />
               {formik.touched.state && formik.errors.state ? (
@@ -204,7 +208,9 @@ const CreateEventModal = (props) => {
               ) : null}
             </div>
 
-            <button type="submit">Submit</button>
+            <button type="submit" className={classes.submitBtn}>
+              Submit
+            </button>
           </Form>
         )}
       </Formik>

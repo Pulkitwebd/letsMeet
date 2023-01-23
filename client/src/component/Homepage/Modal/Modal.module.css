@@ -32,3 +32,18 @@
   flex-direction: column;
 }
 
+.submitBtn {
+  background-color: #1fab89;
+  color: white;
+  letter-spacing: 0.8px;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.categorySelect {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
