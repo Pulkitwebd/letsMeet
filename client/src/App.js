@@ -8,13 +8,12 @@ import Signup from "./component/Signup/Signup";
 import Signin from "./component/Signin/Signin";
 import Footer from "./component/Footer/Footer";
 import ResetPassword from "./component/ResetPassword/ResetPassword";
-import Blogs from "./component/Blogs/index"
+import Blogs from "./component/Blogs/index";
 import PrivateRoute from "./PrivateRoute";
 import "./App.css";
-
 const App = () => {
   return (
-    <>
+    <div>
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Homepage />} />
@@ -28,7 +27,7 @@ const App = () => {
         <Route exact path="/blog" element={<Blogs />} />
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 };
 

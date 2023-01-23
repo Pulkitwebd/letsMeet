@@ -78,7 +78,7 @@ const CreateEventModal = (props) => {
       <h1 className={classes.headingCreateEvent}>Create Event</h1>
       <Formik
         initialValues={{
-          organiser_user_id: user.user._id,
+         // organiser_user_id: user.user._id,
           landmark: "",
           city: "",
         }}
