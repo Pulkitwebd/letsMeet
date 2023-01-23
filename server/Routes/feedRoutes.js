@@ -8,16 +8,24 @@ const validator = require("express-joi-validation").createValidator({});
 
 const feedSchema = Joi.object({
   user_id: Joi.string().required(),
-  postingDate: Joi.date().format("YYYY-MM-DD").utc(),
-  meetDate: Joi.date().format("YYYY-MM-DD HH:mm").utc(),
-  locationOfMeet: Joi.string().required(),
-  currentUserLocation: Joi.string().required(),
-  city: Joi.string().required(),
+  postingDate: Joi.string().required(),
+  meetDate: Joi.string().required(),
+  address: Joi.object({
+    landmark : Joi.string().required(),
+    houseNoflatNo: Joi.string().required(),
+    area : Joi.string().required(),
+    city: Joi.string().required(),
+    state: Joi.string().required(),
+  }).required(),
   personNeeded: Joi.number().required(),
   category: Joi.string().required(),
 });
 
-router.post("/feedPost", validator.body(feedSchema), feedControllers.organiseEvent);
+router.post(
+  "/feedPost",
+  validator.body(feedSchema),
+  feedControllers.organiseEvent
+);
 router.get("/allEvents", feedControllers.allEvents);
 
 module.exports = router;

@@ -34,7 +34,6 @@ app.use("/api/auth", authRoutes);
 app.use('/api', reset_forgotPasswordRoute);
 
 // Homepage feed api 
-
 app.use("/api/feed", feedRoutes)
 
 server.listen(PORT, () => {

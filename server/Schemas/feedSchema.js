@@ -6,26 +6,17 @@ const feedSchema = mongoose.Schema({
   },
 
   postingDate: {
-    type: Date,
-  },
-
-  meetDate: {
-    type: Date,
-  },
-
-  locationOfMeet: {
     type: String,
   },
 
-  currentUserLocation: {
-    type: String,
-  },
-  city: {
-    type: String,
-  },
+  address: {},
 
   personNeeded: {
-    Type: Number,
+    type: Number,
+  },
+
+  meetDate : {
+    type: String,
   },
 
   category: {
