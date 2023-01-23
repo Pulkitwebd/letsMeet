@@ -11,6 +11,7 @@ import Localities from "./FilterSection/Localities";
 import Card from "./EventsSection/Card";
 import CreateEventModal from "./Modal/CreateEventModal";
 import { useSelector } from "react-redux";
+import cards from "./EventsSection/cardsJson";
 
 const Homepage = () => {
   const { user } = useSelector((state) => state.auth);
@@ -36,7 +37,7 @@ const Homepage = () => {
       );
     }
   };
-
+  console.log(cards);
   return (
     <>
       <Grid container>
@@ -64,20 +65,14 @@ const Homepage = () => {
             </div>
 
             <Grid container className={classes.cardGrid}>
-            
-              <Grid item xs={8} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={4} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={4} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={8} md={4}>
-                <Card />
-              </Grid>
-              <Grid item xs={4} md={4}>
+              {cards.map((card) => {
+                return (
+                  <Grid item xs={8} md={4} >
+                    <Card pulkit={card} />
+                  </Grid>
+                );
+              })}
+              {/* <Grid item xs={4} md={4}>
                 <Card />
               </Grid>
               <Grid item xs={4} md={4}>
@@ -92,6 +87,15 @@ const Homepage = () => {
               <Grid item xs={4} md={4}>
                 <Card />
               </Grid>
+              <Grid item xs={8} md={4}>
+                <Card />
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <Card />
+              </Grid>
+              <Grid item xs={4} md={4}>
+                <Card />
+              </Grid> */}
             </Grid>
           </div>
         </Grid>
