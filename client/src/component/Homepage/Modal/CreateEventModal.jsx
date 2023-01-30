@@ -9,6 +9,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Formik, Form } from "formik";
 import { useSelector } from "react-redux";
 import Select from "react-select";
+// import LoadingButton from '@mui/lab/LoadingButton';
 import validation from "./EventFormValidation";
 import CustomTextField from "../../Shared/TextField";
 import indianStates from "./StateNames";
@@ -16,10 +17,19 @@ import cityNames from "./CityNames";
 import category from "./Category";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// import { SendIcon } from "@mui/icons-material/Send.js";
 
 const CreateEventModal = (props) => {
   const [value, setValue] = useState(dayjs("2023-04-07"));
   const [showModal, setShowModal] = useState(props.showModal);
+  const [loading, setLoading] = useState(false);
+
+  //storign base64 content of eventImageUrl
+  const [eventImageBase64, setEventImageBase64] = useState(null);
+
+  // eventImageUrl is used here to show event image in modal
+  const [eventImageUrl, setEventImageUrl] = useState(null);
+
   const [userDetails, setUserDetails] = useState({});
   const navigate = useNavigate();
 
@@ -35,6 +45,8 @@ const CreateEventModal = (props) => {
         userEmail: user.user.email,
       });
     }
+
+    setEventImageUrl(null);
   }, [props.showModal]);
 
   const handleModalClose = () => {
@@ -50,6 +62,19 @@ const CreateEventModal = (props) => {
   ).slice(-2)}:${("0" + currentTimeStamp.getMinutes()).slice(-2)}:${(
     "0" + currentTimeStamp.getSeconds()
   ).slice(-2)}`;
+
+  // console.log(eventImg);
+
+  const handleEventImg = async (event) => {
+    const selectedFile = event.target.files[0];
+
+    const base64 = await convertToBase64(selectedFile);
+    setEventImageBase64(base64);
+
+    setEventImageUrl(URL.createObjectURL(selectedFile));
+  };
+
+  // console.log(eventImageUrl);
 
   return (
     <Modal
@@ -74,9 +99,13 @@ const CreateEventModal = (props) => {
           state: "",
           category: "",
           personNeeded: "",
+          desc: "",
+          eventImage: "",
         }}
         validationSchema={validation}
         onSubmit={(values) => {
+          console.log(eventImageBase64);
+
           let createEvent = {
             organiserName: values.organiserName,
             user_id: values.organiser_user_id,
@@ -91,12 +120,16 @@ const CreateEventModal = (props) => {
             },
             personNeeded: values.personNeeded,
             category: values.category,
+            desc: values.desc,
+            eventImage: eventImageBase64,
           };
 
+          setLoading(true);
           axios
             .post("/api/feed/feedPost", createEvent)
             .then((response) => {
               if (response.status == 201) {
+                setLoading(false);
                 props.toggleModal(response.status, response.data.event);
               }
             })
@@ -154,6 +187,25 @@ const CreateEventModal = (props) => {
               ) : null}
             </div>
 
+            <div>
+              <input
+                type="file"
+                name="eventImage"
+                placeholder="Choose Event Image"
+                onChange={handleEventImg}
+                accept=".jpeg, .png, .jpg"
+              />
+              <div>
+                {eventImageUrl && (
+                  <img
+                    src={eventImageUrl}
+                    className={classes.eventImg}
+                    alt="Selected"
+                  />
+                )}
+              </div>
+            </div>
+
             <CustomTextField
               type="number"
               name="personNeeded"
@@ -179,6 +231,15 @@ const CreateEventModal = (props) => {
               type="text"
               name="landmark"
               label="Land Mark : "
+              placeholder=""
+            />
+
+            <CustomTextField
+              type="textarea"
+              cols="5"
+              rows="5"
+              name="desc"
+              label="Description : "
               placeholder=""
             />
 
@@ -208,9 +269,15 @@ const CreateEventModal = (props) => {
               ) : null}
             </div>
 
-            <button type="submit" className={classes.submitBtn}>
-              Submit
-            </button>
+            {!loading ? (
+              <button type="submit" className={classes.submitBtn}>
+                Submit
+              </button>
+            ) : (
+              <button className={classes.submitBtn}>
+                loading
+              </button>
+            )}
           </Form>
         )}
       </Formik>
@@ -219,3 +286,16 @@ const CreateEventModal = (props) => {
 };
 
 export default CreateEventModal;
+
+const convertToBase64 = async (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (err) => {
+      reject(err);
+    };
+  });
+};

@@ -20,6 +20,8 @@ const feedSchema = Joi.object({
   personNeeded: Joi.number().required(),
   category: Joi.string().required(),
   organiserName: Joi.string().required(),
+  desc: Joi.string().required(),
+  eventImage : Joi.string().required()
 });
 
 router.post(
@@ -27,6 +29,9 @@ router.post(
   validator.body(feedSchema),
   feedControllers.organiseEvent
 );
+
+router.get("/Event/:id", feedControllers.Event);
+
 router.get("/allEvents", feedControllers.allEvents);
 
 module.exports = router;

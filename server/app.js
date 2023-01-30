@@ -6,6 +6,7 @@ const reset_forgotPasswordRoute = require("./Routes/reset_forgotPasswordRoute.js
 const dotenv = require('dotenv');
 const cors = require("cors");
 const feedRoutes = require("./Routes/feedRoutes.js") ;
+const bodyParser = require("body-parser")
 dotenv.config();
 
 mongoose.connect(
@@ -27,6 +28,7 @@ const PORT = process.env.PORT || 3001
 const app = express();
 const server = http.createServer(app);
 
+app.use(bodyParser.json({limit: '10mb'}));
 app.use(express.json());
 app.use(cors());
 

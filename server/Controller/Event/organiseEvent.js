@@ -3,8 +3,17 @@ const User = require("../../Schemas/userSchema.js");
 
 const feedPost = async (req, res) => {
   try {
-    const { user_id, postingDate, meetDate, address, personNeeded, category, organiserName } =
-      req.body;
+    const {
+      user_id,
+      postingDate,
+      meetDate,
+      address,
+      personNeeded,
+      category,
+      organiserName,
+      desc,
+      eventImage
+    } = req.body;
 
     const userExists = await User.findOne({ _id: user_id });
 
@@ -16,7 +25,9 @@ const feedPost = async (req, res) => {
         address,
         personNeeded,
         category,
-        organiserName
+        organiserName,
+        desc,
+        eventImage
       });
 
       res.status(201).json({ success: true, event: event });

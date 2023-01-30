@@ -112,6 +112,12 @@
   height: 150px;
   width: 100%;
   background-color: rgb(50, 116, 94);
+
+}
+
+.placePhoto img {
+  height: 150px;
+  width: 100%;
 }
 
 .organiserPhoto {

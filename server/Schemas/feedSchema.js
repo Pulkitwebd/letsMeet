@@ -23,9 +23,15 @@ const feedSchema = mongoose.Schema({
     type: String,
   },
 
+  desc: {
+    type: String,
+  },
+
   organiserName: {
     type: String,
   },
+
+  eventImage: String,
 });
 
 const Feed = mongoose.model("feed", feedSchema);

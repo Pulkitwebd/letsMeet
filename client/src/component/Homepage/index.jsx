@@ -67,9 +67,8 @@ const Homepage = () => {
       .catch((err) => {
         console.log("error while fetching the events", err);
       });
-  }, []);
+  }, [showToast]);
 
-  console.log(events);
   return (
     <>
       <Grid container>
@@ -98,13 +97,17 @@ const Homepage = () => {
             </div>
 
             <Grid container className={classes.cardGrid}>
-              {events  && events.map((event, id) => {
-                return (
-                  <Grid item xs={8} md={4} key={id}>
-                    <Card event={event} />
-                  </Grid>
-                );
-              })}
+              {events ? (
+                events.map((event, id) => {
+                  return (
+                    <Grid item xs={8} md={4} key={id}>
+                      <Card event={event} />
+                    </Grid>
+                  );
+                })
+              ) : (
+                <div>Loading</div>
+              )}
             </Grid>
           </div>
         </Grid>
