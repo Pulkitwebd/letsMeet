@@ -5,7 +5,6 @@ import { Box } from "@mui/system";
 import BlogCard from "./BlogCard";
 
 export default function MediaCard() {
-  //const classes = useStyles();
   return (
     <Grid
       container

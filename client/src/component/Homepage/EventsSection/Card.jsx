@@ -1,7 +1,6 @@
 import React from "react";
 import classes from "../Homepage.module.css";
 import { useNavigate } from "react-router-dom";
-import eventImg from "../../Assets/per.png"
 
 const Card = (props) => {
   const navigate = useNavigate();

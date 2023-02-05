@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { useJwt } from "react-jwt";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { useQuery } from "react-query";
+import ReactPaginate from "react-paginate";
 import classes from "./Homepage.module.css";
 import Category from "./FilterSection/Category";
 import City from "./FilterSection/City";
@@ -15,12 +17,32 @@ import CreateEventModal from "./Modal/CreateEventModal";
 import "react-toastify/dist/ReactToastify.css";
 import Card from "./EventsSection/Card";
 
+const getAllEvents = (pageNumber) => {
+  return axios.get(`/api/feed/allEvents?pageNumber=${pageNumber}`);
+};
+
 const Homepage = () => {
+  const [queryKey, setQueryKey] = useState("organise-event");
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageCount, setPageCount] = useState(10);
+
+  const { isLoading, data, isError, error } = useQuery(
+    [queryKey, pageNumber],
+    () => getAllEvents(pageNumber),
+    { keepPreviousData: true }
+  );
+
+  console.log(isLoading)
+
+  const handlePageClick = (data) => {
+    window.scrollTo(0, 0);
+    setPageNumber(data.selected);
+  };
+
   const { user } = useSelector((state) => state.auth);
 
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [events, setEvents] = useState("");
 
   const userlocalStorage = JSON.parse(localStorage.getItem("user"));
 
@@ -28,13 +50,14 @@ const Homepage = () => {
     user === null || userlocalStorage === null ? null : userlocalStorage.token
   );
 
-  const toggleModal = (createdEventStatus, createdEventData) => {
+  const toggleModal = (createdEventStatus, createdEventData, randomString) => {
     if (user !== null) {
       reEvaluateToken(userlocalStorage.token);
       if (!isExpired) {
         setShowModal(!showModal);
         if (createdEventStatus == 201) {
           // createEventStatus is coming from modal page on successfully event creation
+          setQueryKey(randomString); // changing key reload query and fetch new data
           setShowToast(true);
           toast.success("Event is created! Successfully", {
             closeOnClick: true,
@@ -56,18 +79,6 @@ const Homepage = () => {
       });
     }
   };
-
-  useEffect(() => {
-    axios
-      .get(`/api/feed/allEvents?pageNumber=0`)
-      .then((res) => {
-        console.log(res.data.data.data);
-        setEvents(res.data.data.data);
-      })
-      .catch((err) => {
-        console.log("error while fetching the events", err);
-      });
-  }, [showToast]);
 
   return (
     <>
@@ -97,18 +108,36 @@ const Homepage = () => {
             </div>
 
             <Grid container className={classes.cardGrid}>
-              {events ? (
-                events.map((event, id) => {
-                  return (
-                    <Grid item xs={8} md={4} key={id}>
-                      <Card event={event} />
-                    </Grid>
-                  );
-                })
-              ) : (
-                <div>Loading</div>
-              )}
+              {isLoading && <div>Loading...</div>}
+              {data
+                ? data.data.data.data.map((event, id) => {
+                    return (
+                      <Grid item xs={8} md={4} key={id}>
+                        <Card event={event} />
+                      </Grid>
+                    );
+                  })
+                : ""}
+              {isError && <div>{error.message}</div>}
             </Grid>
+            {data && (
+              <div className={classes.paginationBox}>
+                <ReactPaginate
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                  className={classes.pagination}
+                />
+              </div>
+            )}
           </div>
         </Grid>
       </Grid>

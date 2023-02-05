@@ -24,6 +24,12 @@ const CreateEventModal = (props) => {
   const [showModal, setShowModal] = useState(props.showModal);
   const [loading, setLoading] = useState(false);
 
+  const [randomString, setRandomString] = useState(
+    Math.random()
+      .toString(36)
+      .substring(2, 15) + Date.now()
+  );
+
   //storign base64 content of eventImageUrl
   const [eventImageBase64, setEventImageBase64] = useState(null);
 
@@ -130,7 +136,8 @@ const CreateEventModal = (props) => {
             .then((response) => {
               if (response.status == 201) {
                 setLoading(false);
-                props.toggleModal(response.status, response.data.event);
+                setRandomString(Math.random().toString(36).substring(2, 15) + Date.now())
+                props.toggleModal(response.status, response.data.event, randomString);
               }
             })
             .catch((error) => {
@@ -274,9 +281,7 @@ const CreateEventModal = (props) => {
                 Submit
               </button>
             ) : (
-              <button className={classes.submitBtn}>
-                loading
-              </button>
+              <button className={classes.submitBtn}>loading</button>
             )}
           </Form>
         )}

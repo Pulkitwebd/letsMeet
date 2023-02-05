@@ -29,6 +29,7 @@
     "react-icons": "^4.6.0",
     "react-jwt": "^1.1.7",
     "react-modal": "^3.16.1",
+    "react-paginate": "^8.1.4",
     "react-query": "^3.39.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.0.2",
