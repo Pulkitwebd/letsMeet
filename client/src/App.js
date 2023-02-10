@@ -12,7 +12,7 @@ import Footer from "./component/Footer/Footer";
 import ResetPassword from "./component/ResetPassword/ResetPassword";
 import Blogs from "./component/Blogs/index";
 import PrivateRoute from "./PrivateRoute";
-import EventPage from "./component/Homepage/EventsSection/EventPage";
+import EventPage from "./component/Homepage/EventsSection/EventPage/index";
 import "./App.css";
 
 const queryClient = new QueryClient();

@@ -11,6 +11,7 @@ const validation = yup.object({
   personNeeded: yup.string().required("Person Needed is required!"),
   category: yup.string().required("Category Needed is required!"),
   desc: yup.string().required("Description is required!"),
+  title: yup.string().required("Title is required!"),
 });
 
 export default validation;

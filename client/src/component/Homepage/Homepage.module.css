@@ -92,50 +92,6 @@
   margin-right: 4px;
 }
 
-.card {
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 10px;
-  background-color: aquamarine;
-  border-radius: 4px;
-}
-
-.placePhoto {
-  border-radius: 4px;
-  height: 150px;
-  width: 100%;
-  background-color: rgb(50, 116, 94);
-
-}
-
-.placePhoto img {
-  height: 150px;
-  width: 100%;
-}
-
-.organiserPhoto {
-  border-radius: 50%;
-  margin: -40px auto 0 auto;
-  height: 80px;
-  width: 80px;
-  background-color: antiquewhite;
-}
-
-.EventInfo {
-  padding: 0 20px 20px 20px;
-  /* background-color: antiquewhite; */
-}
-
-.OrganiserName {
-  margin-top: 5px;
-  text-align: center;
-}
-
-.EventDesc {
-  margin-top: 10px;
-  text-align: justify;
-}
-
 .createEventBtn {
   float: right;
   margin-right: 5px;
@@ -182,4 +138,12 @@
 
 .pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span{
   border-radius: unset
+}
+
+.loadingBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }

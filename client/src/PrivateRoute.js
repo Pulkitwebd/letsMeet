@@ -26,7 +26,8 @@ const PrivateRoute = () => {
       if (!isExpired) {
         setAuth(!auth);
       }
-    } else {
+    }
+    if (isExpired) {
       setAuth(false);
       dispatch(logout());
       dispatch(reset());

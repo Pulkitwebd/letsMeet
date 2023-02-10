@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { useQuery } from "react-query";
 import ReactPaginate from "react-paginate";
+import "react-toastify/dist/ReactToastify.css";
 import classes from "./Homepage.module.css";
 import Category from "./FilterSection/Category";
 import City from "./FilterSection/City";
@@ -14,8 +15,8 @@ import EventFromLocation from "./FilterSection/EventFromLocation";
 import DateOfEvent from "./FilterSection/DateOfEvent";
 import Localities from "./FilterSection/Localities";
 import CreateEventModal from "./Modal/CreateEventModal";
-import "react-toastify/dist/ReactToastify.css";
-import Card from "./EventsSection/Card";
+import Card from "./EventsSection/Card/index";
+import loading from "../Assets/loading.gif";
 
 const getAllEvents = (pageNumber) => {
   return axios.get(`/api/feed/allEvents?pageNumber=${pageNumber}`);
@@ -31,8 +32,6 @@ const Homepage = () => {
     () => getAllEvents(pageNumber),
     { keepPreviousData: true }
   );
-
-  console.log(isLoading)
 
   const handlePageClick = (data) => {
     window.scrollTo(0, 0);
@@ -108,7 +107,11 @@ const Homepage = () => {
             </div>
 
             <Grid container className={classes.cardGrid}>
-              {isLoading && <div>Loading...</div>}
+              {isLoading && (
+                <div className={classes.loadingBox}>
+                  <img src={loading} alt="loading gif"></img>
+                </div>
+              )}
               {data
                 ? data.data.data.data.map((event, id) => {
                     return (

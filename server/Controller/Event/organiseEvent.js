@@ -12,7 +12,8 @@ const feedPost = async (req, res) => {
       category,
       organiserName,
       desc,
-      eventImage
+      eventImage,
+      title
     } = req.body;
 
     const userExists = await User.findOne({ _id: user_id });
@@ -27,6 +28,7 @@ const feedPost = async (req, res) => {
         category,
         organiserName,
         desc,
+        title,
         eventImage
       });
 

@@ -27,6 +27,10 @@ const feedSchema = mongoose.Schema({
     type: String,
   },
 
+  title: {
+    type: String,
+  },
+
   organiserName: {
     type: String,
   },

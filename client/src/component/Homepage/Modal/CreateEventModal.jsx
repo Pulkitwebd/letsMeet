@@ -9,7 +9,6 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Formik, Form } from "formik";
 import { useSelector } from "react-redux";
 import Select from "react-select";
-// import LoadingButton from '@mui/lab/LoadingButton';
 import validation from "./EventFormValidation";
 import CustomTextField from "../../Shared/TextField";
 import indianStates from "./StateNames";
@@ -17,7 +16,6 @@ import cityNames from "./CityNames";
 import category from "./Category";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import { SendIcon } from "@mui/icons-material/Send.js";
 
 const CreateEventModal = (props) => {
   const [value, setValue] = useState(dayjs("2023-04-07"));
@@ -37,7 +35,6 @@ const CreateEventModal = (props) => {
   const [eventImageUrl, setEventImageUrl] = useState(null);
 
   const [userDetails, setUserDetails] = useState({});
-  const navigate = useNavigate();
 
   //getting data of user from redux
   const { user } = useSelector((state) => state.auth);
@@ -69,8 +66,6 @@ const CreateEventModal = (props) => {
     "0" + currentTimeStamp.getSeconds()
   ).slice(-2)}`;
 
-  // console.log(eventImg);
-
   const handleEventImg = async (event) => {
     const selectedFile = event.target.files[0];
 
@@ -79,8 +74,6 @@ const CreateEventModal = (props) => {
 
     setEventImageUrl(URL.createObjectURL(selectedFile));
   };
-
-  // console.log(eventImageUrl);
 
   return (
     <Modal
@@ -110,11 +103,10 @@ const CreateEventModal = (props) => {
         }}
         validationSchema={validation}
         onSubmit={(values) => {
-          console.log(eventImageBase64);
-
           let createEvent = {
             organiserName: values.organiserName,
             user_id: values.organiser_user_id,
+            title: values.title,
             postingDate: formattedTimeStamp,
             meetDate: value.$d,
             address: {
@@ -136,8 +128,16 @@ const CreateEventModal = (props) => {
             .then((response) => {
               if (response.status == 201) {
                 setLoading(false);
-                setRandomString(Math.random().toString(36).substring(2, 15) + Date.now())
-                props.toggleModal(response.status, response.data.event, randomString);
+                setRandomString(
+                  Math.random()
+                    .toString(36)
+                    .substring(2, 15) + Date.now()
+                );
+                props.toggleModal(
+                  response.status,
+                  response.data.event,
+                  randomString
+                );
               }
             })
             .catch((error) => {
@@ -177,6 +177,13 @@ const CreateEventModal = (props) => {
               label="Email : "
               placeholder={`${userDetails.userEmail}`}
               isDisabled={true}
+            />
+
+            <CustomTextField
+              type="text"
+              name="title"
+              label="Title : "
+              placeholder=""
             />
 
             <div className={classes.categorySelect}>

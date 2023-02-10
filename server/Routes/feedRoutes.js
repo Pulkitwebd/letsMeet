@@ -21,6 +21,7 @@ const feedSchema = Joi.object({
   category: Joi.string().required(),
   organiserName: Joi.string().required(),
   desc: Joi.string().required(),
+  title: Joi.string().required(),
   eventImage : Joi.string().required()
 });
 
