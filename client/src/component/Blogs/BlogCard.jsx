@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography"
 
+
 const BlogCard = () => {
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -30,5 +31,5 @@ const BlogCard = () => {
     </Card>
   );
 };
-
 export default BlogCard;
+

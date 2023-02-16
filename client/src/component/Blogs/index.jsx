@@ -3,9 +3,8 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 // import { Classes } from "./Blogs.module.css";
 import BlogCard from "./BlogCard";
-
-export default function MediaCard() {
-  //const classes = useStyles();
+import card from "./cardJson";
+export default function MediaCard(){
   return (
     <Grid
       container
