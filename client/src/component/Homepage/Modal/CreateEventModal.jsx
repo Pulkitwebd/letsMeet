@@ -15,11 +15,29 @@ import indianStates from "./StateNames";
 import cityNames from "./CityNames";
 import category from "./Category";
 import axios from "axios";
+<<<<<<< HEAD
 // import { captureRejectionSymbol } from "stream";
+=======
+import { useNavigate } from "react-router-dom";
+>>>>>>> a8ce8c0bd9f8a1cbb5f1e32a6694cd4ac566e9bd
 
 const CreateEventModal = (props) => {
   const [value, setValue] = useState(dayjs("2023-04-07"));
   const [showModal, setShowModal] = useState(props.showModal);
+  const [loading, setLoading] = useState(false);
+
+  const [randomString, setRandomString] = useState(
+    Math.random()
+      .toString(36)
+      .substring(2, 15) + Date.now()
+  );
+
+  //storign base64 content of eventImageUrl
+  const [eventImageBase64, setEventImageBase64] = useState(null);
+
+  // eventImageUrl is used here to show event image in modal
+  const [eventImageUrl, setEventImageUrl] = useState(null);
+
   const [userDetails, setUserDetails] = useState({});
 
   //getting data of user from redux
@@ -34,6 +52,8 @@ const CreateEventModal = (props) => {
         userEmail: user.user.email,
       });
     }
+
+    setEventImageUrl(null);
   }, [props.showModal]);
 
   const handleModalClose = () => {
@@ -50,7 +70,15 @@ const CreateEventModal = (props) => {
     "0" + currentTimeStamp.getSeconds()
   ).slice(-2)}`;
 
-  console.log(formattedTimeStamp);
+  const handleEventImg = async (event) => {
+    const selectedFile = event.target.files[0];
+
+    const base64 = await convertToBase64(selectedFile);
+    setEventImageBase64(base64);
+
+    setEventImageUrl(URL.createObjectURL(selectedFile));
+  };
+
   return (
     <Modal
       isOpen={props.showModal}
@@ -66,6 +94,7 @@ const CreateEventModal = (props) => {
       <Formik
         initialValues={{
           organiser_user_id: user ? user.user._id : "",
+          organiserName: user ? userDetails.userFullName : "",
           landmark: "",
           houseNo: "",
           area: "",
@@ -73,11 +102,15 @@ const CreateEventModal = (props) => {
           state: "",
           category: "",
           personNeeded: "",
+          desc: "",
+          eventImage: "",
         }}
         validationSchema={validation}
         onSubmit={(values) => {
           let createEvent = {
+            organiserName: values.organiserName,
             user_id: values.organiser_user_id,
+            title: values.title,
             postingDate: formattedTimeStamp,
             meetDate: value.$d,
             address: {
@@ -89,12 +122,27 @@ const CreateEventModal = (props) => {
             },
             personNeeded: values.personNeeded,
             category: values.category,
+            desc: values.desc,
+            eventImage: eventImageBase64,
           };
 
+          setLoading(true);
           axios
             .post("/api/feed/feedPost", createEvent)
             .then((response) => {
-              console.log(response);
+              if (response.status == 201) {
+                setLoading(false);
+                setRandomString(
+                  Math.random()
+                    .toString(36)
+                    .substring(2, 15) + Date.now()
+                );
+                props.toggleModal(
+                  response.status,
+                  response.data.event,
+                  randomString
+                );
+              }
             })
             .catch((error) => {
               console.log(error);
@@ -104,17 +152,19 @@ const CreateEventModal = (props) => {
         {(formik) => (
           <Form onSubmit={formik.handleSubmit}>
             <label>Schedule Event Date and time : </label>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateTimePicker
-                renderInput={(props) => <TextField {...props} />}
-                label=""
-                value={value}
-                onChange={(newValue) => {
-                  setValue(newValue);
-                }}
-                name="Time"
-              />
-            </LocalizationProvider>
+            <div style={{ marginTop: "5px" }}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DateTimePicker
+                  renderInput={(props) => <TextField {...props} />}
+                  label=""
+                  value={value}
+                  onChange={(newValue) => {
+                    setValue(newValue);
+                  }}
+                  name="Time"
+                />
+              </LocalizationProvider>
+            </div>
 
             <CustomTextField
               type="text"
@@ -122,6 +172,7 @@ const CreateEventModal = (props) => {
               label="Full Name : "
               placeholder={`${userDetails.userFullName}`}
               isDisabled={true}
+              style={{ marginTop: "10px" }}
             />
 
             <CustomTextField
@@ -132,12 +183,18 @@ const CreateEventModal = (props) => {
               isDisabled={true}
             />
 
-            <div>
+            <CustomTextField
+              type="text"
+              name="title"
+              label="Title : "
+              placeholder=""
+            />
+
+            <div className={classes.categorySelect}>
               <label>Category : </label>
               <Select
                 name="category"
                 options={category}
-                className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={(category) =>
                   formik.setFieldValue("category", category.value)
@@ -146,6 +203,25 @@ const CreateEventModal = (props) => {
               {formik.touched.category && formik.errors.category ? (
                 <div style={{ color: "red" }}>{formik.errors.category}</div>
               ) : null}
+            </div>
+
+            <div>
+              <input
+                type="file"
+                name="eventImage"
+                placeholder="Choose Event Image"
+                onChange={handleEventImg}
+                accept=".jpeg, .png, .jpg"
+              />
+              <div>
+                {eventImageUrl && (
+                  <img
+                    src={eventImageUrl}
+                    className={classes.eventImg}
+                    alt="Selected"
+                  />
+                )}
+              </div>
             </div>
 
             <CustomTextField
@@ -176,12 +252,20 @@ const CreateEventModal = (props) => {
               placeholder=""
             />
 
-            <div>
+            <CustomTextField
+              type="textarea"
+              cols="5"
+              rows="5"
+              name="desc"
+              label="Description : "
+              placeholder=""
+            />
+
+            <div className={classes.categorySelect}>
               <label>City : </label>
               <Select
                 name="city"
                 options={cityNames}
-                className="basic-multi-select"
                 classNamePrefix="select"
                 onChange={(city) => formik.setFieldValue("city", city.value)}
               />
@@ -190,13 +274,12 @@ const CreateEventModal = (props) => {
               ) : null}
             </div>
 
-            <div>
+            <div className={classes.categorySelect}>
               <label>State : </label>
               <Select
                 name="state"
                 options={indianStates}
                 onChange={(state) => formik.setFieldValue("state", state.value)}
-                className="basic-multi-select"
                 classNamePrefix="select"
               />
               {formik.touched.state && formik.errors.state ? (
@@ -204,7 +287,13 @@ const CreateEventModal = (props) => {
               ) : null}
             </div>
 
-            <button type="submit">Submit</button>
+            {!loading ? (
+              <button type="submit" className={classes.submitBtn}>
+                Submit
+              </button>
+            ) : (
+              <button className={classes.submitBtn}>loading</button>
+            )}
           </Form>
         )}
       </Formik>
@@ -213,3 +302,16 @@ const CreateEventModal = (props) => {
 };
 
 export default CreateEventModal;
+
+const convertToBase64 = async (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (err) => {
+      reject(err);
+    };
+  });
+};

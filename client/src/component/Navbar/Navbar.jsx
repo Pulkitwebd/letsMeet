@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout, reset } from "../../Redux/Auth/authSlice";
 import { BsList } from "react-icons/bs";
 import logoutImg from "../Assets/logout.png";
-import profile from "../Assets/profile.jpg"
+import profile from "../Assets/profile.jpg";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ const Navbar = () => {
           <NavLink
             to="/blog"
             className={`${
-              pathname === "/message" ? classes.active : classes.link
+              pathname === "/blog" ? classes.active : classes.link
             }`}
           >
             Blogs
@@ -63,7 +63,7 @@ const Navbar = () => {
       </div>
       {user ? (
         <div className={classes.logout_box}>
-        <div className={classes.link}>
+          <div className={classes.link}>
             <NavLink
               to="/profile"
               className={`${
@@ -71,7 +71,7 @@ const Navbar = () => {
               }`}
             >
               <div className={classes.profile}>
-                <img src={profile} alt="profile"/>
+                <img src={profile} alt="profile" />
               </div>
             </NavLink>
           </div>

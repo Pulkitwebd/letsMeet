@@ -10,23 +10,15 @@ const feedPost = async (req, res) => {
       address,
       personNeeded,
       category,
+      organiserName,
+      desc,
+      eventImage,
+      title
     } = req.body;
 
     const userExists = await User.findOne({ _id: user_id });
 
     if (userExists) {
-      const multipleCategoriesAvailable = [
-        "Cricket",
-        "Chess",
-        "Travel",
-        "Badminton",
-      ];
-
-      var found = multipleCategoriesAvailable.includes(category);
-      if (!found) {
-        return res.status(409).send(`${category} category is not available`);
-      }
-
       const event = await Feed.create({
         user_id,
         postingDate,
@@ -34,6 +26,10 @@ const feedPost = async (req, res) => {
         address,
         personNeeded,
         category,
+        organiserName,
+        desc,
+        title,
+        eventImage
       });
 
       res.status(201).json({ success: true, event: event });
