@@ -15,7 +15,7 @@ import indianStates from "./StateNames";
 import cityNames from "./CityNames";
 import category from "./Category";
 import axios from "axios";
-import { captureRejectionSymbol } from "stream";
+// import { captureRejectionSymbol } from "stream";
 
 const CreateEventModal = (props) => {
   const [value, setValue] = useState(dayjs("2023-04-07"));
