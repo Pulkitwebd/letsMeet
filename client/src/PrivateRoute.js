@@ -35,6 +35,7 @@ const PrivateRoute = () => {
     }
   }, [user]);
 
+
   return isExpired ? <Navigate to="/signin" /> : <Outlet />;
 };
 

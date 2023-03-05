@@ -1,0 +1,56 @@
+/* tablet size css*/
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+  .userPhotoDesc {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .userPhotoDiv {
+    height: 200px;
+    width: 15%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .userPhotoDesc {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .userPhotoDiv {
+    height: 200px;
+    width: 15%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+
+  .userPhoto {
+    height: 100%;
+    width: 100%;
+  }
+
+  .userDescription {
+    width: 85%;
+  }
+
+  .userName {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .userDetails {
+    text-align: justify;
+  }
+}
