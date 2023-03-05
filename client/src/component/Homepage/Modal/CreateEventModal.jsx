@@ -15,11 +15,7 @@ import indianStates from "./StateNames";
 import cityNames from "./CityNames";
 import category from "./Category";
 import axios from "axios";
-<<<<<<< HEAD
-// import { captureRejectionSymbol } from "stream";
-=======
-import { useNavigate } from "react-router-dom";
->>>>>>> a8ce8c0bd9f8a1cbb5f1e32a6694cd4ac566e9bd
+// import { useNavigate } from "react-router-dom";
 
 const CreateEventModal = (props) => {
   const [value, setValue] = useState(dayjs("2023-04-07"));
