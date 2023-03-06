@@ -67,7 +67,7 @@ const Profile = () => {
         <div className={classes.userPhotoDiv}>
           {isImageLoaded ? (
             <img
-              alt="user image"
+              alt="user"
               src={updatedProfilePhoto}
               className={classes.userPhoto}
               ref={imgRef}
