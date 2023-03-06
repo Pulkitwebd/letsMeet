@@ -1,7 +1,8 @@
-.yogaimage img {
+/* .yogaimage img {
   width: 360px;
   height: 195px;
 }
+
 
 .meditationimage img {
   width: 360px;
@@ -19,6 +20,10 @@
 }
 
 .relationshipimage img {
+  width: 360px;
+  height: 195px;
+} */
+.imageBox img {
   width: 360px;
   height: 195px;
 }
