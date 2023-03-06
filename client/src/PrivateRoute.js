@@ -27,12 +27,12 @@ const PrivateRoute = () => {
         setAuth(!auth);
       }
     }
-    if (isExpired) {
-      setAuth(false);
-      dispatch(logout());
-      dispatch(reset());
-      window.alert("Login to continue");
-    }
+    // if (isExpired) {
+    //   setAuth(false);
+    //   dispatch(logout());
+    //   dispatch(reset());
+    //   window.alert("Login to continue");
+    // }
   }, [user]);
 
 

@@ -1,0 +1,81 @@
+.horizontalCardsMainBox {
+  border: 1px solid grey;
+  display: flex;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.cardsImgBox {
+  width: 30%;
+  height: 300px;
+  padding: 20px;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.cardsImgBox img{
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
+.cardsDetailsBox{
+    padding: 20px 20px 20px 0;
+    position: relative;
+    width: 70%;
+}
+
+.dateOfEvent{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.title{
+    margin-bottom: 15px;
+}
+
+.description{
+    margin-bottom: 15px;
+}
+
+.eventMode {
+    display: flex;
+    align-items: center;
+}
+
+.eventModeButton{
+    padding: 5px 10px;
+    border : none;
+    background-color: rgba(0, 128, 0, 0.265);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.eventCompletePendingButton{
+    padding: 5px 10px;
+    border : none;
+    background-color: rgba(226, 150, 63, 0.76);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.personNeeded{
+    padding: 5px 10px;
+    border : none;
+    background-color: rgba(48, 134, 239, 0.32);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.colourTagDiv div{
+    margin-bottom: 5px;
+}
+
