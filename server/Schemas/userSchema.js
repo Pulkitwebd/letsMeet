@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
     type: String,
   },
 
+  photo: {
+    type: String,
+  },
+
   phone: {
     type: Number,
     unique: true,
