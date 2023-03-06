@@ -2,12 +2,11 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import BlogCard from "./BlogCard";
 import cardData from "./cardJson";
-// import travelimg from "../Assets/travelimg.jpg";
 import React, { useState } from "react";
 
 export default function MediaCard() {
   const [cards, setCards] = useState(cardData);
-  console.log(cards);
+  
   return (
     <Grid
       container

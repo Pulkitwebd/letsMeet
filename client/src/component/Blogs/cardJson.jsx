@@ -1,9 +1,3 @@
-// const card = [
-//     { EventName: "Football", desc: "Ronaldo is my Favvvvv" , key : "value"},
-//     { EventName: "Cricket", desc: "Cricket is LOML and it is organised in HOlkar stadium, in indore. " },
-//     { EventName: "Music concert", desc: "In indore, Concerts are organised quite often." },
-
-//   ];
 import travelimg from "../Assets/travelimg.jpg";
 import yogaimage from "../Assets/yogaimg.jpg";
 import productivityimg from "../Assets/productivityimg.jpg";
@@ -23,7 +17,6 @@ const card = [
     descrption:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
   },
-
   {
     title: " How to Stay Productive While Working From Home",
     authorName: "John Smith",
@@ -35,7 +28,6 @@ const card = [
     descrption:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
   },
-
   {
     title: " Top 10 Places to Travel in 2023",
     authorName: " Sarah Johnson",
@@ -47,7 +39,6 @@ const card = [
     descrption:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
   },
-
   {
     title: " The Importance of Self-Care for Mental Health",
     authorName: " Lisa Chen",
@@ -59,7 +50,6 @@ const card = [
     descrption:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
   },
-
   {
     title: "The Benefits of Meditation for Stress Reduction",
     authorName: " David Lee",
@@ -83,4 +73,5 @@ const card = [
     category: "Family, Relationship",
   },
 ];
+
 export default card;
