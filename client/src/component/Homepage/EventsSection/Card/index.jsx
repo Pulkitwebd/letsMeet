@@ -9,20 +9,30 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const Card = React.memo(({ event }) => {
   const { user } = useSelector((state) => state.auth);
   const [showList, setShowList] = useState(false);
   const [showThreeDots, setShowThreeDots] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
+  const [userPhoto, setUserPhoto] = useState(null);
 
   useEffect(() => {
-    console.log("hello");
     if (user !== null && user.user._id == event.user_id) {
       setShowThreeDots(true);
     } else {
       setShowThreeDots(false);
     }
+
+    axios
+      .get(`/api/auth/getUserById/${event.user_id}`)
+      .then((response) => {
+        setUserPhoto(response.data.user.photo);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, [user, event]);
 
   useEffect(() => {
@@ -78,7 +88,9 @@ const Card = React.memo(({ event }) => {
           <div>Loading image...</div>
         )}
       </div>
-      <div className={classes.organiserPhoto}></div>
+      <div className={classes.organiserPhoto}>
+        {userPhoto && <img alt="event organiser" src={userPhoto}></img>}
+      </div>
       <div className={classes.EventInfo}>
         <div className={classes.OrganiserName}>{event.organiserName}</div>
         <div className={classes.title}>{event.title}</div>

@@ -25,7 +25,12 @@
   border: 3px solid white;
   height: 80px;
   width: 80px;
-  background-color: antiquewhite;
+  overflow: hidden;
+}
+
+.organiserPhoto img {
+  height: 80px;
+  width: 80px;
 }
 
 .EventInfo {
