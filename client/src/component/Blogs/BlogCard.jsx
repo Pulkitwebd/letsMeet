@@ -2,31 +2,46 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+// import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
-const BlogCard = () => {
+import { ClassNames } from "@emotion/react";
+import classes from "./Blogs.module.css";
+const BlogCard = ({
+  title,
+  authorName,
+  authorEmail,
+  lastEdited,
+  category,
+  creationDateAndTime,
+  imageUrl,
+  description,
+}) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
+      {/* <CardMedia
         sx={{ height: 140 }}
-        image="https://www.shutterstock.com/image-photo/image-butterfly-agama-lizard-leiolepis-600w-659854906.jpg"
-        title="green iguana"
-      />
+        imageUrl={imageUrl}
+        // title="green iguana"
+      /> */}
+
+      <div className={classes.yogaimage}>
+        <img src={imageUrl} alt="" />
+        <div className={classes.category}>{category}</div>
+      </div>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <div size="small">{authorName} |</div>
+        <div size="small">{creationDateAndTime}</div>
       </CardActions>
+      {/* <Button size="small">{category}</Button> */}
     </Card>
   );
 };

@@ -1,0 +1,35 @@
+.yogaimage img {
+  width: 360px;
+  height: 195px;
+}
+#abc{
+    position: relative;
+    top:-180px;
+}
+.meditationimage img {
+  width: 360px;
+  height: 195px;
+}
+.selfcareimage img {
+  width: 360px;
+  height: 195px;
+}
+.productivityimage img {
+  width: 360px;
+  height: 195px;
+}
+.relationshipimage img {
+  width: 360px;
+  height: 195px;
+}
+.category {
+  position: relative;
+  top: -180px;
+  left: 20px;
+  background: white;
+  color: #1fab89;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+padding: 5px 10px;
+}

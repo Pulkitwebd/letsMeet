@@ -1,10 +1,13 @@
-import * as React from "react";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-// import { Classes } from "./Blogs.module.css";
 import BlogCard from "./BlogCard";
+import cardData from "./cardJson";
+// import travelimg from "../Assets/travelimg.jpg";
+import React, { useState } from "react";
 
 export default function MediaCard() {
+  const [cards, setCards] = useState(cardData);
+  console.log(cards);
   return (
     <Grid
       container
@@ -14,35 +17,22 @@ export default function MediaCard() {
       marginTop={4}
       marginBottom={4}
     >
-      <Grid item xs={12} sm={6} md={4}>
-        <Box>
-          <BlogCard />
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} sm={6} md={4}>
-        <Box>
-          <BlogCard />
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} sm={6} md={4}>
-        <Box>
-          <BlogCard />
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} sm={6} md={4}>
-        <Box>
-          <BlogCard />
-        </Box>
-      </Grid>
-
-      <Grid item xs={12} sm={6} md={4}>
-        <Box>
-          <BlogCard />
-        </Box>
-      </Grid>
+      {cards.map((card) => {
+        return (
+          <Grid item xs={12} sm={6} md={4}>
+            <BlogCard
+              title={card.title}
+              authorName={card.authorName}
+              authorEmail={card.authorEmail}
+              lastEdited={card.lastEdited}
+              category={card.category}
+              creationDateAndTime={card.creationDateAndTime}
+              description={card.descrption}
+              imageUrl={card.imageUrl}
+            />
+          </Grid>
+        );
+      })}
     </Grid>
   );
 }

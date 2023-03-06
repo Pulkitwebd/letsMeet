@@ -4,40 +4,83 @@
 //     { EventName: "Music concert", desc: "In indore, Concerts are organised quite often." },
 
 //   ];
+import travelimg from "../Assets/travelimg.jpg";
+import yogaimage from "../Assets/yogaimg.jpg";
+import productivityimg from "../Assets/productivityimg.jpg";
+import selfcareimg from "../Assets/selfcareimg.jpeg";
+import meditationimg from "../Assets/meditationimg.jpg";
+import relationshipimg from "../Assets/relationshipimg.jpeg";
+
 const card = [
   {
-    Title: "The Benefits of Yoga for Mental Health",
-    Author: "Jane Doe",
-    Date: "March 1, 2023",
-    Content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
+    title: "The Benefits of Yoga for Mental Health",
+    authorName: "Jane Doe",
+    authorEmail: "sandhyaginare@gmail.com",
+    lastEdited: "March 2,2023 at 2:45pm",
+    category: "Yoga",
+    creationDateAndTime: "March 1, 2023 at 2:45pm",
+    imageUrl: yogaimage,
+    descrption:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
   },
 
   {
-    Title: " How to Stay Productive While Working From Home",
-    Author: "John Smith",
-    Date: "February 27, 2023",
-    Content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
+    title: " How to Stay Productive While Working From Home",
+    authorName: "John Smith",
+    authorEmail: "sandhyaginare@gmail.com",
+    lastEdited: "March 2,2023 at 2:45pm",
+    category: "Productivity",
+    creationDateAndTime: "February 27, 2023 at 2:45pm",
+    imageUrl: productivityimg,
+    descrption:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
   },
 
   {
-    Title: " Top 10 Places to Travel in 2023",
-    Author: " Sarah Johnson",
-    Date: "February 22, 2023",
-    Content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
+    title: " Top 10 Places to Travel in 2023",
+    authorName: " Sarah Johnson",
+    authorEmail: "sandhyaginare@gmail.com",
+    lastEdited: "March 1,2023 at 2:45pm",
+    category: "Travel",
+    creationDateAndTime: "February 22, 2023 at 2:45pm",
+    imageUrl: travelimg,
+    descrption:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
   },
 
   {
-    Title: " The Importance of Self-Care for Mental Health",
-    Author: " Lisa Chen",
-    Date: "February 18, 2023",
-    Content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
+    title: " The Importance of Self-Care for Mental Health",
+    authorName: " Lisa Chen",
+    authorEmail: "sandhyaginare@gmail.com",
+    lastEdited: "March 3,2023 at 2:45pm",
+    category: "Health",
+    creationDateAndTime: "February 18, 2023 at 2:45pm",
+    imageUrl: selfcareimg,
+    descrption:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
   },
 
   {
-    Title: "The Benefits of Meditation for Stress Reduction",
-    Author: " David Lee",
-    Date: "February 15, 2023",
-    Content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
+    title: "The Benefits of Meditation for Stress Reduction",
+    authorName: " David Lee",
+    authorEmail: "sandhyaginare@gmail.com",
+    lastEdited: "March 3,2023 at 2:45pm",
+    category: "Health",
+    creationDateAndTime: "February 15, 2023 at 2:45pm",
+    imageUrl: meditationimg,
+    descrption:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
+  },
+  {
+    title: "Create Meaningful Family Moments",
+    authorName: " David Lee",
+    authorEmail: "sandhyaginare@gmail.com",
+    lastEdited: "March 3,2023 at 2:00pm",
+    creationDateAndTime: "December 10, 2017",
+    imageUrl: relationshipimg,
+    descrption:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce faucibus tellus eu odio pharetra, a cursus quam malesuada.",
+    category: "Family, Relationship",
   },
 ];
 export default card;
