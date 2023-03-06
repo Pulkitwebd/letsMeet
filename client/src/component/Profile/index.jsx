@@ -9,16 +9,26 @@ import userDummyImage from "../Assets/userDummyImage.webp";
 import PhotoModal from "./PhotoModal/index";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useQuery } from "react-query";
+
+const getUserById = (userId) => {
+  return axios.get(`/api/auth/getUserById/${userId}`);
+};
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
+  const [queryKey, setQueryKey] = useState("getUserById");
+
   const [showToast, setShowToast] = useState(false);
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
-  const [updatedProfilePhoto, setUpdatedProfilePhoto] = useState(userDummyImage);
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
-  const imgRef = useRef(null);
 
-  const toggleModal = (updatedData, responseFromUpdtaedApi) => {
+  const { isLoading, data, isError, error } = useQuery(
+    [queryKey],
+    () => getUserById(user.user._id),
+    { keepPreviousData: false }
+  );
+
+  const toggleModal = (updatedData, responseFromUpdtaedApi, randomString) => {
     if (responseFromUpdtaedApi === 201) {
       setShowToast(true);
       toast.success("Photo is updated successfully!", {
@@ -27,7 +37,7 @@ const Profile = () => {
         pauseOnHover: false,
         autoClose: 2000,
       });
-      setUpdatedProfilePhoto(updatedData.photo);
+      setQueryKey(randomString);
     }
     setPhotoModalStatus(!photoModalStatus);
   };
@@ -35,26 +45,6 @@ const Profile = () => {
   const openModal = () => {
     return setPhotoModalStatus(true);
   };
-
-  const fetchData = async () => {
-    try {
-      const { data } = await axios.get(
-        `/api/auth/getUserById/${user.user._id}`
-      );
-      setUpdatedProfilePhoto(data.user.photo || userDummyImage);
-      setIsImageLoaded(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-
-    return () => {
-      axios.CancelToken.source().cancel();
-    };
-  }, []);
 
   return (
     <div>
@@ -65,29 +55,20 @@ const Profile = () => {
       />
       <div className={classes.userPhotoDesc}>
         <div className={classes.userPhotoDiv}>
-          {isImageLoaded ? (
-            <img
-              alt="user"
-              src={updatedProfilePhoto}
-              className={classes.userPhoto}
-              ref={imgRef}
-            />
-          ) : null}
-          {/* {updatedProfilePhoto ? ( // Check if updatedProfilePhoto is not null before displaying the image
+          {!isLoading && (
             <img
               alt="user image"
-              src={updatedProfilePhoto}
+              src={data.data.user.photo ? data.data.user.photo : userDummyImage}
               className={classes.userPhoto}
             ></img>
-          ) : (
-            
-            <div className={classes.loadingSpinner}>Loading...</div> 
-          )} */}
-          {/* <img
-            alt="user image"
-            src={updatedProfilePhoto}
-            className={classes.userPhoto}
-          ></img> */}
+          )}
+          {
+            isLoading && (
+            <div
+              className={classes.userPhoto}
+            >Loading...</div>
+          )
+          }
           <div className={classes.editImage} onClick={openModal}>
             <AiFillEdit />
           </div>

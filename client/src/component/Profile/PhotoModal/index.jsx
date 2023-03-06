@@ -6,9 +6,15 @@ import { useSelector } from "react-redux";
 
 const PhotoModal = (props) => {
   const { user } = useSelector((state) => state.auth);
+
   const [eventImageUrl, setEventImageUrl] = useState(null);
   const [eventImageBase64, setEventImageBase64] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [randomString, setRandomString] = useState(
+    Math.random()
+      .toString(36)
+      .substring(2, 15) + Date.now()
+  );
 
   const handleEventImg = async (event) => {
     const selectedFile = event.target.files[0];
@@ -35,8 +41,17 @@ const PhotoModal = (props) => {
       .put("/api/auth/update", formData)
       .then((response) => {
         if (response.status === 201) {
-          props.togglePhotoModal(response.data.updatedUser, response.status);
-          props.togglePhotoModal();
+          setRandomString(
+            Math.random()
+              .toString(36)
+              .substring(2, 15) + Date.now()
+          );
+          props.togglePhotoModal(
+            response.data.updatedUser,
+            response.status,
+            randomString
+          );
+          // props.togglePhotoModal();
           setLoading(false);
         }
       })
@@ -76,7 +91,12 @@ const PhotoModal = (props) => {
             )}
           </div>
         </div>
-        {eventImageBase64 && <button onClick={handlePostSubmit} className={classes.postButton}> {loading ? "loading": "Post" }</button>}
+        {eventImageBase64 && (
+          <button onClick={handlePostSubmit} className={classes.postButton}>
+            {" "}
+            {loading ? "loading" : "Post"}
+          </button>
+        )}
       </Modal>
     </>
   );
