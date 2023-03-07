@@ -44,8 +44,8 @@ const CreateEventModal = (props) => {
     //getting user detail from redux and store in userDetails for full name and email of user
     if (user) {
       setUserDetails({
-        userFullName: `${user.user.firstname} ${user.user.lastname}`,
-        userEmail: user.user.email,
+        // userFullName: `${user.user.firstname} ${user.user.lastname}`,
+        // userEmail: user.user.email,
       });
     }
 
@@ -89,7 +89,7 @@ const CreateEventModal = (props) => {
       <h1 className={classes.headingCreateEvent}>Create Event</h1>
       <Formik
         initialValues={{
-          organiser_user_id: user ? user.user._id : "",
+          // organiser_user_id: user ? user.user._id : "",
           organiserName: user ? userDetails.userFullName : "",
           landmark: "",
           houseNo: "",

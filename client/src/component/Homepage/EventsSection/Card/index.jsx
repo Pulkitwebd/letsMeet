@@ -16,7 +16,7 @@ const Card = React.memo(({ event }) => {
   const [showList, setShowList] = useState(false);
   const [showThreeDots, setShowThreeDots] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
-  const [userPhoto, setUserPhoto] = useState(null);
+  const [userPhoto, setUserPhoto] = useState(null)
 
   useEffect(() => {
     if (user !== null && user.user._id == event.user_id) {
@@ -28,7 +28,7 @@ const Card = React.memo(({ event }) => {
     axios
       .get(`/api/auth/getUserById/${event.user_id}`)
       .then((response) => {
-        setUserPhoto(response.data.user.photo);
+        setUserPhoto(response.data.user.photo)
       })
       .catch((error) => {
         console.log(error);
@@ -89,7 +89,9 @@ const Card = React.memo(({ event }) => {
         )}
       </div>
       <div className={classes.organiserPhoto}>
-        {userPhoto && <img alt="event organiser" src={userPhoto}></img>}
+        {
+        userPhoto && <img alt="event organiser" src={userPhoto}></img>
+      }
       </div>
       <div className={classes.EventInfo}>
         <div className={classes.OrganiserName}>{event.organiserName}</div>

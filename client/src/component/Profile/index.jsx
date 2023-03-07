@@ -1,31 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
 import { GoThumbsup, GoThumbsdown, GoClock } from "react-icons/go";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AiFillEdit } from "react-icons/ai";
-import axios from "axios";
 import classes from "./Profile.module.css";
 import HorizontalCards from "../Shared/HorizontalCards/index";
-import userDummyImage from "../Assets/userDummyImage.webp";
 import PhotoModal from "./PhotoModal/index";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useQuery } from "react-query";
-
-const getUserById = (userId) => {
-  return axios.get(`/api/auth/getUserById/${userId}`);
-};
+import userDummyImage from "../Assets/userDummyImage.webp";
 
 const Profile = () => {
+  
   const { user } = useSelector((state) => state.auth);
-  const [queryKey, setQueryKey] = useState("getUserById");
 
   const [showToast, setShowToast] = useState(false);
-  const [photoModalStatus, setPhotoModalStatus] = useState(false);
-
-  const { isLoading, data, isError, error } = useQuery(
-    [queryKey],
-    () => getUserById(user.user._id),
-    { keepPreviousData: false }
+  // const [photoModalStatus, setPhotoModalStatus] = useState(false);
+  const [updatedProfile, setUpdatedProfile] = useState(
+    // user.user.photo ? user.user.photo : userDummyImage
   );
 
   const toggleModal = (updatedData, responseFromUpdtaedApi, randomString) => {
@@ -37,38 +28,34 @@ const Profile = () => {
         pauseOnHover: false,
         autoClose: 2000,
       });
-      setQueryKey(randomString);
+
+      // setUpdatedProfile(JSON.parse(localStorage.getItem("user")).user.photo);
+      // setTimeout(() => {
+      //   window.location.reload();
+        // setUpdatedProfile(updatedData.photo);
+      // }, 2000);
     }
-    setPhotoModalStatus(!photoModalStatus);
+    // setPhotoModalStatus(!photoModalStatus);
   };
 
   const openModal = () => {
-    return setPhotoModalStatus(true);
+    // return setPhotoModalStatus(true);
   };
 
   return (
     <div>
       {showToast && <ToastContainer />}
-      <PhotoModal
+      {/* <PhotoModal
         photoModalStatus={photoModalStatus}
         togglePhotoModal={toggleModal}
-      />
+      /> */}
       <div className={classes.userPhotoDesc}>
         <div className={classes.userPhotoDiv}>
-          {!isLoading && (
-            <img
-              alt="user image"
-              src={data.data.user.photo ? data.data.user.photo : userDummyImage}
-              className={classes.userPhoto}
-            ></img>
-          )}
-          {
-            isLoading && (
-            <div
-              className={classes.userPhoto}
-            >Loading...</div>
-          )
-          }
+          <img
+            alt="user"
+            src={updatedProfile}
+            className={classes.userPhoto}
+          ></img>
           <div className={classes.editImage} onClick={openModal}>
             <AiFillEdit />
           </div>
@@ -76,7 +63,7 @@ const Profile = () => {
         <div className={classes.userDescription}>
           <div className={classes.userName}>
             <h1>
-              {user.user.firstname} {user.user.lastname}
+              {/* {user.user.firstname} {user.user.lastname} */}
             </h1>
           </div>
           <div className={classes.userDetails}>

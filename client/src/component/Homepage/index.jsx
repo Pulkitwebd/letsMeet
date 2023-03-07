@@ -15,7 +15,7 @@ import EventFromLocation from "./FilterSection/EventFromLocation";
 import DateOfEvent from "./FilterSection/DateOfEvent";
 import Localities from "./FilterSection/Localities";
 import CreateEventModal from "./Modal/CreateEventModal";
-import Card from "./EventsSection/Card/index";
+// import Card from "./EventsSection/Card/index";
 import loading from "../Assets/loading.gif";
 
 const getAllEvents = (pageNumber) => {
@@ -116,7 +116,7 @@ const Homepage = () => {
                 ? data.data.data.data.map((event, id) => {
                     return (
                       <Grid item xs={8} md={4} key={id}>
-                        <Card event={event} />
+                        {/* <Card event={event} /> */}
                       </Grid>
                     );
                   })
