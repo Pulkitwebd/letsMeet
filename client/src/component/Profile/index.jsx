@@ -10,50 +10,40 @@ import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
 
 const Profile = () => {
-  
   const { user } = useSelector((state) => state.auth);
 
   const [showToast, setShowToast] = useState(false);
-  // const [photoModalStatus, setPhotoModalStatus] = useState(false);
-  const [updatedProfile, setUpdatedProfile] = useState(
-    // user.user.photo ? user.user.photo : userDummyImage
-  );
+  const [photoModalStatus, setPhotoModalStatus] = useState(false);
 
-  const toggleModal = (updatedData, responseFromUpdtaedApi, randomString) => {
-    if (responseFromUpdtaedApi === 201) {
-      setShowToast(true);
-      toast.success("Photo is updated successfully!", {
-        closeOnClick: true,
-        draggable: true,
-        pauseOnHover: false,
-        autoClose: 2000,
-      });
-
-      // setUpdatedProfile(JSON.parse(localStorage.getItem("user")).user.photo);
-      // setTimeout(() => {
-      //   window.location.reload();
-        // setUpdatedProfile(updatedData.photo);
-      // }, 2000);
-    }
-    // setPhotoModalStatus(!photoModalStatus);
+  const toggleModal = () => {
+    setPhotoModalStatus(!photoModalStatus);
   };
+  
+  // setShowToast(true);
+  // toast.success("Photo is updated successfully!", {
+  //   closeOnClick: true,
+  //   draggable: true,
+  //   pauseOnHover: false,
+  //   autoClose: 2000,
+  // });
+
 
   const openModal = () => {
-    // return setPhotoModalStatus(true);
+    return setPhotoModalStatus(true);
   };
 
   return (
     <div>
       {showToast && <ToastContainer />}
-      {/* <PhotoModal
+      <PhotoModal
         photoModalStatus={photoModalStatus}
         togglePhotoModal={toggleModal}
-      /> */}
+      />
       <div className={classes.userPhotoDesc}>
         <div className={classes.userPhotoDiv}>
           <img
             alt="user"
-            src={updatedProfile}
+            src={user.user ? user.user.photo : userDummyImage}
             className={classes.userPhoto}
           ></img>
           <div className={classes.editImage} onClick={openModal}>
@@ -63,7 +53,7 @@ const Profile = () => {
         <div className={classes.userDescription}>
           <div className={classes.userName}>
             <h1>
-              {/* {user.user.firstname} {user.user.lastname} */}
+              {user.user.firstname} {user.user.lastname}
             </h1>
           </div>
           <div className={classes.userDetails}>

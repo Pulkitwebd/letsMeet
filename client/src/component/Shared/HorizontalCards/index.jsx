@@ -7,7 +7,7 @@ const HorizontalCards = () => {
     <div className={classes.horizontalCardsMainBox}>
     
       <div className={classes.cardsImgBox}>
-        <img src={dummyEventImg} alt="event image"></img>
+        <img src={dummyEventImg} alt="event"></img>
       </div>
 
       <div className={classes.cardsDetailsBox}>

@@ -2,21 +2,18 @@ import React, { useEffect, useState } from "react";
 import classes from "./Card.module.css";
 import { useNavigate } from "react-router-dom";
 import { FiMoreVertical } from "react-icons/fi";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
-const Card = React.memo(({ event }) => {
+const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const { user } = useSelector((state) => state.auth);
-  const [showList, setShowList] = useState(false);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [showThreeDots, setShowThreeDots] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
-  const [userPhoto, setUserPhoto] = useState(null)
+  const [userPhoto, setUserPhoto] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     if (user !== null && user.user._id == event.user_id) {
@@ -28,7 +25,7 @@ const Card = React.memo(({ event }) => {
     axios
       .get(`/api/auth/getUserById/${event.user_id}`)
       .then((response) => {
-        setUserPhoto(response.data.user.photo)
+        setUserPhoto(response.data.user.photo);
       })
       .catch((error) => {
         console.log(error);
@@ -43,7 +40,35 @@ const Card = React.memo(({ event }) => {
 
   const navigate = useNavigate();
 
-  const handleShowList = () => setShowList(!showList);
+  const handleShowList = () => {
+    setShowDeleteButton(!showDeleteButton);
+  };
+
+  const handleDeleteEventApi = () => {
+    axios
+      .delete("/api/feed/event", {
+        data: {
+          eventId: event._id,
+          user_id: user.user._id,
+        },
+      })
+      .then((resp) => {
+        if(resp.status = 200){
+          callApiOnDeleteCard()
+          setShowDeleteButton(false)
+          setShowToast(true);
+          toast.error("Event is deleted! Successfully", {
+            closeOnClick: true,
+            draggable: true,
+            pauseOnHover: false,
+            autoClose: 2000,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting event:", error);
+      });
+  };
 
   const handleParticularEventPage = () => navigate(`/event/${event._id}`);
 
@@ -62,23 +87,16 @@ const Card = React.memo(({ event }) => {
 
   return (
     <div className={classes.card}>
+    {showToast ? <ToastContainer /> : ""}
       <div className={classes.threeDots}>
         {showThreeDots && <FiMoreVertical onClick={handleShowList} />}
       </div>
-      {showList && showThreeDots && (
-        <div className={classes.list}>
-          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-          >
-            <ListItem>
-              <ListItemAvatar>
-                <Avatar>
-                  <DeleteIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary="Delete" />
-            </ListItem>
-          </List>
+      {showDeleteButton && (
+        <div
+          className={classes.deleteEventButton}
+          onClick={handleDeleteEventApi}
+        >
+          <DeleteIcon /> Delete
         </div>
       )}
       <div className={classes.placePhoto}>
@@ -89,9 +107,7 @@ const Card = React.memo(({ event }) => {
         )}
       </div>
       <div className={classes.organiserPhoto}>
-        {
-        userPhoto && <img alt="event organiser" src={userPhoto}></img>
-      }
+        {userPhoto && <img alt="event organiser" src={userPhoto}></img>}
       </div>
       <div className={classes.EventInfo}>
         <div className={classes.OrganiserName}>{event.organiserName}</div>

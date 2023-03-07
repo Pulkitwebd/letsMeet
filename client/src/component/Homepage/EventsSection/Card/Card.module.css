@@ -4,6 +4,7 @@
   margin-top: 10px;
   background-color: rgba(238, 237, 237, 0.388);
   border-radius: 4px;
+  position: relative;
 }
 
 .placePhoto {
@@ -71,13 +72,35 @@
   cursor: pointer;
 }
 
-.list {
+.deleteEventButton{
+  position: absolute;
+  height: 50px;
+  width : 100px;
+  background-color: grey;
+  right: 25px;
+  top: 5px;
+  z-index : 1;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color : white;
+  font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.deleteEventButton:hover{
+  color : rgb(215, 12, 12);
+}
+
+/* .list {
   position: absolute;
   z-index: 1;
   top: 0;
   right: 0;
   margin : 5px 25px 0 0;
-}
+} */
 
 .meetDate {
   color: rgb(150, 101, 28);

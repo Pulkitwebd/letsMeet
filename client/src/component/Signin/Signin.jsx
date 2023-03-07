@@ -10,7 +10,7 @@ const Signin = () => {
     <div className={classes.signinPage}>
       <div className={classes.greenBackground}>
         <div className={classes.greenPart}>
-          <img />
+          {/* <img /> */}
           <p></p>
         </div>
       </div>

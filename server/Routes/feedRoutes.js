@@ -35,4 +35,6 @@ router.get("/Event/:id", feedControllers.Event);
 
 router.get("/allEvents", feedControllers.allEvents);
 
+router.delete("/event", feedControllers.deleteEvent);
+
 module.exports = router;
