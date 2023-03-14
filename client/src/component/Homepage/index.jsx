@@ -17,6 +17,7 @@ import Localities from "./FilterSection/Localities";
 import CreateEventModal from "./Modal/CreateEventModal";
 import Card from "./EventsSection/Card/index";
 import loading from "../Assets/loading.gif";
+import { FaBorderAll, FaBars } from "react-icons/fa";
 
 const getAllEvents = (pageNumber) => {
   return axios.get(`/api/feed/allEvents?pageNumber=${pageNumber}`);
@@ -79,6 +80,10 @@ const Homepage = () => {
     }
   };
 
+  const callApiOnDeleteCard = () => {
+    setQueryKey(Math.random());
+  };
+
   return (
     <>
       <Grid container>
@@ -101,6 +106,10 @@ const Homepage = () => {
         <Grid item xs={8} md={9} lg={9}>
           <div className={classes.eventSections}>
             <div className={classes.createEventDiv}>
+              <div className={classes.logoOfverticalHoriCards}>
+                <FaBorderAll />
+                <FaBars />
+              </div>
               <button className={classes.createEventBtn} onClick={toggleModal}>
                 Create Event
               </button>
@@ -116,7 +125,11 @@ const Homepage = () => {
                 ? data.data.data.data.map((event, id) => {
                     return (
                       <Grid item xs={8} md={4} key={id}>
-                        <Card event={event} />
+                        <Card
+                          event={event}
+                          callApiOnDeleteCard={callApiOnDeleteCard}
+                          index={id}
+                        />
                       </Grid>
                     );
                   })

@@ -71,7 +71,7 @@ const Navbar = () => {
               }`}
             >
               <div className={classes.profile}>
-                <img src={profile} alt="profile" />
+                <img src={user.user ? user.user.photo :profile} alt="profile" />
               </div>
             </NavLink>
           </div>

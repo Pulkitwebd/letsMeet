@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import axios from "axios";
 import classes from "./PhotoModal.module.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUser } from "../../../Redux/Auth/authSlice";
 
 const PhotoModal = (props) => {
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+
   const [eventImageUrl, setEventImageUrl] = useState(null);
   const [eventImageBase64, setEventImageBase64] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const handleEventImg = async (event) => {
     const selectedFile = event.target.files[0];
@@ -25,24 +26,13 @@ const PhotoModal = (props) => {
   };
 
   const handlePostSubmit = async () => {
-    setLoading(true);
     const formData = {
       user_id: user.user._id,
       userPhoto: eventImageBase64,
     };
-
-    axios
-      .put("/api/auth/update", formData)
-      .then((response) => {
-        if (response.status === 201) {
-          props.togglePhotoModal(response.data.updatedUser, response.status);
-          props.togglePhotoModal();
-          setLoading(false);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    dispatch(updateUser(formData));
+    
+    props.togglePhotoModal();
   };
 
   return (
@@ -76,7 +66,12 @@ const PhotoModal = (props) => {
             )}
           </div>
         </div>
-        {eventImageBase64 && <button onClick={handlePostSubmit} className={classes.postButton}> {loading ? "loading": "Post" }</button>}
+        {eventImageBase64 && (
+          <button onClick={handlePostSubmit} className={classes.postButton}>
+           
+            Post
+          </button>
+        )}
       </Modal>
     </>
   );
