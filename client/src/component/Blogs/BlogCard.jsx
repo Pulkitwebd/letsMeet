@@ -8,11 +8,12 @@ import classes from "./Blogs.module.css";
 
 const BlogCard = (props) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} >
       <div className={classes.imageBox}>
         <img src={props.imageUrl} alt="" />
         <div className={classes.category}>{props.category}</div>
       </div>
+      
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {props.title}
