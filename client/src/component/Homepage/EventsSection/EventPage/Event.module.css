@@ -5,14 +5,14 @@
 }
 
 .eventHeading {
-  padding: 20px 0 20px 20px;
+  padding: 20px 0 20px 100px;
 }
 
 .organiserPhoto {
   border-radius: 50%;
   border: 1px solid black;
-  height: 60px;
-  width: 60px;
+  height: 70px;
+  width: 70px;
   background-color: rgba(82, 82, 56, 0.537);
 }
 
@@ -23,7 +23,7 @@
 }
 
 .organiserHeading_Photo {
-  margin-left: 20px;
+  margin-left: 30px;
   display: flex;
   flex-direction: column;
 }
@@ -37,21 +37,76 @@
   background-color: #f6f7f8;
 }
 
-.eventType {
-  display: flex;
-  padding-top: 10px;
-  padding-bottom: 10px;
+.eventDetails {
+  padding: 40px 100px 0 100px;
 }
 
-.eventType div {
+.eventAddress {
+  position: sticky;
+  height: 300px;
+  width: 30vw;
+  border-radius: 10px;
+  background-color: antiquewhite;
+  /* top: 40px; */
+  right: 0px;
+  float: right;
+  /* margin-right: 100px; */
+}
+
+.eventImage {
+  height: 400px;
+  width: 50vw;
+  /* background-color: beige; */
+  /* margin-left: 100px; */
+  /* margin-top: 40px; */
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.eventImage img {
+  height: 100%;
+  width: 100%;
+}
+
+.eventDetailsParaBox {
+  margin-top: 20px;
+  width: 50vw;
+}
+
+.eventDetailsPara {
+  margin-top: 20px;
+  line-height: 30px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.attendiesBox {
+  width: 50vw;
+  margin-bottom: 30px;
+}
+.attendiesBox h2 {
+  margin-bottom: 20px;
+}
+
+.attendiesCard {
+  height: 200px;
+  border-radius: 6px;
+  background-color: rgba(243, 240, 236, 0.708);
   display: flex;
-  width: 50%;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  cursor: pointer;
-  padding-bottom: 5px;
+  justify-content: center;
 }
 
-.activeEventType{
-    border-bottom: 1.5px solid green;
+.attendiesImgBox {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.attendiesImgBox img {
+  height: 100%;
+  width: 100%;
 }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import classes from "./Card.module.css";
-import { useNavigate } from "react-router-dom";
-import { FiMoreVertical } from "react-icons/fi";
+import { ToastContainer, toast } from "react-toastify";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { FiMoreVertical } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import classes from "./Card.module.css";
 
 const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const { user } = useSelector((state) => state.auth);
