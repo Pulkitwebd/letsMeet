@@ -1,37 +1,52 @@
+import React, { useState, useEffect, useRef } from "react";
 import { Grid } from "@mui/material";
-import { Box } from "@mui/system";
 import BlogCard from "./BlogCard";
 import cardData from "./cardJson";
-import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const CardList = () => {
-  const [cards, setCards] = useState(cardData.slice(0, 6));
+  const [items, setItems] = useState(cardData.slice(0, 6));
   const [hasMore, setHasMore] = useState(true);
 
-  const loadMoreCards = () => {
-    console.log("sandhiii");
-    // add the next 6 cards to the existing cards array
-    const nextCards = cards.slice(cards.length, cards.length + 6);
-    setCards((prevCards) => [...prevCards, ...nextCards]);
-    console.log("hi");
+  const infiniteScrollRef = useRef(null);
 
-    // set hasMore to false if there are no more cards to be loaded
-    if (cards.length + nextCards.length === cardData.length) {
-      setHasMore(false);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+
+  const handleScroll = () => {
+    const { current: element } = infiniteScrollRef;
+    if (element && typeof element.getBoundingClientRect === "function" && element.getBoundingClientRect().bottom <= window.innerHeight) {
+      fetchMoreData();
     }
-    // setCards((prev) => [...prev, ...nextCards]);
   };
-  console.log("object");
+
+  const fetchMoreData = () => {
+    // Simulate loading more data
+    setTimeout(() => {
+      const newItems = cardData.slice(items.length, items.length + 6);
+      setItems([...items, ...newItems]);
+      setHasMore(items.length < cardData.length);
+    }, 1500);
+  };
+
+  const endMessage = (
+    <p style={{ textAlign: "center", fontSize: "20px" }}>
+      Yay! You have seen it all
+    </p>
+  );
+
+
   return (
-    <InfiniteScroll
-      pageStart={0}
-      loadMore={loadMoreCards}
+    <InfiniteScroll ref={infiniteScrollRef}
+      dataLength={items.length}
+      next={fetchMoreData}
       hasMore={hasMore}
-      loader={<div key={0}>Loading...</div>}
-      delay={500}
-      data={20}
-      dataLength={6}
+      loader={<h4>Loading...</h4>}
+      scrollThreshold="0px"
+      endMessage={endMessage}
     >
       <Grid
         container
@@ -41,9 +56,9 @@ const CardList = () => {
         marginTop={4}
         marginBottom={4}
       >
-        {cards.map((card) => {
+        {items.map((card, index) => {
           return (
-            <Grid item xs={12} sm={6} md={4}>
+            <Grid item xs={12} sm={6} md={4} key={index}>
               <BlogCard
                 title={card.title}
                 authorName={card.authorName}
