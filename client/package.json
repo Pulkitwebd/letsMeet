@@ -27,6 +27,7 @@
     "react-calendar": "^4.0.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-jwt": "^1.1.7",
     "react-modal": "^3.16.1",
     "react-paginate": "^8.1.4",

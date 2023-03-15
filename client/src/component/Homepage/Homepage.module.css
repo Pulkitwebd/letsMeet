@@ -92,23 +92,23 @@
   margin-right: 4px;
 }
 
-.createEventDiv{
+.createEventDiv {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.logoOfverticalHoriCards svg:first-child{
+.logoOfverticalHoriCards svg:first-child {
   margin-left: 10px;
 }
 
-.logoOfverticalHoriCards svg{
- margin-right: 10px;
- padding-top: 5px;
- height: 30px;
- width: 30px;
- cursor: pointer;
- border-bottom: 3px solid black;
+.logoOfverticalHoriCards svg {
+  margin-right: 10px;
+  padding-top: 5px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  border-bottom: 3px solid black;
 }
 
 .createEventBtn {
@@ -118,7 +118,7 @@
   cursor: pointer;
 }
 
-.paginationBox{
+.paginationBox {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,37 +131,55 @@
   outline: none;
 }
 
-.pagination > .active > a{
-  background-color:#1fab89 ;
+.pagination > .active > a {
+  background-color: #1fab89;
   border-color: #1fab89;
   color: #fff;
 }
 
-.pagination > li > a{
-  border: 1.5px solid #1fab89 ;
+.pagination > li > a {
+  border: 1.5px solid #1fab89;
   padding: 5px 10px;
   outline: none;
   cursor: pointer;
 }
 
-.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
-  background-color: #1fab89 ;
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #1fab89;
   border-color: #1fab89;
-  outline: none ;
+  outline: none;
 }
 
-.pagination > li > a, .pagination > li > span{
-  color: #1fab89
+.pagination > li > a,
+.pagination > li > span {
+  color: #1fab89;
 }
 
-.pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span{
-  border-radius: unset
+.pagination > li:first-child > a,
+.pagination > li:first-child > span,
+.pagination > li:last-child > a,
+.pagination > li:last-child > span {
+  border-radius: unset;
 }
 
-.loadingBox{
+.loadingBox {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 100%;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 576px) {
+  .filterGird {
+    display: none;
+  }
+  .eventSection{
+    max-width: 100%;
+  }
 }
