@@ -89,7 +89,7 @@ const Homepage = () => {
       <Grid container>
         <CreateEventModal showModal={showModal} toggleModal={toggleModal} />
         {showToast ? <ToastContainer /> : ""}
-        <Grid item xs={4} md={3} lg={3}>
+        <Grid item md={3} lg={3} className={classes.filterGird}>
           <div className={classes.filterSection}>
             <Category />
             <Divider />
@@ -103,7 +103,7 @@ const Homepage = () => {
           </div>
         </Grid>
 
-        <Grid item xs={8} md={9} lg={9}>
+        <Grid item xs={12} md={9} lg={9}>
           <div className={classes.eventSections}>
             <div className={classes.createEventDiv}>
               <div className={classes.logoOfverticalHoriCards}>
@@ -124,7 +124,7 @@ const Homepage = () => {
               {data
                 ? data.data.data.data.map((event, id) => {
                     return (
-                      <Grid item xs={8} md={4} key={id}>
+                      <Grid item xs={12} md={4} key={id}>
                         <Card
                           event={event}
                           callApiOnDeleteCard={callApiOnDeleteCard}
