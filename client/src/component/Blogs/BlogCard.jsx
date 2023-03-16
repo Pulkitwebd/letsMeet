@@ -4,27 +4,52 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import classes from "./Blogs.module.css";
-
+import { useParams, useNavigate } from "react-router-dom";
 
 const BlogCard = (props) => {
+  const { blogId, title } = useParams();
+  console.log(blogId);
+
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/blog/${blogId}/${title}`);
+    console.log("imnavigate");
+  };
+
   return (
-    <Card sx={{ maxWidth: 345 }} >
+    <Card className={classes.card} blogId={blogId} sx={{ maxWidth: 345 }}>
       <div className={classes.imageBox}>
-        <img src={props.imageUrl} alt="" />
-        <div className={classes.category}>{props.category}</div>
+        <img src={props.imageUrl} onClick={handleClick} alt="" />
+        <div className={classes.category} onClick={handleClick}>
+          {props.category}
+        </div>
       </div>
-      
+
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography
+          className={classes.title}
+          gutterBottom
+          variant="h5"
+          component="div"
+          onClick={handleClick}
+        >
           {props.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          className={classes.description}
+          variant="body2"
+          color="text.secondary"
+        >
           {props.description}
         </Typography>
       </CardContent>
       <CardActions>
-        <div size="small">{props.authorName} |</div>
-        <div size="small">{props.creationDateAndTime}</div>
+        <div className={classes.author} size="small">
+          {props.authorName} |
+        </div>
+        <div className={classes.dateAndTime} size="small">
+          {props.creationDateAndTime}
+        </div>
       </CardActions>
       {/* <Button size="small">{category}</Button> */}
     </Card>

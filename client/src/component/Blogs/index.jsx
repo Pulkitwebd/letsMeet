@@ -13,12 +13,15 @@ const CardList = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+  });
 
   const handleScroll = () => {
     const { current: element } = infiniteScrollRef;
-    if (element && typeof element.getBoundingClientRect === "function" && element.getBoundingClientRect().bottom <= window.innerHeight) {
+    if (
+      element &&
+      typeof element.getBoundingClientRect === "function" &&
+      element.getBoundingClientRect().bottom <= window.innerHeight
+    ) {
       fetchMoreData();
     }
   };
@@ -38,9 +41,9 @@ const CardList = () => {
     </p>
   );
 
-
   return (
-    <InfiniteScroll ref={infiniteScrollRef}
+    <InfiniteScroll
+      ref={infiniteScrollRef}
       dataLength={items.length}
       next={fetchMoreData}
       hasMore={hasMore}
