@@ -13,6 +13,7 @@ import ResetPassword from "./component/ResetPassword/ResetPassword";
 import Blogs from "./component/Blogs/index";
 import PrivateRoute from "./PrivateRoute";
 import EventPage from "./component/Homepage/EventsSection/EventPage/index";
+import BlogPage from "./component/Blogs/Blog" 
 import "./App.css";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Homepage />} />
         <Route exact path="/event/:id" element={<EventPage />} />
+        <Route exact path="/event/:id" element={<EventPage />} />
         <Route exact path="/" element={<PrivateRoute />}>
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/message" element={<Message />} />
@@ -31,7 +33,6 @@ const App = () => {
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/signin" element={<Signin />} />
         <Route exact path="/reset-password" element={<ResetPassword />} />
-        <Route exact path="/blogs/:blogId/:title" element={<Blogs />} />
       </Routes>
       {/* <Footer /> */}
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />

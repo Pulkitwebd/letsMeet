@@ -63,6 +63,7 @@ const CardList = () => {
           return (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <BlogCard
+                id={card.id}
                 title={card.title}
                 authorName={card.authorName}
                 authorEmail={card.authorEmail}
