@@ -2,6 +2,7 @@ import React from "react";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Routes, Route } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 import Navbar from "./component/Navbar/Navbar";
 import Homepage from "./component/Homepage";
 import Profile from "./component/Profile/index";
@@ -10,10 +11,9 @@ import Signup from "./component/Signup/Signup";
 import Signin from "./component/Signin/Signin";
 // import Footer from "./component/Footer/Footer";
 import ResetPassword from "./component/ResetPassword/ResetPassword";
+import BlogPage from "./component/Blogs/Blog/index"
 import Blogs from "./component/Blogs/index";
-import PrivateRoute from "./PrivateRoute";
 import EventPage from "./component/Homepage/EventsSection/EventPage/index";
-import BlogPage from "./component/Blogs/Blog" 
 import "./App.css";
 
 const queryClient = new QueryClient();

@@ -53,9 +53,9 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
         },
       })
       .then((resp) => {
-        if(resp.status = 200){
-          callApiOnDeleteCard()
-          setShowDeleteButton(false)
+        if ((resp.status = 200)) {
+          callApiOnDeleteCard();
+          setShowDeleteButton(false);
           setShowToast(true);
           toast.error("Event is deleted! Successfully", {
             closeOnClick: true,
@@ -70,7 +70,8 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
       });
   };
 
-  const handleParticularEventPage = () => navigate(`/event/${event._id}`);
+  const handleParticularEventPage = () =>
+    navigate(`/event/${event._id}`, { state: { userPhoto } });
 
   const description = event.desc.charAt(0).toUpperCase() + event.desc.slice(1);
 
@@ -87,7 +88,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
 
   return (
     <div className={classes.card}>
-    {showToast ? <ToastContainer /> : ""}
+      {showToast ? <ToastContainer /> : ""}
       <div className={classes.threeDots}>
         {showThreeDots && <FiMoreVertical onClick={handleShowList} />}
       </div>

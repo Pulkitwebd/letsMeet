@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import cardsData from "./cardJson";
+import cardsData from "../cardJson";
 
 const Blog = () => {
   const [cards, setCards] = useState(cardsData);

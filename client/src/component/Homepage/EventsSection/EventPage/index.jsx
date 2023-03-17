@@ -4,7 +4,10 @@ import { useQuery } from "react-query";
 import { Grid } from "@mui/material";
 import loading from "../../../Assets/loading.gif";
 import classes from "./Event.module.css";
-import userPhoto from "../../../Assets/userPhoto.jpg"
+import Attendies from "../../../Assets/userPhoto.jpg";
+import { IoMdPin } from "react-icons/io";
+import { FaClock } from "react-icons/fa";
+import { useLocation } from "react-router-dom";
 
 const getEvent = (eventId) => {
   return axios.get(`/api/feed/Event/${eventId}`);
@@ -19,11 +22,17 @@ const EventPage = () => {
     () => getEvent(eventId)
   );
 
+  //getiing usrePhto from card index.jsx by passing in navigate
+  const location = useLocation();
+  const userPhoto = location.state.userPhoto;
+
   useEffect(() => {
     const pathName = window.location.pathname;
     const eventId = pathName.split("/")[2];
     setEventId(eventId);
   }, []);
+
+  console.log(data && data.data);
 
   let date = data ? data.data.meetDate : "";
 
@@ -38,7 +47,6 @@ const EventPage = () => {
   let options = { weekday: "short", month: "short", day: "2-digit" };
   let requiredDateFormat = date1.toLocaleDateString("en-US", options);
 
-  console.log(data && data.data);
   return (
     <>
       {isLoading && (
@@ -50,9 +58,11 @@ const EventPage = () => {
       {data && (
         <div>
           <div className={classes.eventHeading}>
-            <h1>{data.data.title}</h1>
+            <h1>Title - {data.data.title}</h1>
             <div className={classes.organiserDetails}>
-              <div className={classes.organiserPhoto}></div>
+              <div className={classes.organiserPhoto}>
+                <img src={userPhoto} alt="user" />
+              </div>
               <div className={classes.organiserHeading_Photo}>
                 <h3>Organiser</h3>
                 <p>{data.data.organiserName}</p>
@@ -61,7 +71,28 @@ const EventPage = () => {
           </div>
           <div className={classes.boxBtwHeading_Details}></div>
           <div className={classes.eventDetails}>
-            <div className={classes.eventAddress}></div>
+            <div className={classes.eventAddressTimeBox}>
+              <div className={classes.eventDateTime}>
+                <div className={classes.timelogo}>
+                  <FaClock />
+                </div>
+                <div>
+                  {requiredTimeFormat} {requiredDateFormat}
+                </div>
+              </div>
+              <div className={classes.eventAddress}>
+                <div className={classes.addressLogo}>
+                  <IoMdPin />
+                </div>
+                <div>
+                  <div>
+                    {data.data.address.landmark} {data.data.address.area}
+                  </div>
+                  <div>{data.data.address.city}</div>
+                  <div>{data.data.address.state}</div>
+                </div>
+              </div>
+            </div>
 
             <div className={classes.eventImage}>
               <img src={data.data.eventImage} alt="event"></img>
@@ -106,7 +137,7 @@ const EventPage = () => {
                 <Grid item md={4} xs={8}>
                   <div className={classes.attendiesCard}>
                     <div className={classes.attendiesImgBox}>
-                      <img src={userPhoto} alt="member" />
+                      <img src={Attendies} alt="member" />
                     </div>
                     <p>Name</p>
                   </div>
@@ -114,7 +145,7 @@ const EventPage = () => {
                 <Grid item md={4} xs={4}>
                   <div className={classes.attendiesCard}>
                     <div className={classes.attendiesImgBox}>
-                      <img src={userPhoto} alt="member" />
+                      <img src={Attendies} alt="member" />
                     </div>
                     <p>Name</p>
                   </div>
@@ -122,7 +153,7 @@ const EventPage = () => {
                 <Grid item md={4} xs={4}>
                   <div className={classes.attendiesCard}>
                     <div className={classes.attendiesImgBox}>
-                      <img src={userPhoto} alt="member" />
+                      <img src={Attendies} alt="member" />
                     </div>
                     <p>Name</p>
                   </div>
@@ -130,7 +161,7 @@ const EventPage = () => {
                 <Grid item md={4} xs={8}>
                   <div className={classes.attendiesCard}>
                     <div className={classes.attendiesImgBox}>
-                      <img src={userPhoto} alt="member" />
+                      <img src={Attendies} alt="member" />
                     </div>
                     <p>Name</p>
                   </div>
