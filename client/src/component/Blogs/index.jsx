@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Grid } from "@mui/material";
-import BlogCard from "./BlogCard";
+import BlogCard from "./Card/index";
 import cardData from "./cardJson";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -70,7 +70,7 @@ const CardList = () => {
                 lastEdited={card.lastEdited}
                 category={card.category}
                 creationDateAndTime={card.creationDateAndTime}
-                description={card.descrption}
+                description={card.description}
                 imageUrl={card.imageUrl}
               />
             </Grid>

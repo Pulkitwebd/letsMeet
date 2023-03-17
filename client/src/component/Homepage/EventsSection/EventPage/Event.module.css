@@ -10,10 +10,14 @@
 
 .organiserPhoto {
   border-radius: 50%;
-  border: 1px solid black;
   height: 70px;
   width: 70px;
-  background-color: rgba(82, 82, 56, 0.537);
+  overflow: hidden;
+}
+
+.organiserPhoto img {
+  height: 100%;
+  width: 100%;
 }
 
 .organiserDetails {
@@ -41,24 +45,19 @@
   padding: 40px 100px 0 100px;
 }
 
-.eventAddress {
+.eventAddressTimeBox {
   position: sticky;
   height: 300px;
   width: 30vw;
   border-radius: 10px;
-  background-color: antiquewhite;
-  /* top: 40px; */
+  background-color: #f6f7f8;
   right: 0px;
   float: right;
-  /* margin-right: 100px; */
 }
 
 .eventImage {
   height: 400px;
   width: 50vw;
-  /* background-color: beige; */
-  /* margin-left: 100px; */
-  /* margin-top: 40px; */
   border-radius: 6px;
   overflow: hidden;
 }
@@ -69,15 +68,16 @@
 }
 
 .eventDetailsParaBox {
-  margin-top: 20px;
+  margin-top: 40px;
   width: 50vw;
+  text-align: justify;
 }
 
 .eventDetailsPara {
-  margin-top: 20px;
+  margin-top: 10px;
   line-height: 30px;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .attendiesBox {
@@ -109,4 +109,30 @@
 .attendiesImgBox img {
   height: 100%;
   width: 100%;
+}
+
+.eventDateTime {
+  margin: 10px 0 10px 10px;
+  display: flex;
+}
+
+.timelogo {
+  margin-right: 10px;
+}
+
+.timelogo svg {
+  height: 20px;
+  width: 20px;
+}
+
+.eventAddress {
+  display: flex;
+  align-items: center;
+  padding-left: 5px;
+}
+
+.addressLogo svg {
+  height: 30px;
+  width: 30px;
+  margin-right: 6px;
 }

@@ -1,0 +1,41 @@
+.card:hover {
+  background-color: rgb(247, 247, 247);
+  cursor: pointer;
+}
+
+.imageBox img {
+  width: 360px;
+  height: 195px;
+}
+
+.category {
+  position: relative;
+  top: -180px;
+  left: 20px;
+  background: white;
+  color: #1fab89;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+.category:hover {
+  background-color: #1fab89;
+  color: white;
+}
+
+.title:hover {
+  text-decoration: underline;
+  color: #1fab89;
+}
+
+.description:hover {
+  text-decoration: underline;
+  color: #1fab89;
+}
+.dateAndTime:hover {
+  text-decoration: underline;
+ }
+.author:hover {
+  text-decoration: underline;
+}
