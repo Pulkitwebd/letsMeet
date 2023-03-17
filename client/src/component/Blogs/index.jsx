@@ -70,7 +70,7 @@ const CardList = () => {
                 lastEdited={card.lastEdited}
                 category={card.category}
                 creationDateAndTime={card.creationDateAndTime}
-                description={card.descrption}
+                description={card.description}
                 imageUrl={card.imageUrl}
               />
             </Grid>
