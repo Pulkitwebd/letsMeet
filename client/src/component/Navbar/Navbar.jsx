@@ -52,9 +52,9 @@ const Navbar = () => {
         </div>
         <div className={classes.link}>
           <NavLink
-            to="/blog"
+            to="/blogs"
             className={`${
-              pathname === "/blog" ? classes.active : classes.link
+              pathname === "/blogs" ? classes.active : classes.link
             }`}
           >
             Blogs
