@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Divider from "@mui/material/Divider";
 import { useJwt } from "react-jwt";
@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { useQuery } from "react-query";
 import ReactPaginate from "react-paginate";
+import { FaBorderAll, FaBars } from "react-icons/fa";
+
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./Homepage.module.css";
 import Category from "./FilterSection/Category";
@@ -17,14 +19,13 @@ import Localities from "./FilterSection/Localities";
 import CreateEventModal from "./Modal/CreateEventModal";
 import Card from "./EventsSection/Card/index";
 import loading from "../Assets/loading.gif";
-import { FaBorderAll, FaBars } from "react-icons/fa";
 
 const getAllEvents = (pageNumber) => {
   return axios.get(`/api/feed/allEvents?pageNumber=${pageNumber}`);
 };
 
 const Homepage = () => {
-  const [queryKey, setQueryKey] = useState("organise-event");
+  const [queryKey, setQueryKey] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageCount, setPageCount] = useState(10);
 
@@ -33,6 +34,14 @@ const Homepage = () => {
     () => getAllEvents(pageNumber),
     { keepPreviousData: true }
   );
+
+  useEffect(() => {
+    if (data && data.data && data.data.data && data.data.data.totalPosts) {
+      const totalPosts = data.data.data.totalPosts;
+      const postsPerPage = 12;
+      setPageCount(Math.ceil(totalPosts / postsPerPage));
+    }
+  }, [data]);
 
   const handlePageClick = (data) => {
     window.scrollTo(0, 0);
@@ -57,7 +66,7 @@ const Homepage = () => {
         setShowModal(!showModal);
         if (createdEventStatus == 201) {
           // createEventStatus is coming from modal page on successfully event creation
-          setQueryKey(randomString); // changing key reload query and fetch new data
+          setQueryKey((prevKey) => prevKey + 1); // changing key reload query and fetch new data
           setShowToast(true);
           toast.success("Event is created! Successfully", {
             closeOnClick: true,
@@ -88,7 +97,7 @@ const Homepage = () => {
     <>
       <Grid container>
         <CreateEventModal showModal={showModal} toggleModal={toggleModal} />
-        {showToast ? <ToastContainer /> : ""}
+        {showToast && <ToastContainer />}
         <Grid item md={3} lg={3} className={classes.filterGird}>
           <div className={classes.filterSection}>
             <Category />

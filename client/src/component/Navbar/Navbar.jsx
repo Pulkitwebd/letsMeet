@@ -6,6 +6,7 @@ import { logout, reset } from "../../Redux/Auth/authSlice";
 import { BsList } from "react-icons/bs";
 import logoutImg from "../Assets/logout.png";
 import profile from "../Assets/profile.jpg";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -40,21 +41,12 @@ const Navbar = () => {
             Home
           </NavLink>
         </div>
-        <div className={classes.link}>
-          <NavLink
-            to="/message"
-            className={`${
-              pathname === "/message" ? classes.active : classes.link
-            }`}
-          >
-            Messages
-          </NavLink>
-        </div>
+
         <div className={classes.link}>
           <NavLink
             to="/blogs"
             className={`${
-              pathname === "/blog" ? classes.active : classes.link
+              pathname === "/blogs" ? classes.active : classes.link
             }`}
           >
             Blogs
@@ -76,6 +68,18 @@ const Navbar = () => {
                   alt="profile"
                 />
               </div>
+            </NavLink>
+          </div>
+          <div className={classes.link}>
+            <NavLink
+              to="/message"
+              className={`${
+                pathname === "/message"
+                  ? classes.messageIconActive
+                  : classes.messageIcon
+              }`}
+            >
+              <FaFacebookMessenger />
             </NavLink>
           </div>
           <div onClick={onLogout}>

@@ -15,7 +15,6 @@ import indianStates from "./StateNames";
 import cityNames from "./CityNames";
 import category from "./Category";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
 
 const CreateEventModal = (props) => {
   const [value, setValue] = useState(dayjs("2023-04-07"));
