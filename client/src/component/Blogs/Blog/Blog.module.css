@@ -1,9 +1,6 @@
 .container {
-  height: 1800px;
   position: relative;
   top: 2rem;
-  left: 2rem;
-  /* bottom: 2rem; */
 }
 
 .cardTitle {
@@ -13,13 +10,18 @@
   height: 4%;
   padding-top: 1%;
 }
+
+.blogDetailsCover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .BlogDetails {
-  height: 5%;
   text-align: center;
   display: flex;
   flex-direction: row;
   align-content: center;
-  margin-left: 25%;
   padding-bottom: 20px;
   align-items: center;
 }
@@ -27,11 +29,13 @@
 .aName {
   margin-left: 5%;
 }
+
 .timeDetails {
   width: 250px;
   display: flex;
   margin-left: 6%;
 }
+
 .clockicon {
   height: 20px;
   width: 20px;
@@ -41,38 +45,48 @@
   margin-left: 2%;
   display: inline;
 }
+
 .readDetails {
   width: 150px;
   display: flex;
   margin-left: 2%;
 }
+
 .readTimeicon {
   height: 20px;
   width: 20px;
 }
+
 .readTime {
   margin-left: 2%;
   display: inline;
 }
+
 .aEmail {
   margin-left: 2%;
 }
 
+.img_textContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .imgContainer {
   width: 1000px;
-  height: 800px;
   position: relative;
-  left: 150px;
 }
+
 .imgContainer img {
   height: 700px;
   width: 980px;
 }
+
 .textContainer {
-  width: 75%;
-  height: 800px;
+  margin-top: 60px;
+  width: 80vw;
   position: relative;
-  left: 12%;
 }
 
 .text {
@@ -86,17 +100,19 @@
   justify-content: flex-start;
   text-align: justify;
 }
+
 .bar {
+  margin-top: 50px;
   width: 100%;
   display: flex;
-  flex-direction: row;
   align-content: center;
   justify-content: center;
-  /* margin-left: 50vh; */
+  margin-bottom: 70px;
 }
 
 .iconContainer {
-  width: 42%;
+  overflow: hidden;
+  width: 20vw;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -108,76 +124,92 @@
   border-radius: 2rem;
 }
 
+.iconContainer div {
+  width: 4vw;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.iconContainer div:not(:last-child) {
+  border-right: 1.5px solid rgba(72, 70, 70, 0.208);
+}
+
+.iconContainer div:last-child svg {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
 .like {
   display: flex;
   flex-direction: row;
-  margin-left: 8vh;
-  position: relative;
   top: 10px;
 }
+
 .like svg {
-  margin-right: 10px;
+  margin-bottom: 0.5px;
+  margin-right: 5px;
+  height: 20px;
+  width: 20px;
 }
 
 .like:hover {
   cursor: pointer;
 }
-.likeNum{
-  
-}
+
 .liked {
   display: flex;
   flex-direction: row;
-  margin-left: 8vh;
-  position: relative;
   top: 10px;
 }
+
 .liked svg {
-  margin-right: 10px;
+  color: red;
+  margin-top: 1px;
+  margin-right: 5px;
 }
 
 .liked:hover {
   cursor: pointer;
 }
+
 .comment {
   display: flex;
   flex-direction: row;
-  margin-left: 8vh;
-  position: relative;
   top: 10px;
   cursor: pointer;
 }
+
 .comment svg {
   margin-right: 10px;
 }
-.comment:hover{
+
+.comment:hover {
   background-color: rgb(188, 188, 188);
-  
 }
+
 .share {
   display: flex;
   flex-direction: row;
-  margin-left: 8vh;
-  position: relative;
   top: 10px;
   cursor: pointer;
 }
-.share:hover{
+
+.share:hover {
   background-color: rgb(188, 188, 188);
 }
+
 .bookmark {
-  margin-left: 8vh;
-  position: relative;
   top: 10px;
   cursor: pointer;
 }
-.bookmark:hover{
+
+.bookmark:hover {
   background-color: rgb(188, 188, 188);
 }
-.more{
+.more {
   margin-left: 12vh;
   position: relative;
   top: 10px;
   cursor: pointer;
-
 }
