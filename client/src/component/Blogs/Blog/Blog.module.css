@@ -1,0 +1,183 @@
+.container {
+  height: 1800px;
+  position: relative;
+  top: 2rem;
+  left: 2rem;
+  /* bottom: 2rem; */
+}
+
+.cardTitle {
+  text-align: center;
+  font-weight: 800;
+  font-size: 40px;
+  height: 4%;
+  padding-top: 1%;
+}
+.BlogDetails {
+  height: 5%;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  margin-left: 25%;
+  padding-bottom: 20px;
+  align-items: center;
+}
+
+.aName {
+  margin-left: 5%;
+}
+.timeDetails {
+  width: 250px;
+  display: flex;
+  margin-left: 6%;
+}
+.clockicon {
+  height: 20px;
+  width: 20px;
+}
+
+.creationDate {
+  margin-left: 2%;
+  display: inline;
+}
+.readDetails {
+  width: 150px;
+  display: flex;
+  margin-left: 2%;
+}
+.readTimeicon {
+  height: 20px;
+  width: 20px;
+}
+.readTime {
+  margin-left: 2%;
+  display: inline;
+}
+.aEmail {
+  margin-left: 2%;
+}
+
+.imgContainer {
+  width: 1000px;
+  height: 800px;
+  position: relative;
+  left: 150px;
+}
+.imgContainer img {
+  height: 700px;
+  width: 980px;
+}
+.textContainer {
+  width: 75%;
+  height: 800px;
+  position: relative;
+  left: 12%;
+}
+
+.text {
+  font-size: 20px;
+  font-weight: bold;
+  gap: revert;
+  height: 50%;
+  top: inherit;
+  display: flex;
+  align-self: start;
+  justify-content: flex-start;
+  text-align: justify;
+}
+.bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  /* margin-left: 50vh; */
+}
+
+.iconContainer {
+  width: 42%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  height: 2rem;
+  border: ridge;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  border-radius: 2rem;
+}
+
+.like {
+  display: flex;
+  flex-direction: row;
+  margin-left: 8vh;
+  position: relative;
+  top: 10px;
+}
+.like svg {
+  margin-right: 10px;
+}
+
+.like:hover {
+  cursor: pointer;
+}
+.likeNum{
+  
+}
+.liked {
+  display: flex;
+  flex-direction: row;
+  margin-left: 8vh;
+  position: relative;
+  top: 10px;
+}
+.liked svg {
+  margin-right: 10px;
+}
+
+.liked:hover {
+  cursor: pointer;
+}
+.comment {
+  display: flex;
+  flex-direction: row;
+  margin-left: 8vh;
+  position: relative;
+  top: 10px;
+  cursor: pointer;
+}
+.comment svg {
+  margin-right: 10px;
+}
+.comment:hover{
+  background-color: rgb(188, 188, 188);
+  
+}
+.share {
+  display: flex;
+  flex-direction: row;
+  margin-left: 8vh;
+  position: relative;
+  top: 10px;
+  cursor: pointer;
+}
+.share:hover{
+  background-color: rgb(188, 188, 188);
+}
+.bookmark {
+  margin-left: 8vh;
+  position: relative;
+  top: 10px;
+  cursor: pointer;
+}
+.bookmark:hover{
+  background-color: rgb(188, 188, 188);
+}
+.more{
+  margin-left: 12vh;
+  position: relative;
+  top: 10px;
+  cursor: pointer;
+
+}

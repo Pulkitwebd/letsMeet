@@ -72,6 +72,7 @@ const CardList = () => {
                 creationDateAndTime={card.creationDateAndTime}
                 description={card.description}
                 imageUrl={card.imageUrl}
+                timeToRead={card.timeToRead}
               />
             </Grid>
           );
