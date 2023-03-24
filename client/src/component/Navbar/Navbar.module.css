@@ -24,7 +24,7 @@
   margin-right: 70px;
 }
 
-.navlinks div:first-child{
+.navlinks div:first-child {
   margin-left: 90px;
 }
 
@@ -59,10 +59,10 @@
   padding-right: 10px;
 }
 
-.profile{
+.profile {
   border-radius: 50%;
-  height : 50px;
-  width : 50px;
+  height: 50px;
+  width: 50px;
   background-color: aliceblue;
   overflow: hidden;
   display: flex;
@@ -72,8 +72,8 @@
 }
 
 .profile img {
-  height : 50px;
-  width : 50px;
+  height: 50px;
+  width: 50px;
 }
 
 @media only screen and (min-width: 0px) and (max-width: 768px) {
@@ -127,5 +127,21 @@
   .logoutImg {
     height: 20px;
     cursor: pointer;
+  }
+  .messageIcon svg {
+    color: black;
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 3px;
+  }
+  .messageIconActive svg {
+    color: white;
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 3px;
   }
 }
