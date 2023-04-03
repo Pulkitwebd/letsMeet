@@ -1,0 +1,215 @@
+.container {
+  position: relative;
+  top: 2rem;
+}
+
+.cardTitle {
+  text-align: center;
+  font-weight: 800;
+  font-size: 40px;
+  height: 4%;
+  padding-top: 1%;
+}
+
+.blogDetailsCover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.BlogDetails {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  padding-bottom: 20px;
+  align-items: center;
+}
+
+.aName {
+  margin-left: 5%;
+}
+
+.timeDetails {
+  width: 250px;
+  display: flex;
+  margin-left: 6%;
+}
+
+.clockicon {
+  height: 20px;
+  width: 20px;
+}
+
+.creationDate {
+  margin-left: 2%;
+  display: inline;
+}
+
+.readDetails {
+  width: 150px;
+  display: flex;
+  margin-left: 2%;
+}
+
+.readTimeicon {
+  height: 20px;
+  width: 20px;
+}
+
+.readTime {
+  margin-left: 2%;
+  display: inline;
+}
+
+.aEmail {
+  margin-left: 2%;
+}
+
+.img_textContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imgContainer {
+  width: 1000px;
+  position: relative;
+}
+
+.imgContainer img {
+  height: 700px;
+  width: 980px;
+}
+
+.textContainer {
+  margin-top: 60px;
+  width: 80vw;
+  position: relative;
+}
+
+.text {
+  font-size: 20px;
+  font-weight: bold;
+  gap: revert;
+  height: 50%;
+  top: inherit;
+  display: flex;
+  align-self: start;
+  justify-content: flex-start;
+  text-align: justify;
+}
+
+.bar {
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-bottom: 70px;
+}
+
+.iconContainer {
+  overflow: hidden;
+  width: 20vw;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  height: 2rem;
+  border: ridge;
+  border-color: rgb(226 232 240 / var(--tw-border-opacity));
+  border-radius: 2rem;
+}
+
+.iconContainer div {
+  width: 4vw;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.iconContainer div:not(:last-child) {
+  border-right: 1.5px solid rgba(72, 70, 70, 0.208);
+}
+
+.iconContainer div:last-child svg {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.like {
+  display: flex;
+  flex-direction: row;
+  top: 10px;
+}
+
+.like svg {
+  margin-bottom: 0.5px;
+  margin-right: 5px;
+  height: 20px;
+  width: 20px;
+}
+
+.like:hover {
+  cursor: pointer;
+}
+
+.liked {
+  display: flex;
+  flex-direction: row;
+  top: 10px;
+}
+
+.liked svg {
+  color: red;
+  margin-top: 1px;
+  margin-right: 5px;
+}
+
+.liked:hover {
+  cursor: pointer;
+}
+
+.comment {
+  display: flex;
+  flex-direction: row;
+  top: 10px;
+  cursor: pointer;
+}
+
+.comment svg {
+  margin-right: 10px;
+}
+
+.comment:hover {
+  background-color: rgb(188, 188, 188);
+}
+
+.share {
+  display: flex;
+  flex-direction: row;
+  top: 10px;
+  cursor: pointer;
+}
+
+.share:hover {
+  background-color: rgb(188, 188, 188);
+}
+
+.bookmark {
+  top: 10px;
+  cursor: pointer;
+}
+
+.bookmark:hover {
+  background-color: rgb(188, 188, 188);
+}
+.more {
+  margin-left: 12vh;
+  position: relative;
+  top: 10px;
+  cursor: pointer;
+}

@@ -1,0 +1,117 @@
+/* tablet size css*/
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+  .userPhotoDesc {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .userPhotoDiv {
+    height: 200px;
+    width: 25%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+  .userPhoto {
+    height: 100%;
+    width: 100%;
+  }
+  .userDescription {
+    width: 75%;
+    overflow: hidden;
+  }
+  .userDetails {
+    text-align: justify;
+  }
+  .userName {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+/* laptop size */
+@media only screen and (min-width: 768px) {
+  .userPhotoDesc {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .userPhotoDiv {
+    height: 200px;
+    width: 15%;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-right: 20px;
+    position: relative;
+  }
+  .userPhoto {
+    height: 100%;
+    width: 100%;
+  }
+  .editImage {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+  }
+  .editImage svg {
+    height: 25px;
+    width: 25px;
+  }
+  .userDescription {
+    width: 85%;
+  }
+  .userName {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .userDetails {
+    text-align: justify;
+  }
+  .userActivity {
+    padding-top: 30px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .totalDetails {
+    display: flex;
+    margin-right: 50px;
+    align-items: center;
+  }
+  .totallogo {
+    margin-right: 10px;
+  }
+  .totallogo svg {
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+  }
+  .RecentPost_RecentComments_EditAccount {
+    display: flex;
+    border-bottom: 2px solid grey;
+    padding-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .RecentPost_RecentComments_EditAccount div {
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  .activeDiv {
+    padding-bottom: 5px;
+    border-bottom: 2px solid blue;
+  }
+  .eventsHorizontalDiv {
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+}

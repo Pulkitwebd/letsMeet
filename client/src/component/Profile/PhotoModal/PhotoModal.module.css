@@ -1,0 +1,38 @@
+.PhotoModal {
+  background-color: white;
+  height: 70vh;
+  width: 40vw;
+  margin: auto;
+  margin-top: 15vh;
+  padding: 20px;
+}
+
+.closeModal {
+  padding: 5px 10px;
+  border: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.userPhoto {
+  height: 300px;
+  width: 200px;
+  margin-top: 20px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.chooseFileDiv{
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.postButton{
+  padding: 5px 20px;
+  background-color: #1fab89;
+  border : none;
+  cursor: pointer;
+}

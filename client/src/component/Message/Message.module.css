@@ -1,0 +1,123 @@
+.leftPart {
+  background-color: red;
+}
+
+.header {
+  display: flex;
+}
+
+.header div {
+  padding: 10px 0 10px 0;
+  width: 50%;
+  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.border {
+  border-bottom: 3px solid black;
+}
+
+.header div svg {
+  height: 25px;
+  width: 25px;
+}
+
+.showChatRoom {
+  background-color: antiquewhite;
+}
+
+.groupChatsBox {
+  height: 80vh;
+}
+
+.groupChat_img_name {
+  height: 70px;
+  /* background-color: royalblue; */
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.groupPic {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  background-color: aliceblue;
+}
+
+.groupName_msg {
+  position: relative;
+  width: 80%;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.groupName {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.timeofLastMsg {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.individual_img_name {
+  height: 70px;
+  background-color: royalblue;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.chatRoomHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0 5px 0;
+}
+
+.chatRoomLogo_name {
+  display: flex;
+  align-items: center;
+}
+
+.chatRoomLogo {
+  border-radius: 50%;
+  height: 55px;
+  width: 55px;
+  margin-left: 20px;
+  background-color: antiquewhite;
+}
+
+.chatRoomName {
+  margin-left: 10px;
+}
+
+.chatRoomVideo_audio_search_box {
+  margin-right: 30px;
+  display: flex;
+  float: right;
+}
+
+.videoCallLogo svg {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.phoneCallLogo svg {
+  cursor: pointer;
+}
+
+.chatRoomVideo_audio_search_box div:first-child {
+  margin-right: 20px;
+  border-right: 2px solid black;
+}
+
+/* .chatMessages {} */
