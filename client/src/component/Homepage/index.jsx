@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 import { useQuery } from "react-query";
 import ReactPaginate from "react-paginate";
 import { FaBorderAll, FaBars } from "react-icons/fa";
-
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./Homepage.module.css";
 import Category from "./FilterSection/Category";

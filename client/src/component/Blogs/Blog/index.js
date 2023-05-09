@@ -10,11 +10,17 @@ import { BiCommentDetail } from "react-icons/bi";
 import { BsBookmark } from "react-icons/bs";
 import { AiOutlineMore } from "react-icons/ai";
 import { FcLike } from "react-icons/fc";
+import SlidingPane from "react-sliding-pane";
+import Comment from "./Comment";
+import "react-sliding-pane/dist/react-sliding-pane.css";
+
 
 const Blog = () => {
   const [cards, setCards] = useState(cardsData);
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(0);
+  const [isPaneOpen, setIsPaneOpen] = useState(false);
+
   const { id } = useParams();
 
   const handleLikeClick = () => {
@@ -22,9 +28,23 @@ const Blog = () => {
     likes == 1 ? setLikes(0) : setLikes(1);
   };
 
+  // const handleComments = () => {
+  //   {comments}
+  // };
+
   console.log(cards[id]);
   return (
     <div className={classes.container}>
+      <SlidingPane
+        isOpen={isPaneOpen}
+        onRequestClose={() => setIsPaneOpen(false)}
+        from="right"
+        width="35%"
+      >
+        {/* Content of your pane goes here */}
+        {/* heloooos */}
+        <Comment/>
+      </SlidingPane>
       <h2 className={classes.cardTitle}>{cards[id - 1].title}</h2>
 
       <div className={classes.blogDetailsCover}>
@@ -68,7 +88,11 @@ const Blog = () => {
           </div>
 
           <div>
-            <p title="Read comments" className={classes.comment}>
+            <p
+              title="Read comments"
+              className={classes.comment}
+              onClick={() => setIsPaneOpen(true)}
+            >
               <BiCommentDetail />
               <span>2</span>
             </p>
@@ -96,7 +120,3 @@ const Blog = () => {
 };
 
 export default Blog;
-
-// FcLike
-// BiCommentDetail
-// AiOutlineShareAlt

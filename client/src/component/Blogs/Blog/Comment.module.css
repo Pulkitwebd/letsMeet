@@ -1,0 +1,48 @@
+.commetSection{
+    width: 30%;
+}
+
+/* .writeComment{
+
+
+}
+
+.writeComment h2{
+
+}
+
+.commentBox{
+
+}
+
+.user{
+
+}
+
+.pfp{
+
+}
+
+.userName{
+
+}
+.commentArea{
+
+}
+.commentHere{
+
+} */
+.subButton{
+    border: none;
+    color: white;
+    text-decoration: none;
+  display: inline-block;
+
+}
+.subButton button{
+    border: none;
+    color: white;
+}
+/* .options{
+    
+} */
