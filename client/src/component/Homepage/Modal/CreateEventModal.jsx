@@ -1,22 +1,88 @@
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import Modal from "react-modal";
-import TextField from "@mui/material/TextField";
-import classes from "./Modal.module.css";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { Formik, Form } from "formik";
 import { useSelector } from "react-redux";
-import Select from "react-select";
-import validation from "./EventFormValidation";
-import CustomTextField from "../../Shared/TextField";
-import indianStates from "./StateNames";
-import cityNames from "./CityNames";
-import category from "./Category";
 import axios from "axios";
 
+import classes from "./Modal.module.css";
+import MutliStepProgessBar from "./multiStepProgessBar/index.js";
+
+import { StepOne, StepTwo, StepThree } from './formsAllSteps/index';
+
 const CreateEventModal = (props) => {
+  // step of mutlistepbar
+  const [currentStep, setCurrentStep] = useState(1);
+
+  const [eventData, setEventData] = useState({
+    organiser_user_id: user ? user.user._id : "",
+    organiserName: user ? userDetails.userFullName : "",
+    landmark: "",
+    houseNo: "",
+    area: "",
+    city: "",
+    state: "",
+    category: "",
+    personNeeded: "",
+    desc: "",
+    eventImage: "",
+  });
+
+  const makeRequest = (eventData) => {
+    let finalData = {
+      organiserName: user ? userDetails.userFullName : "",
+      user_id: user ? user.user._id : "",
+      title: eventData.title,
+      postingDate: formattedTimeStamp,
+      meetDate: value,
+      address: {
+        houseNoflatNo: eventData.houseNo,
+        landmark: eventData.landmark,
+        area: eventData.area,
+        city: eventData.city,
+        state: eventData.state,
+      },
+      personNeeded: eventData.personNeeded,
+      category: eventData.category,
+      desc: eventData.desc,
+      eventImage: eventImageBase64,
+    };
+
+    axios
+      .post("/api/feed/feedPost", finalData)
+      .then((response) => {
+        if (response.status == 201) {
+          setLoading(false);
+          setRandomString(
+            Math.random()
+              .toString(36)
+              .substring(2, 15) + Date.now()
+          );
+          props.toggleModal(response.status, response.data.event, randomString);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log("form submitted", eventData);
+  };
+
+  const handlePrevStep = (newData) => {
+    setCurrentStep((prevStep) => prevStep - 1);
+    setEventData((prev) => ({ ...prev, newData }));
+  };
+
+  const handleNextStep = (newData, final = false) => {
+    setEventData((prev) => ({ ...prev, ...newData }));
+
+    if (final) {
+      console.log("hello");
+      makeRequest(newData);
+      return;
+    }
+
+    setCurrentStep((prevStep) => prevStep + 1);
+  };
+
   const [value, setValue] = useState(dayjs("2023-04-07"));
   const [showModal, setShowModal] = useState(props.showModal);
   const [loading, setLoading] = useState(false);
@@ -74,6 +140,29 @@ const CreateEventModal = (props) => {
     setEventImageUrl(URL.createObjectURL(selectedFile));
   };
 
+  const steps = [
+    <StepOne
+      userDetails={userDetails}
+      next={handleNextStep}
+      eventData={eventData}
+      value={value}
+      setValue={setValue}
+      formattedTimeStamp={formattedTimeStamp}
+    />,
+    <StepTwo
+      prev={handlePrevStep}
+      next={handleNextStep}
+      eventData={eventData}
+    />,
+    <StepThree
+      handleEventImg={handleEventImg}
+      prev={handlePrevStep}
+      next={handleNextStep}
+      eventData={eventData}
+      eventImageUrl={eventImageUrl}
+    />,
+  ];
+
   return (
     <Modal
       isOpen={props.showModal}
@@ -86,7 +175,31 @@ const CreateEventModal = (props) => {
         Close
       </button>
       <h1 className={classes.headingCreateEvent}>Create Event</h1>
-      <Formik
+      <MutliStepProgessBar step={currentStep} />
+
+      <div className={classes.steps}>{steps[currentStep - 1]}</div>
+    </Modal>
+  );
+};
+
+export default CreateEventModal;
+
+const convertToBase64 = async (file) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (err) => {
+      reject(err);
+    };
+  });
+};
+
+
+{
+  /* <Formik
         initialValues={{
           organiser_user_id: user ? user.user._id : "",
           organiserName: user ? userDetails.userFullName : "",
@@ -291,22 +404,5 @@ const CreateEventModal = (props) => {
             )}
           </Form>
         )}
-      </Formik>
-    </Modal>
-  );
-};
-
-export default CreateEventModal;
-
-const convertToBase64 = async (file) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (err) => {
-      reject(err);
-    };
-  });
-};
+      </Formik> */
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import DeleteIcon from "@mui/icons-material/Delete";
+// import DeleteIcon from "@mui/icons-material/Delete";
 import { FiMoreVertical } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -97,7 +97,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
           className={classes.deleteEventButton}
           onClick={handleDeleteEventApi}
         >
-          <DeleteIcon /> Delete
+          {/* <DeleteIcon /> Delete */}
         </div>
       )}
       <div className={classes.placePhoto}>

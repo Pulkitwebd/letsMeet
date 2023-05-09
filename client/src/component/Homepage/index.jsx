@@ -7,7 +7,10 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { useQuery } from "react-query";
 import ReactPaginate from "react-paginate";
-import { FaBorderAll, FaBars } from "react-icons/fa";
+import { FaBorderAll, FaBars, FaAngleRight, FaFilter} from "react-icons/fa";
+import SlidingPane from "react-sliding-pane";
+
+import "react-sliding-pane/dist/react-sliding-pane.css";
 import "react-toastify/dist/ReactToastify.css";
 import classes from "./Homepage.module.css";
 import Category from "./FilterSection/Category";
@@ -27,6 +30,7 @@ const Homepage = () => {
   const [queryKey, setQueryKey] = useState(0);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageCount, setPageCount] = useState(10);
+  const [isPaneOpen, setIsPaneOpen] = useState(false);
 
   const { isLoading, data, isError, error } = useQuery(
     [queryKey, pageNumber],
@@ -94,77 +98,86 @@ const Homepage = () => {
 
   return (
     <>
-      <Grid container>
-        <CreateEventModal showModal={showModal} toggleModal={toggleModal} />
-        {showToast && <ToastContainer />}
-        <Grid item md={3} lg={3} className={classes.filterGird}>
-          <div className={classes.filterSection}>
-            <Category />
-            <Divider />
-            <DateOfEvent />
-            <Divider />
-            <City />
-            <Divider />
-            <Localities />
-            <Divider />
-            <EventFromLocation />
-          </div>
-        </Grid>
+      <CreateEventModal showModal={showModal} toggleModal={toggleModal} />
+      {showToast && <ToastContainer />}
 
-        <Grid item xs={12} md={9} lg={9}>
-          <div className={classes.eventSections}>
-            <div className={classes.createEventDiv}>
-              <div className={classes.logoOfverticalHoriCards}>
-                <FaBorderAll />
-                <FaBars />
-              </div>
-              <button className={classes.createEventBtn} onClick={toggleModal}>
-                Create Event
-              </button>
+      <SlidingPane
+        isOpen={isPaneOpen}
+        className="some-custom-class"
+        onRequestClose={() => setIsPaneOpen(false)}
+        closeIcon={<FaAngleRight style={{ height: "30px", width: "30px" }} />}
+        from="right"
+        width="30%"
+      >
+        <div className={classes.filterSection}>
+          <Category />
+          <Divider />
+          <DateOfEvent />
+          <Divider />
+          <City />
+          <Divider />
+          <Localities />
+          <Divider />
+          <EventFromLocation />
+        </div>
+      </SlidingPane>
+
+      <div className={classes.eventSections}>
+        <div className={classes.createEventDiv}>
+          <div className={classes.logoOfverticalHoriCards}>
+            <FaBorderAll />
+            <FaBars />
+            <FaFilter onClick={() => setIsPaneOpen(true)} />
+          </div>
+          <button className={classes.createEventBtn} onClick={toggleModal}>
+            Create Event
+          </button>
+        </div>
+
+        <Grid
+          container
+          className={classes.cardGrid}
+          columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 8 }}
+        >
+          {isLoading && (
+            <div className={classes.loadingBox}>
+              <img src={loading} alt="loading gif"></img>
             </div>
-
-            <Grid container className={classes.cardGrid}>
-              {isLoading && (
-                <div className={classes.loadingBox}>
-                  <img src={loading} alt="loading gif"></img>
-                </div>
-              )}
-              {data
-                ? data.data.data.data.map((event, id) => {
-                    return (
-                      <Grid item xs={12} md={4} key={id}>
-                        <Card
-                          event={event}
-                          callApiOnDeleteCard={callApiOnDeleteCard}
-                          index={id}
-                        />
-                      </Grid>
-                    );
-                  })
-                : ""}
-              {isError && <div>{error.message}</div>}
-            </Grid>
-            {data && (
-              <div className={classes.paginationBox}>
-                <ReactPaginate
-                  previousLabel={"Previous"}
-                  nextLabel={"Next"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
-                  pageCount={pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={handlePageClick}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                  className={classes.pagination}
-                />
-              </div>
-            )}
-          </div>
+          )}
+          {data
+            ? data.data.data.data.map((event, id) => {
+                return (
+                  <Grid item xs={12} md={4} key={id}>
+                    <Card
+                      event={event}
+                      callApiOnDeleteCard={callApiOnDeleteCard}
+                      index={id}
+                    />
+                  </Grid>
+                );
+              })
+            : ""}
+          {isError && <div>{error.message}</div>}
         </Grid>
-      </Grid>
+        {data && (
+          <div className={classes.paginationBox}>
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+              className={classes.pagination}
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 };

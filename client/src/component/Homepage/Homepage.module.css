@@ -85,14 +85,13 @@
 }
 
 .eventSections {
-  /* background-color: #1fab89; */
-  margin-top: 5px;
   border-radius: 4px;
   margin-left: 4px;
   margin-right: 4px;
 }
 
 .createEventDiv {
+  padding: 5px 20px 0 17px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -108,7 +107,6 @@
   height: 30px;
   width: 30px;
   cursor: pointer;
-  border-bottom: 3px solid black;
 }
 
 .createEventBtn {
@@ -126,10 +124,15 @@
   border: none;
 }
 
+.cardGrid {
+  padding: 0 20px 0 20px;
+}
+
 .paginationBox {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 20px 0 20px 0;
 }
 
 .pagination {

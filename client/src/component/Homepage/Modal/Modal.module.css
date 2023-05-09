@@ -18,6 +18,68 @@
   border-radius: 4px;
   cursor: pointer;
   z-index: 1;
+  border: none;
+  letter-spacing: 0.8px;
+}
+
+.modalCloseBtn:hover{
+  background-color: #1fab89;
+  color : white;
+  border: none;
+  letter-spacing: 0.8px;
+}
+
+.steps{
+  margin-top: 20px;
+}
+
+.nextButtonCover{
+  display: flex;
+  justify-content:end;
+  align-items: center;
+}
+
+.prevNextButtonsCover{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.prevButton{
+  border-radius: 4px;
+  padding: 7px 20px;
+  border: none;
+  letter-spacing: 0.8px;
+  border: none
+}
+
+.nextButton {
+  border-radius: 4px;
+  padding: 7px 20px;
+  border: none;
+  letter-spacing: 0.8px;
+  border: none;
+}
+
+.prevButton:hover{
+  border-radius: 4px;
+  border: none;
+  letter-spacing: 0.8px;
+  border: none;
+  background-color: #1fab89;
+  color : white;
+  cursor: pointer;
+}
+
+.nextButton:hover {
+  border-radius: 4px;
+  border: none;
+  letter-spacing: 0.8px;
+  border: none;
+  background-color: #1fab89;
+  color : white;
+  cursor: pointer;
 }
 
 .headingCreateEvent {

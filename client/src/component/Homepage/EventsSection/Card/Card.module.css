@@ -1,10 +1,8 @@
 .card {
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 10px;
   background-color: rgba(238, 237, 237, 0.388);
   border-radius: 4px;
   position: relative;
+  margin : 10px 5px 20px 5px
 }
 
 .placePhoto {
@@ -24,14 +22,14 @@
   border-radius: 50%;
   margin: -40px auto 0 auto;
   border: 3px solid white;
-  height: 80px;
-  width: 80px;
+  height: 90px;
+  width: 90px;
   overflow: hidden;
 }
 
 .organiserPhoto img {
-  height: 80px;
-  width: 80px;
+  height: 90px;
+  width: 90px;
 }
 
 .EventInfo {
@@ -41,6 +39,8 @@
 .OrganiserName {
   margin-top: 5px;
   text-align: center;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
 }
 
 .EventDesc {
@@ -53,8 +53,14 @@
   padding: 5px 10px;
   background-color: none;
   cursor: pointer;
-  border-radius: 4px;
-  border-color: 1px;
+  border-radius: 25px;
+  width: 140px;
+  height: 50px;
+  background: #1fab89;
+  color: #fff;
+  outline: none;
+  border: none;
+  margin-top: 15px;
 }
 
 .title {
