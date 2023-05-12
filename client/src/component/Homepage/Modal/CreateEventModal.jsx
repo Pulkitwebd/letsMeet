@@ -7,13 +7,13 @@ import axios from "axios";
 import classes from "./Modal.module.css";
 import MutliStepProgessBar from "./multiStepProgessBar/index.js";
 
-import { StepOne, StepTwo, StepThree } from './formsAllSteps/index';
+import { StepOne, StepTwo, StepThree } from "./formsAllSteps/index";
 
 const CreateEventModal = (props) => {
   // step of mutlistepbar
   const [currentStep, setCurrentStep] = useState(1);
 
-  const [eventData, setEventData] = useState({
+  const emptyEventData = {
     organiser_user_id: user ? user.user._id : "",
     organiserName: user ? userDetails.userFullName : "",
     landmark: "",
@@ -25,7 +25,9 @@ const CreateEventModal = (props) => {
     personNeeded: "",
     desc: "",
     eventImage: "",
-  });
+  };
+
+  const [eventData, setEventData] = useState(emptyEventData);
 
   const makeRequest = (eventData) => {
     let finalData = {
@@ -50,20 +52,22 @@ const CreateEventModal = (props) => {
     axios
       .post("/api/feed/feedPost", finalData)
       .then((response) => {
-        if (response.status == 201) {
-          setLoading(false);
+        setLoading(false);
+
+        if (response.status === 201) {
           setRandomString(
             Math.random()
               .toString(36)
               .substring(2, 15) + Date.now()
           );
-          props.toggleModal(response.status, response.data.event, randomString);
+          props.toggleModal(response.status, response.data.message);
         }
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response.status === 429) {
+          props.toggleModal(error.response.status, error.response.data.message);
+        }
       });
-    console.log("form submitted", eventData);
   };
 
   const handlePrevStep = (newData) => {
@@ -75,7 +79,6 @@ const CreateEventModal = (props) => {
     setEventData((prev) => ({ ...prev, ...newData }));
 
     if (final) {
-      console.log("hello");
       makeRequest(newData);
       return;
     }
@@ -106,6 +109,9 @@ const CreateEventModal = (props) => {
 
   useEffect(() => {
     setShowModal(props.showModal);
+    // when modal open formstep will be 1 and eventData key --- values will be empty
+    setEventData(emptyEventData);
+    setCurrentStep(1);
     //getting user detail from redux and store in userDetails for full name and email of user
     if (user) {
       setUserDetails({
@@ -196,213 +202,3 @@ const convertToBase64 = async (file) => {
     };
   });
 };
-
-
-{
-  /* <Formik
-        initialValues={{
-          organiser_user_id: user ? user.user._id : "",
-          organiserName: user ? userDetails.userFullName : "",
-          landmark: "",
-          houseNo: "",
-          area: "",
-          city: "",
-          state: "",
-          category: "",
-          personNeeded: "",
-          desc: "",
-          eventImage: "",
-        }}
-        validationSchema={validation}
-        onSubmit={(values) => {
-          let createEvent = {
-            organiserName: values.organiserName,
-            user_id: values.organiser_user_id,
-            title: values.title,
-            postingDate: formattedTimeStamp,
-            meetDate: value.$d,
-            address: {
-              houseNoflatNo: values.houseNo,
-              landmark: values.landmark,
-              area: values.area,
-              city: values.city,
-              state: values.state,
-            },
-            personNeeded: values.personNeeded,
-            category: values.category,
-            desc: values.desc,
-            eventImage: eventImageBase64,
-          };
-
-          setLoading(true);
-          axios
-            .post("/api/feed/feedPost", createEvent)
-            .then((response) => {
-              if (response.status == 201) {
-                setLoading(false);
-                setRandomString(
-                  Math.random()
-                    .toString(36)
-                    .substring(2, 15) + Date.now()
-                );
-                props.toggleModal(
-                  response.status,
-                  response.data.event,
-                  randomString
-                );
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }}
-      >
-        {(formik) => (
-          <Form onSubmit={formik.handleSubmit}>
-            <label>Schedule Event Date and time : </label>
-            <div style={{ marginTop: "5px" }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                  renderInput={(props) => <TextField {...props} />}
-                  label=""
-                  value={value}
-                  onChange={(newValue) => {
-                    setValue(newValue);
-                  }}
-                  name="Time"
-                />
-              </LocalizationProvider>
-            </div>
-
-            <CustomTextField
-              type="text"
-              name="fullName"
-              label="Full Name : "
-              placeholder={`${userDetails.userFullName}`}
-              isDisabled={true}
-              style={{ marginTop: "10px" }}
-            />
-
-            <CustomTextField
-              type="email"
-              name="email"
-              label="Email : "
-              placeholder={`${userDetails.userEmail}`}
-              isDisabled={true}
-            />
-
-            <CustomTextField
-              type="text"
-              name="title"
-              label="Title : "
-              placeholder=""
-            />
-
-            <div className={classes.categorySelect}>
-              <label>Category : </label>
-              <Select
-                name="category"
-                options={category}
-                classNamePrefix="select"
-                onChange={(category) =>
-                  formik.setFieldValue("category", category.value)
-                }
-              />
-              {formik.touched.category && formik.errors.category ? (
-                <div style={{ color: "red" }}>{formik.errors.category}</div>
-              ) : null}
-            </div>
-
-            <div>
-              <input
-                type="file"
-                name="eventImage"
-                placeholder="Choose Event Image"
-                onChange={handleEventImg}
-                accept=".jpeg, .png, .jpg"
-              />
-              <div>
-                {eventImageUrl && (
-                  <img
-                    src={eventImageUrl}
-                    className={classes.eventImg}
-                    alt="Selected"
-                  />
-                )}
-              </div>
-            </div>
-
-            <CustomTextField
-              type="number"
-              name="personNeeded"
-              label="Person Needed : "
-              placeholder=""
-            />
-
-            <CustomTextField
-              type="text"
-              name="houseNo"
-              label="Flat, House no, Building, Company, Apartment : "
-              placeholder=""
-            />
-
-            <CustomTextField
-              type="text"
-              name="area"
-              label="Area, Street, Sector, Village : "
-              placeholder=""
-            />
-
-            <CustomTextField
-              type="text"
-              name="landmark"
-              label="Land Mark : "
-              placeholder=""
-            />
-
-            <CustomTextField
-              type="textarea"
-              cols="5"
-              rows="5"
-              name="desc"
-              label="Description : "
-              placeholder=""
-            />
-
-            <div className={classes.categorySelect}>
-              <label>City : </label>
-              <Select
-                name="city"
-                options={cityNames}
-                classNamePrefix="select"
-                onChange={(city) => formik.setFieldValue("city", city.value)}
-              />
-              {formik.touched.city && formik.errors.city ? (
-                <div style={{ color: "red" }}>{formik.errors.city}</div>
-              ) : null}
-            </div>
-
-            <div className={classes.categorySelect}>
-              <label>State : </label>
-              <Select
-                name="state"
-                options={indianStates}
-                onChange={(state) => formik.setFieldValue("state", state.value)}
-                classNamePrefix="select"
-              />
-              {formik.touched.state && formik.errors.state ? (
-                <div style={{ color: "red" }}>{formik.errors.state}</div>
-              ) : null}
-            </div>
-
-            {!loading ? (
-              <button type="submit" className={classes.submitBtn}>
-                Submit
-              </button>
-            ) : (
-              <button className={classes.submitBtn}>loading</button>
-            )}
-          </Form>
-        )}
-      </Formik> */
-}

@@ -1,4 +1,4 @@
-const Feed = require("../../Schemas/feedSchema.js");
+const Feed = require("../../Schemas/feed.js");
 // const User = require("../../Schemas/userSchema.js");
 
 const Event = async (req, res) => {

@@ -30,7 +30,7 @@ const update = async (userData) => {
   let user;
   const response = await axios.put(UPDATE_URL, userData);
 
-  if (response.status == 201) {
+  if (response.status === 201) {
     try {
       const userJson = localStorage.getItem("user");
       const user = JSON.parse(userJson);

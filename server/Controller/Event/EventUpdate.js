@@ -1,5 +1,5 @@
-const Feed = require("../../Schemas/feedSchema.js");
-const User = require("../../Schemas/userSchema.js");
+const Feed = require("../../Schemas/feed.js");
+const User = require("../../Schemas/user.js");
 
 const feedPost = async (req, res) => {
   try {

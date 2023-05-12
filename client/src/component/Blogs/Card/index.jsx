@@ -5,14 +5,28 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import classes from "./Card.module.css";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 const BlogCard = (props) => {
   const { blogId, title } = useParams();
-  console.log(blogId);
+  const navigate = useNavigate();
+
+  // to pass props.title to path here converting to owercase replcae spacebetween with -
+  const pathTitle = props.title
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .trim();
+
+  function handleCardClick(pathTitle) {
+    navigate(`/blog/${pathTitle}`, { state: {blogId : props.id} });
+  }
 
   return (
-    <Link to={`/blogs/${props.id}`} style={{ textDecoration: "none" }}>
+    <div
+      onClick={() => handleCardClick(pathTitle)}
+      style={{ textDecoration: "none" }}
+    >
       <Card className={classes.card} blogId={blogId} sx={{ maxWidth: 345 }}>
         <div className={classes.imageBox}>
           <img src={props.imageUrl} alt="" />
@@ -20,14 +34,14 @@ const BlogCard = (props) => {
         </div>
 
         <CardContent>
-            <Typography
-              className={classes.title}
-              gutterBottom
-              variant="h5"
-              component="div"
-            >
-              {props.title}
-            </Typography>
+          <Typography
+            className={classes.title}
+            gutterBottom
+            variant="h5"
+            component="div"
+          >
+            {props.title}
+          </Typography>
           <Typography
             className={classes.description}
             variant="body2"
@@ -46,7 +60,8 @@ const BlogCard = (props) => {
         </CardActions>
         {/* <Button size="small">{category}</Button> */}
       </Card>
-    </Link>
+    </div>
   );
 };
+
 export default BlogCard;

@@ -6,7 +6,7 @@ const feedSchema = mongoose.Schema({
   },
 
   postingDate: {
-    type: String,
+    type: Date,
   },
 
   address: {},

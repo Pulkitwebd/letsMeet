@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { useQuery } from "react-query";
 import ReactPaginate from "react-paginate";
-import { FaBorderAll, FaBars, FaAngleRight, FaFilter} from "react-icons/fa";
+import { FaBorderAll, FaBars, FaAngleRight, FaFilter } from "react-icons/fa";
 import SlidingPane from "react-sliding-pane";
 
 import "react-sliding-pane/dist/react-sliding-pane.css";
@@ -62,16 +62,26 @@ const Homepage = () => {
     user === null || userlocalStorage === null ? null : userlocalStorage.token
   );
 
-  const toggleModal = (createdEventStatus, createdEventData, randomString) => {
+  const toggleModal = (createdEventStatus, msg) => {
     if (user !== null) {
       reEvaluateToken(userlocalStorage.token);
       if (!isExpired) {
         setShowModal(!showModal);
-        if (createdEventStatus == 201) {
+        if (createdEventStatus === 201) {
           // createEventStatus is coming from modal page on successfully event creation
           setQueryKey((prevKey) => prevKey + 1); // changing key reload query and fetch new data
           setShowToast(true);
-          toast.success("Event is created! Successfully", {
+          toast.success(msg, {
+            closeOnClick: true,
+            draggable: true,
+            pauseOnHover: false,
+            autoClose: 2000,
+          });
+        }
+        if (createdEventStatus === 429) {
+          // createEventStatus is coming from modal page on unsuccessfully event
+          setShowToast(true);
+          toast.error(msg, {
             closeOnClick: true,
             draggable: true,
             pauseOnHover: false,

@@ -8,7 +8,7 @@ const validator = require("express-joi-validation").createValidator({});
 
 const feedSchema = Joi.object({
   user_id: Joi.string().required(),
-  postingDate: Joi.string().required(),
+  postingDate: Joi.date().required(),
   meetDate: Joi.string().required(),
   address: Joi.object({
     landmark: Joi.string().required(),

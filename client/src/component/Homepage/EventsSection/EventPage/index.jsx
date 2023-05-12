@@ -32,8 +32,6 @@ const EventPage = () => {
     setEventId(eventId);
   }, []);
 
-  console.log(data && data.data);
-
   let date = data ? data.data.meetDate : "";
 
   let startIndex = date.indexOf("T") + 1;
