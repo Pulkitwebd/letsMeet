@@ -4,9 +4,31 @@
   align-items: center;
 }
 
+.titleApplyEventbtnCover{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.titleApplyEventbtnCover button {
+  padding: 7px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.8px;
+  border: none
+  
+}
+
+.titleApplyEventbtnCover button:hover{
+  background-color: #1fab89;
+  color : white;
+  cursor: pointer
+}
+
 .eventHeading {
   padding: 20px 0 20px 100px;
 }
+
 
 .organiserPhoto {
   border-radius: 50%;

@@ -35,6 +35,10 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "",
   },
+
+  appliedEvents: {
+    type: [String], // Array of string values representing event IDs
+  },
 });
 
 const User = mongoose.model("user", userSchema);

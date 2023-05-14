@@ -16,7 +16,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    if (user !== null && user.user._id == event.user_id) {
+    if (user !== null && user.user._id === event.user_id) {
       setShowThreeDots(true);
     } else {
       setShowThreeDots(false);
@@ -102,7 +102,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
       )}
       <div className={classes.placePhoto}>
         {imageSrc ? (
-          <img src={imageSrc} alt="Event Image" />
+          <img src={imageSrc} alt="Event" />
         ) : (
           <div>Loading image...</div>
         )}

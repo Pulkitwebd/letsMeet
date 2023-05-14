@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const BlogCard = (props) => {
-  const { blogId, title } = useParams();
+  const { blogId } = useParams();
   const navigate = useNavigate();
 
   // to pass props.title to path here converting to owercase replcae spacebetween with -

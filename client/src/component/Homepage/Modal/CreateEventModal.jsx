@@ -13,6 +13,10 @@ const CreateEventModal = (props) => {
   // step of mutlistepbar
   const [currentStep, setCurrentStep] = useState(1);
 
+  //getting data of user from redux
+  const { user } = useSelector((state) => state.auth);
+  const [userDetails, setUserDetails] = useState({});
+
   const emptyEventData = {
     organiser_user_id: user ? user.user._id : "",
     organiserName: user ? userDetails.userFullName : "",
@@ -29,7 +33,7 @@ const CreateEventModal = (props) => {
 
   const [eventData, setEventData] = useState(emptyEventData);
 
-  const makeRequest = (eventData) => {
+  const makeRequest = async (eventData) => {
     let finalData = {
       organiserName: user ? userDetails.userFullName : "",
       user_id: user ? user.user._id : "",
@@ -49,25 +53,22 @@ const CreateEventModal = (props) => {
       eventImage: eventImageBase64,
     };
 
-    axios
-      .post("/api/feed/feedPost", finalData)
-      .then((response) => {
-        setLoading(false);
+    try {
+      const response = await axios.post("/api/feed/feedPost", finalData);
 
-        if (response.status === 201) {
-          setRandomString(
-            Math.random()
-              .toString(36)
-              .substring(2, 15) + Date.now()
-          );
-          props.toggleModal(response.status, response.data.message);
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 429) {
-          props.toggleModal(error.response.status, error.response.data.message);
-        }
-      });
+      if (response.status === 201) {
+        setRandomString(
+          Math.random()
+            .toString(36)
+            .substring(2, 15) + Date.now()
+        );
+        props.toggleModal(response.status, response.data.message);
+      }
+    } catch (error) {
+      if (error.response.status === 429) {
+        props.toggleModal(error.response.status, error.response.data.message);
+      }
+    }
   };
 
   const handlePrevStep = (newData) => {
@@ -101,11 +102,6 @@ const CreateEventModal = (props) => {
 
   // eventImageUrl is used here to show event image in modal
   const [eventImageUrl, setEventImageUrl] = useState(null);
-
-  const [userDetails, setUserDetails] = useState({});
-
-  //getting data of user from redux
-  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     setShowModal(props.showModal);

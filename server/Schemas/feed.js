@@ -35,6 +35,10 @@ const feedSchema = mongoose.Schema({
     type: String,
   },
 
+  applicants: {
+    type: [String], // Array of string values representing user IDs
+  },
+
   eventImage: String,
 });
 

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { GoThumbsup, GoThumbsdown, GoClock } from "react-icons/go";
-import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import { AiFillEdit } from "react-icons/ai";
+import { useSelector } from "react-redux";
 import classes from "./Profile.module.css";
 import HorizontalCards from "../Shared/HorizontalCards/index";
 import PhotoModal from "./PhotoModal/index";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
 
@@ -18,7 +18,7 @@ const Profile = () => {
   const toggleModal = () => {
     setPhotoModalStatus(!photoModalStatus);
   };
-  
+
   // setShowToast(true);
   // toast.success("Photo is updated successfully!", {
   //   closeOnClick: true,
@@ -26,7 +26,6 @@ const Profile = () => {
   //   pauseOnHover: false,
   //   autoClose: 2000,
   // });
-
 
   const openModal = () => {
     return setPhotoModalStatus(true);

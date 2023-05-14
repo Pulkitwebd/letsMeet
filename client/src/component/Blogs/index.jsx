@@ -79,7 +79,7 @@ const CardList = () => {
       scrollThreshold="0px"
       endMessage={endMessage}
     >
-      {user && user.user.email == "pulkitgupta714@gmail.com" ? (
+      {user && user.user.email === "pulkitgupta714@gmail.com" ? (
         <div className={classes.createBlogDiv}>
           <Link to={"/dashboard"}>
             <button>Create Blog</button>

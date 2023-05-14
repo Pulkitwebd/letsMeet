@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useQuery } from "react-query";
-import { Grid } from "@mui/material";
-import loading from "../../../Assets/loading.gif";
-import classes from "./Event.module.css";
-import Attendies from "../../../Assets/userPhoto.jpg";
+import { ToastContainer, toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { IoMdPin } from "react-icons/io";
 import { FaClock } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
+import { Grid } from "@mui/material";
+import axios from "axios";
+
+import loading from "../../../Assets/loading.gif";
+import classes from "./Event.module.css";
+import profile from "../../../Assets/profile.jpg";
 
 const getEvent = (eventId) => {
   return axios.get(`/api/feed/Event/${eventId}`);
@@ -15,16 +18,22 @@ const getEvent = (eventId) => {
 
 const EventPage = () => {
   const [eventId, setEventId] = useState();
-  const [queryKey, setQueryKey] = useState("get-event");
+  // const [queryKey, setQueryKey] = useState("get-event");
+  const [usersOfevent, setUsersOfevent] = useState([]);
+
+  //getting current logged in user details
+  const { user } = useSelector((state) => state.auth);
+
+  const [showToast, setShowToast] = useState(false);
 
   const { isLoading, data, isError, error } = useQuery(
-    [queryKey, eventId],
-    () => getEvent(eventId)
+    ["get-event", eventId],
+    () => (eventId ? getEvent(eventId) : null)
   );
 
-  //getiing usrePhto from card index.jsx by passing in navigate
+  //getting usrePhto from card index.jsx by passing in navigate
   const location = useLocation();
-  const userPhoto = location.state.userPhoto;
+  const userPhoto = location.state.userPhoto || profile;
 
   useEffect(() => {
     const pathName = window.location.pathname;
@@ -45,8 +54,88 @@ const EventPage = () => {
   let options = { weekday: "short", month: "short", day: "2-digit" };
   let requiredDateFormat = date1.toLocaleDateString("en-US", options);
 
+  const fetchData = async () => {
+    const userfetchedInitially = [];
+    for (const applicant of data.data.applicants) {
+      try {
+        const response = await axios.get(`/api/auth/getUserById/${applicant}`);
+        // console.log("response.data.user" , response.data.user)
+        userfetchedInitially.push(response.data.user);
+        console.log(usersOfevent);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    setUsersOfevent(userfetchedInitially);
+  };
+
+  useEffect(() => {
+    if (data && data.data.applicants.length > 0) {
+      fetchData();
+    }
+  }, [data]);
+
+  const handleApplyEvent = async () => {
+    const applyEventData = {
+      userId: user ? user.user._id : "",
+      feedId: data ? data.data._id : "",
+    };
+
+    // sending post request for adding user to database in feed
+    try {
+      const response = await axios.post(
+        "/api/feed/applyToEvent",
+        applyEventData
+      );
+
+      if (response.status === 200) {
+        setShowToast(true);
+        toast.success(response.data.message, {
+          closeOnClick: true,
+          draggable: true,
+          pauseOnHover: false,
+          autoClose: 2000,
+        });
+        try {
+          const response = await axios.get(
+            `/api/auth/getUserById/${user ? user.user._id : ""}`
+          );
+          //adding new applied after click apply to event user to existing applied user
+          setUsersOfevent((prevUsers) => [...prevUsers, response.data.user]);
+          console.log(usersOfevent);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    } catch (error) {
+      if (error.response.status === 500) {
+        setShowToast(true);
+        toast.error("Login to Apply", {
+          closeOnClick: true,
+          draggable: true,
+          pauseOnHover: false,
+          autoClose: 2000,
+        });
+      }
+
+      if (error.response.status === 400) {
+        setShowToast(true);
+        toast.error(error.response.data.error, {
+          closeOnClick: true,
+          draggable: true,
+          pauseOnHover: false,
+          autoClose: 2000,
+        });
+      }
+    }
+  };
+
+  console.log("usersOfevent", usersOfevent);
+
   return (
     <>
+      {showToast && <ToastContainer />}
       {isLoading && (
         <div className={classes.loadingBox}>
           <img src={loading} alt="loading gif" />
@@ -56,7 +145,14 @@ const EventPage = () => {
       {data && (
         <div>
           <div className={classes.eventHeading}>
-            <h1>Title - {data.data.title}</h1>
+            <div className={classes.titleApplyEventbtnCover}>
+              <h1>
+                TITLE -
+                {data.data.title.charAt(0).toUpperCase() +
+                  data.data.title.slice(1)}
+              </h1>
+              <button onClick={handleApplyEvent}>Apply to Event</button>
+            </div>
             <div className={classes.organiserDetails}>
               <div className={classes.organiserPhoto}>
                 <img src={userPhoto} alt="user" />
@@ -67,7 +163,9 @@ const EventPage = () => {
               </div>
             </div>
           </div>
+
           <div className={classes.boxBtwHeading_Details}></div>
+
           <div className={classes.eventDetails}>
             <div className={classes.eventAddressTimeBox}>
               <div className={classes.eventDateTime}>
@@ -75,7 +173,7 @@ const EventPage = () => {
                   <FaClock />
                 </div>
                 <div>
-                  {requiredTimeFormat} {requiredDateFormat}
+                  {requiredDateFormat} {requiredTimeFormat}
                 </div>
               </div>
               <div className={classes.eventAddress}>
@@ -129,41 +227,24 @@ const EventPage = () => {
             </div>
 
             <div className={classes.attendiesBox}>
-              <h2>Attendies 4</h2>
+              <h2>Attendies {data.data.applicants.length}</h2>
 
               <Grid container spacing={3}>
-                <Grid item md={4} xs={8}>
-                  <div className={classes.attendiesCard}>
-                    <div className={classes.attendiesImgBox}>
-                      <img src={Attendies} alt="member" />
-                    </div>
-                    <p>Name</p>
-                  </div>
-                </Grid>
-                <Grid item md={4} xs={4}>
-                  <div className={classes.attendiesCard}>
-                    <div className={classes.attendiesImgBox}>
-                      <img src={Attendies} alt="member" />
-                    </div>
-                    <p>Name</p>
-                  </div>
-                </Grid>
-                <Grid item md={4} xs={4}>
-                  <div className={classes.attendiesCard}>
-                    <div className={classes.attendiesImgBox}>
-                      <img src={Attendies} alt="member" />
-                    </div>
-                    <p>Name</p>
-                  </div>
-                </Grid>
-                <Grid item md={4} xs={8}>
-                  <div className={classes.attendiesCard}>
-                    <div className={classes.attendiesImgBox}>
-                      <img src={Attendies} alt="member" />
-                    </div>
-                    <p>Name</p>
-                  </div>
-                </Grid>
+                {usersOfevent.map((user, index) => {
+                  return (
+                    <Grid item md={4} xs={8} key={index}>
+                      <div className={classes.attendiesCard}>
+                        <div className={classes.attendiesImgBox}>
+                          <img
+                            src={user.photo ? user.photo : profile}
+                            alt="member"
+                          />
+                        </div>
+                        <p>{`${user.firstname} ${user.lastname}`}</p>
+                      </div>
+                    </Grid>
+                  );
+                })}
               </Grid>
             </div>
           </div>

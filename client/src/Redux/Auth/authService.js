@@ -25,7 +25,7 @@ const login = async (userData) => {
   return response.data;
 };
 
-//update user
+//Update user
 const update = async (userData) => {
   let user;
   const response = await axios.put(UPDATE_URL, userData);
@@ -34,7 +34,6 @@ const update = async (userData) => {
     try {
       const userJson = localStorage.getItem("user");
       const user = JSON.parse(userJson);
-
 
       const updatedUserData = response.data.updatedUser;
       user.user.photo = updatedUserData.photo;
@@ -51,7 +50,7 @@ const update = async (userData) => {
   return user;
 };
 
-//logout
+//Logout
 const logout = () => {
   localStorage.removeItem("user");
 };

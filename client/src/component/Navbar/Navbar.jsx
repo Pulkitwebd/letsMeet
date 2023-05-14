@@ -64,8 +64,8 @@ const Navbar = () => {
             >
               <div className={classes.profile}>
                 <img
-                  src={user.user ? user.user.photo : profile}
-                  alt="profile"
+                  src={user.photo ? user.photo : profile}
+                  alt="user"
                 />
               </div>
             </NavLink>
