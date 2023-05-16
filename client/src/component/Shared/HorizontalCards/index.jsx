@@ -1,25 +1,20 @@
 import React from "react";
 import classes from "./HorizontalCards.module.css";
-import dummyEventImg from "../../Assets/dummyEventImg.jpg";
 
-const HorizontalCards = () => {
+const HorizontalCards = ({ event, callApiOnDeleteCard, index }) => {
   return (
     <div className={classes.horizontalCardsMainBox}>
-    
       <div className={classes.cardsImgBox}>
-        <img src={dummyEventImg} alt="event"></img>
+        <img src={event.eventImage} alt="event"></img>
       </div>
 
       <div className={classes.cardsDetailsBox}>
-        <div className={classes.dateOfEvent}>Fri, May 12 22:53:00</div>
-        <h2 className={classes.title}>Indore Cricket club</h2>
-        <div className={classes.description}>
-          Join us for an exciting day of cricket action! Our local cricket club
-          is hosting a match between two of the best teams in the league, and
-          you won't want to miss out. From the moment you arrive, you'll be
-          immersed in the atmosphere of this great sport, surrounded by
-          passionate fans and players.
+        <div className={classes.dateOfEvent}>
+          <h3>Event Date: {event.meetDate.slice(0, 10)}</h3>
+          <h3>Time : {event.meetDate.slice(11, 19)}</h3>
         </div>
+        <h2 className={classes.title}>{event.title}</h2>
+        <div className={classes.description}>{event.desc}</div>
 
         <div className={classes.colourTagDiv}>
           <div className={classes.eventMode}>
@@ -29,7 +24,7 @@ const HorizontalCards = () => {
 
           <div className={classes.eventMode}>
             <h4>Person Needed</h4>
-            <div className={classes.personNeeded}>7</div>
+            <div className={classes.personNeeded}>{event.personNeeded}</div>
           </div>
 
           <div className={classes.eventMode}>
@@ -37,7 +32,6 @@ const HorizontalCards = () => {
             <div className={classes.eventCompletePendingButton}>Completed</div>
           </div>
         </div>
-
       </div>
     </div>
   );

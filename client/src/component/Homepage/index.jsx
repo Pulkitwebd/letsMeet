@@ -21,6 +21,7 @@ import Localities from "./FilterSection/Localities";
 import CreateEventModal from "./Modal/CreateEventModal";
 import Card from "./EventsSection/Card/index";
 import loading from "../Assets/loading.gif";
+import HorizontalCards from "../Shared/HorizontalCards/index";
 
 const getAllEvents = (pageNumber) => {
   return axios.get(`/api/feed/allEvents?pageNumber=${pageNumber}`);
@@ -31,6 +32,7 @@ const Homepage = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const [pageCount, setPageCount] = useState(10);
   const [isPaneOpen, setIsPaneOpen] = useState(false);
+  const [gridView, setGridView] = useState(true);
 
   const { isLoading, data, isError, error } = useQuery(
     [queryKey, pageNumber],
@@ -106,6 +108,13 @@ const Homepage = () => {
     setQueryKey(Math.random());
   };
 
+  const handleSetListView = () => {
+    setGridView(false);
+  };
+  const handleSetGridView = () => {
+    setGridView(true);
+  };
+
   return (
     <>
       <CreateEventModal showModal={showModal} toggleModal={toggleModal} />
@@ -117,8 +126,7 @@ const Homepage = () => {
         onRequestClose={() => setIsPaneOpen(false)}
         closeIcon={<FaAngleRight style={{ height: "30px", width: "30px" }} />}
         from="right"
-        width="30%"
-      >
+        width="30%">
         <div className={classes.filterSection}>
           <Category />
           <Divider />
@@ -135,9 +143,21 @@ const Homepage = () => {
       <div className={classes.eventSections}>
         <div className={classes.createEventDiv}>
           <div className={classes.logoOfverticalHoriCards}>
-            <FaBorderAll />
-            <FaBars />
-            <FaFilter onClick={() => setIsPaneOpen(true)} />
+            <button
+              type="button"
+              className={`${gridView ? classes.activeButton : ""}`}
+              onClick={() => handleSetGridView()}>
+              <FaBorderAll />
+            </button>
+            <button
+              type="button"
+              className={`${!gridView ? classes.activeButton : ""}`}
+              onClick={() => handleSetListView()}>
+              <FaBars />
+            </button>
+            <button onClick={() => setIsPaneOpen(true)}>
+              <FaFilter />
+            </button>
           </div>
           <button className={classes.createEventBtn} onClick={toggleModal}>
             Create Event
@@ -147,8 +167,7 @@ const Homepage = () => {
         <Grid
           container
           className={classes.cardGrid}
-          columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 8 }}
-        >
+          columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 8 }}>
           {isLoading && (
             <div className={classes.loadingBox}>
               <img src={loading} alt="loading gif"></img>
@@ -156,9 +175,18 @@ const Homepage = () => {
           )}
           {data
             ? data.data.data.data.map((event, id) => {
-                return (
+                console.log(event);
+                return gridView ? (
                   <Grid item xs={12} md={4} key={id}>
                     <Card
+                      event={event}
+                      callApiOnDeleteCard={callApiOnDeleteCard}
+                      index={id}
+                    />
+                  </Grid>
+                ) : (
+                  <Grid item xs={12} md={12} key={id}>
+                    <HorizontalCards
                       event={event}
                       callApiOnDeleteCard={callApiOnDeleteCard}
                       index={id}
