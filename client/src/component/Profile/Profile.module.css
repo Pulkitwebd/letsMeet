@@ -8,6 +8,7 @@
     align-items: flex-start;
     justify-content: flex-start;
   }
+
   .userPhotoDiv {
     height: 200px;
     width: 25%;
@@ -19,6 +20,7 @@
     height: 100%;
     width: 100%;
   }
+
   .userDescription {
     width: 75%;
     overflow: hidden;
@@ -115,3 +117,4 @@
     margin-bottom: 20px;
   }
 }
+
