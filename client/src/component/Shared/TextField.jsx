@@ -1,11 +1,10 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import classes from "../Signup/Signup.module.css";
 import { ErrorMessage, useField } from "formik";
-import { FaRegWindowClose } from "react-icons/fa";
 
 const TextField = ({ placeholder, ...props }) => {
   const [field, meta] = useField(props);
-  const [closeButton, setCloseButton] = useState(props.closeButton);
+  // const [closeButton, setCloseButton] = useState(props.closeButton);
 
   return (
     <div>

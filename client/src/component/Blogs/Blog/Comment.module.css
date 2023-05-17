@@ -1,0 +1,15 @@
+.commetSection{
+    width: 30%;
+}
+
+.subButton{
+    border: none;
+    color: white;
+    text-decoration: none;
+  display: inline-block;
+
+}
+.subButton button{
+    border: none;
+    color: white;
+}

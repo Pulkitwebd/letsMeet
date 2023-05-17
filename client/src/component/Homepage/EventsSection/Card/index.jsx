@@ -16,7 +16,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    if (user !== null && user.user._id == event.user_id) {
+    if (user !== null && user.user._id === event.user_id) {
       setShowThreeDots(true);
     } else {
       setShowThreeDots(false);
@@ -73,15 +73,15 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const handleParticularEventPage = () =>
     navigate(`/event/${event._id}`, { state: { userPhoto } });
 
-  const description = event.desc.charAt(0).toUpperCase() + event.desc.slice(1);
+  const description = event && event.desc ? event.desc.charAt(0).toUpperCase() + event.desc.slice(1) : "";
 
-  let date = event.meetDate;
-  let startIndex = date.indexOf("T") + 1;
-  let endIndex = date.indexOf(".");
-  let requiredTimeFormat = date.substring(startIndex, endIndex);
+  let date = event && event.meetDate ? event.meetDate : "";
+  let startIndex = date && date.indexOf("T") + 1;
+  let endIndex = date && date.indexOf(".");
+  let requiredTimeFormat = date && date.substring(startIndex, endIndex);
 
-  let dateString = event.meetDate;
-  let requiredSring = dateString.split(" ")[0];
+  let dateString = event && event.meetDate ? event.meetDate : "";
+  let requiredSring = dateString && dateString.split(" ")[0];
   let date1 = new Date(requiredSring);
   let options = { weekday: "short", month: "short", day: "2-digit" };
   let requiredDateFormat = date1.toLocaleDateString("en-US", options);
@@ -102,7 +102,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
       )}
       <div className={classes.placePhoto}>
         {imageSrc ? (
-          <img src={imageSrc} alt="Event Image" />
+          <img src={imageSrc} alt="Event" />
         ) : (
           <div>Loading image...</div>
         )}
