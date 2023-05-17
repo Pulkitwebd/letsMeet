@@ -100,6 +100,11 @@
 .logoOfverticalHoriCards svg:first-child {
   margin-left: 10px;
 }
+.activeButton {
+  background: black;
+  color: #fff;
+  border: 3px;
+}
 
 .logoOfverticalHoriCards svg {
   margin-right: 10px;
