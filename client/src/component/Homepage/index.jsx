@@ -175,7 +175,7 @@ const Homepage = () => {
           )}
           {data
             ? data.data.data.data.map((event, id) => {
-                console.log(event);
+              console.log(event)
                 return gridView ? (
                   <Grid item xs={12} md={4} key={id}>
                     <Card
