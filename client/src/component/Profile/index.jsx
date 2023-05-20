@@ -24,7 +24,7 @@ const Profile = () => {
 
   const userId = user && user.user && user.user._id;
 
-  const { isLoading, data, error } = useQuery(
+  const { isLoading, data } = useQuery(
     ["getAppliedEvents", userId],
     () => (userId ? getEventOfUser(userId) : null)
   );
