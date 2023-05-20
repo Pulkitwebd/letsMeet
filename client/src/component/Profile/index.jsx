@@ -118,9 +118,11 @@ const Profile = () => {
           toggalProfileModal={openProfileUpdateModal}
         />
         <button className="btn  mt-3" onClick={openProfileUpdateModal}>
-          Edit Profile
+          <AiFillEdit style={{fontSize:30, transform: 'translate(3850%, -1070%)'}}/>
+
         </button>
       </div>
+
 
       <div className={classes.eventsHorizontalDiv}>
         <HorizontalCards />

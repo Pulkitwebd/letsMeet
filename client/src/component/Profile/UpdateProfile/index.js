@@ -3,37 +3,69 @@ import Modal from "react-modal";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
 
+
 const schema = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
+  firstName: yup.string().required('First name is required!'),
+  lastName: yup.string().required('Last name is required!'),
+  email: yup.string().email("Invalid email").required("Email is required!"),
   password: yup
     .string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-});
+    .min(6, "Password must be at least 6 characters!")
+    .required("Password is required!"),
+    phoneNumber: yup
+    .string()
+    .matches(/^\d+$/, 'Phone number must only contain digits!')
+    .min(10, 'Phone number must be at least 10 digits!')
+    .max(10, 'Phone number can be maximum 10 digits!')
+    .required('Phone number is required!'),
+    age: yup
+    .number()
+    .min(21, 'Minimum age must be 21!')
+    .max(120, 'Maximum age must be 120!')
+    .required('Age is required!'),
 
+});
 const UpdateProfile = (props) => {
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '500px',
+      height: '500px',
+    },
+  };
   return (
     <Modal
+
       isOpen={props.showModal}
       ariaHideApp={false}
-      //   className={classes.modal}
+      style={customStyles}
       contentLabel="Example Modal"
     >
+
+      <h1>EDIT PROFILE</h1>
       <button
         onClick={props.toggalProfileModal}
         className="btn btn-secondary"
-        style={{ marginLeft: 480 }}
+        style={{  position: 'absolute',
+          top: 10,
+          right: 10}}
       >
         Close
       </button>
       <Formik
         initialValues={{
-          name: "",
+          firstName: "",
+          lastName:"",
           email: "",
           password: "",
           phone: "",
           age: "",
+          phoneNumber: '',
         }}
         validationSchema={schema}
         onSubmit={(values) => {
@@ -41,7 +73,7 @@ const UpdateProfile = (props) => {
         }}
       >
         {(formik) => (
-          <Form onSubmit={formik.handleSubmit}>
+          <Form onSubmit={formik.handleSubmit} className="my-form" >
             <div className="mb-3">
               <label htmlFor="exampleFirstName" className="form-label">
                 First Name
@@ -51,10 +83,10 @@ const UpdateProfile = (props) => {
                 className="form-control"
                 placeholder="First name"
                 aria-label="First name"
-                {...formik.getFieldProps("name")}
+                {...formik.getFieldProps('firstName')}
               />
-              {formik.touched.name && formik.errors.name && (
-                <div>{formik.errors.name}</div>
+              {formik.touched.firstName && formik.errors.firstName && (
+                <div style={{ color: '#cc0000' }}>{formik.errors.firstName}</div>
               )}
             </div>
             <div className="mb-3">
@@ -66,15 +98,15 @@ const UpdateProfile = (props) => {
                 className="form-control"
                 placeholder="Last name"
                 aria-label="Last name"
-                {...formik.getFieldProps("last-name")}
+                {...formik.getFieldProps("lastName")}
               />
-              {formik.touched.name && formik.errors.name && (
-                <div>{formik.errors.name}</div>
+              {formik.touched.lastName && formik.errors.lastName && (
+                <div style={{ color: '#cc0000' }}>{formik.errors.lastName}</div>
               )}
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail1" className="form-label">
-                New Email{" "}
+                New Email
               </label>
               <input
                 type="email"
@@ -85,7 +117,7 @@ const UpdateProfile = (props) => {
                 {...formik.getFieldProps("email")}
               />
               {formik.touched.email && formik.errors.email && (
-                <div>{formik.errors.email}</div>
+                <div style={{color:'#cc0000'}}>{formik.errors.email}</div>
               )}
               <div id="emailHelp" className="form-text"></div>
             </div>
@@ -101,7 +133,7 @@ const UpdateProfile = (props) => {
                 {...formik.getFieldProps("password")}
               />
               {formik.touched.password && formik.errors.password && (
-                <div>{formik.errors.password}</div>
+                <div style={{color : '#cc0000'}}>{formik.errors.password}</div>
               )}
             </div>
             <div className="mb-3">
@@ -113,19 +145,27 @@ const UpdateProfile = (props) => {
                 className="form-control"
                 id="exampleInputPassword1"
                 placeholder="Confirm password"
+                {...formik.getFieldProps("email")}
               />
+                 {formik.touched.password && formik.errors.password && (
+                <div style={{color : '#cc0000'}}>{formik.errors.password}</div>
+              )}
             </div>
             <div className="mb-3">
               <label HtmlFor="exampleInputPhone" className="form-label">
-                {" "}
+
                 Change Phone
               </label>
               <input
                 type="phone"
                 className="form-control"
                 id="exampleInputPhone"
-                placeholder="+91 0000000000"
+                placeholder="0000000000"
+                {...formik.getFieldProps('phoneNumber')}
               />
+               {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+          <div style={{ color: '#cc0000' }}>{formik.errors.phoneNumber}</div>
+        )}
             </div>
             <div className="mb-3">
               <label HtmlFor="exampleInputAge" className="form-label">
@@ -136,7 +176,11 @@ const UpdateProfile = (props) => {
                 className="form-control"
                 id="exampleInputAge"
                 placeholder="Enter your age"
+                {...formik.getFieldProps('age')}
               />
+                {formik.touched.age && formik.errors.age && (
+          <div style={{ color: '#cc0000' }}>{formik.errors.age}</div>
+        )}
             </div>
             <button type="submit" className="btn btn-success">
               Save Changes
@@ -147,5 +191,4 @@ const UpdateProfile = (props) => {
     </Modal>
   );
 };
-
 export default UpdateProfile;
