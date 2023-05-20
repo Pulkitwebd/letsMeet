@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const REGISTER_URL = "/api/auth/register";
-const LOGIN_URL = "/api/auth/login";
-const UPDATE_URL = "/api/auth/update";
+const REGISTER_URL = "https://letsmeet.onrender.com/api/auth/register";
+const LOGIN_URL = "https://letsmeet.onrender.com/api/auth/login";
+const UPDATE_URL = "https://letsmeet.onrender.com/api/auth/update";
 
 //Register user
 const register = async (userData) => {

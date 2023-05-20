@@ -54,7 +54,7 @@ const CreateEventModal = (props) => {
     };
 
     try {
-      const response = await axios.post("/api/feed/feedPost", finalData);
+      const response = await axios.post("https://letsmeet.onrender.com/api/feed/feedPost", finalData);
 
       if (response.status === 201) {
         setRandomString(

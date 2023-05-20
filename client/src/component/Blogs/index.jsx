@@ -11,7 +11,7 @@ import classes from "./index.module.css";
 
 const getAllBlogs = (pageNumber, limit) => {
   return axios.get(
-    `/api/blog/allBlogs?pageNumber=${pageNumber}&limit=${limit}`
+    `https://letsmeet.onrender.com/api/blog/allBlogs?pageNumber=${pageNumber}&limit=${limit}`
   );
 };
 
