@@ -11,7 +11,7 @@ const PrivateRoute = () => {
 
   const userlocalStorage = JSON.parse(localStorage.getItem("user"));
 
-  const { decodeToken, isExpired, reEvaluateToken } = useJwt(
+  const {isExpired, reEvaluateToken } = useJwt(
     user === null || userlocalStorage === null ? null : userlocalStorage.token
   );
 

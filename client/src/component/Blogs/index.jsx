@@ -17,7 +17,7 @@ const getAllBlogs = (pageNumber, limit) => {
 
 const CardList = () => {
   //to set post per page
-  const [limit, setLimit] = useState(6);
+  const [limit ] = useState(6);
   const [hasMore, setHasMore] = useState(true);
   const [queryKey, setQueryKey] = useState(getAllBlogs);
   const [pageNumber, setPageNumber] = useState(0);

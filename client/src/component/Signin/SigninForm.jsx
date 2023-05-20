@@ -13,7 +13,7 @@ const SigninForm = ({ showPassPage }) => {
 
   const [invalidCredential, setInvalidCredential] = useState(false);
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 

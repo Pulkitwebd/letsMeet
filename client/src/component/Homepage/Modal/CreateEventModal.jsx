@@ -88,10 +88,10 @@ const CreateEventModal = (props) => {
   };
 
   const [value, setValue] = useState(dayjs("2023-04-07"));
-  const [showModal, setShowModal] = useState(props.showModal);
-  const [loading, setLoading] = useState(false);
+  const [, setShowModal] = useState(props.showModal);
+  // const [loading, setLoading] = useState(false);
 
-  const [randomString, setRandomString] = useState(
+  const [, setRandomString] = useState(
     Math.random()
       .toString(36)
       .substring(2, 15) + Date.now()
