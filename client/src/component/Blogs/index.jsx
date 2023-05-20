@@ -11,13 +11,13 @@ import classes from "./index.module.css";
 
 const getAllBlogs = (pageNumber, limit) => {
   return axios.get(
-    `/api/blog/allBlogs?pageNumber=${pageNumber}&limit=${limit}`
+    `https://letsmeet.onrender.com/api/blog/allBlogs?pageNumber=${pageNumber}&limit=${limit}`
   );
 };
 
 const CardList = () => {
   //to set post per page
-  const [limit, setLimit] = useState(6);
+  const [limit ] = useState(6);
   const [hasMore, setHasMore] = useState(true);
   const [queryKey, setQueryKey] = useState(getAllBlogs);
   const [pageNumber, setPageNumber] = useState(0);

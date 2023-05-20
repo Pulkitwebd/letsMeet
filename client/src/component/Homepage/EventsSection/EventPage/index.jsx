@@ -58,7 +58,7 @@ const EventPage = () => {
     const userfetchedInitially = [];
     for (const applicant of data.data.applicants) {
       try {
-        const response = await axios.get(`/api/auth/getUserById/${applicant}`);
+        const response = await axios.get(`https://letsmeet.onrender.com/api/auth/getUserById/${applicant}`);
         // console.log("response.data.user" , response.data.user)
         userfetchedInitially.push(response.data.user);
         console.log(usersOfevent);
@@ -85,7 +85,7 @@ const EventPage = () => {
     // sending post request for adding user to database in feed
     try {
       const response = await axios.post(
-        "/api/feed/applyToEvent",
+        "https://letsmeet.onrender.com/api/feed/applyToEvent",
         applyEventData
       );
 
@@ -99,7 +99,7 @@ const EventPage = () => {
         });
         try {
           const response = await axios.get(
-            `/api/auth/getUserById/${user ? user.user._id : ""}`
+            `https://letsmeet.onrender.com/api/auth/getUserById/${user ? user.user._id : ""}`
           );
           //adding new applied after click apply to event user to existing applied user
           setUsersOfevent((prevUsers) => [...prevUsers, response.data.user]);

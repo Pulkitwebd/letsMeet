@@ -9,13 +9,17 @@ const Comment = () => {
           <h2>Comments (2)</h2>
           <div className={classes.commentBox}>
             <div className={classes.user}>
-              <div className={classes.pfp}>
-                <a href=""></a>
-              </div>
+              <div className={classes.pfp}></div>
               <div className={classes.userNam}>Sandhya Ginare</div>
             </div>
             <div className={classes.commentArea}>
-              <textarea name="commentHere" placeholder="Write a comment..." id="" cols="30" rows="10"></textarea>
+              <textarea
+                name="commentHere"
+                placeholder="Write a comment..."
+                id=""
+                cols="30"
+                rows="10"
+              ></textarea>
             </div>
             <div className={classes.subButton}>
               <button>Submit</button>

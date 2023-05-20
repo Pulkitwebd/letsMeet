@@ -54,7 +54,7 @@ const CreateEventModal = (props) => {
     };
 
     try {
-      const response = await axios.post("/api/feed/feedPost", finalData);
+      const response = await axios.post("https://letsmeet.onrender.com/api/feed/feedPost", finalData);
 
       if (response.status === 201) {
         setRandomString(
@@ -88,10 +88,10 @@ const CreateEventModal = (props) => {
   };
 
   const [value, setValue] = useState(dayjs("2023-04-07"));
-  const [showModal, setShowModal] = useState(props.showModal);
-  const [loading, setLoading] = useState(false);
+  const [, setShowModal] = useState(props.showModal);
+  // const [loading, setLoading] = useState(false);
 
-  const [randomString, setRandomString] = useState(
+  const [, setRandomString] = useState(
     Math.random()
       .toString(36)
       .substring(2, 15) + Date.now()

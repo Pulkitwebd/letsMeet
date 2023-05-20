@@ -20,7 +20,6 @@ const getBlog = (eventId) => {
 };
 
 const Blog = () => {
-  
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(0);
   const [isPaneOpen, setIsPaneOpen] = useState(false);
@@ -28,21 +27,19 @@ const Blog = () => {
   const location = useLocation();
   const blogId = location.state.blogId;
 
-  const [queryKey, setQueryKey] = useState("get-blog");
+  const [queryKey] = useState("get-blog");
 
-  const { isLoading, data, isError, error } = useQuery([queryKey, blogId], () =>
-    getBlog(blogId)
-  );
+  const { data } = useQuery([queryKey, blogId], () => getBlog(blogId));
 
   // const { id } = useParams();
 
   const handleLikeClick = () => {
     setIsLiked(!isLiked);
-    likes == 1 ? setLikes(0) : setLikes(1);
+    likes === 1 ? setLikes(0) : setLikes(1);
   };
 
   console.log("testing blogid in blog page", blogId);
-  console.log(data ? data.data.title : "no data found")
+  console.log(data ? data.data.title : "no data found");
 
   return (
     <div className={classes.container}>
@@ -79,7 +76,9 @@ const Blog = () => {
           {/* <img src={cards[id - 1].imageUrl} alt="" /> */}
         </div>
         <div className={classes.textContainer}>
-          <p className={classes.text}>{data && data.data.headings[0].paragraphs[0]}</p>
+          <p className={classes.text}>
+            {data && data.data.headings[0].paragraphs[0]}
+          </p>
         </div>
       </div>
       <div className={classes.bar}>

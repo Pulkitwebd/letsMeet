@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <div className={classes.navbar}>
       <div className={classes.logo}>
-        <img src=""></img>
+        <img src="" alt="logo"></img>
       </div>
 
       <div className={classes.hambergerMenu}>

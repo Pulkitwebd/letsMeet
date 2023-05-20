@@ -47,4 +47,3 @@ app.use("/api/blog", blogRoutes)
 server.listen(PORT, () => {
   console.log(`Port is running at ${PORT}`);
 });
-
