@@ -24,7 +24,7 @@ import loading from "../Assets/loading.gif";
 import HorizontalCards from "../Shared/HorizontalCards/index";
 
 const getAllEvents = (pageNumber) => {
-  return axios.get(`/api/feed/allEvents?pageNumber=${pageNumber}`);
+  return axios.get(`https://letsmeet.onrender.com/api/feed/allEvents?pageNumber=${pageNumber}`);
 };
 
 const Homepage = () => {
