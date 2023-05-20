@@ -9,8 +9,19 @@ import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
 import UpdateProfile from "./UpdateProfile/index";
 
+const getEventOfUser = (userId) => {
+  return axios.get(`https://letsmeet.onrender.com/api/auth/getAppliedEvents${userId}`);
+};
+
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
+
+  console.log("logged in user", user.user);
+
+  // const { isLoading, data, isError, error } = useQuery(
+  //   ["get-event", eventId],
+  //   () => (eventId ? getEventOfUser(eventId) : null)
+  // );
 
   // const [showToast, setShowToast] = useState(false);
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
@@ -18,12 +29,14 @@ const Profile = () => {
   const togglePhototModal = () => {
     setPhotoModalStatus(!photoModalStatus);
   };
-  
+
   const [profileUpdateModal, setProfileUpdateModal] = useState(false);
 
   const openProfileUpdateModal = () => {
     setProfileUpdateModal((currentValue) => !currentValue);
   };
+
+
 
   return (
     <div>
@@ -100,7 +113,10 @@ const Profile = () => {
 
       <div className={classes.RecentPost_RecentComments_EditAccount}>
         <div className={classes.activeDiv}>All Events</div>
-        <UpdateProfile showModal={profileUpdateModal} toggalProfileModal={openProfileUpdateModal}/>
+        <UpdateProfile
+          showModal={profileUpdateModal}
+          toggalProfileModal={openProfileUpdateModal}
+        />
         <button className="btn  mt-3" onClick={openProfileUpdateModal}>
           Edit Profile
         </button>

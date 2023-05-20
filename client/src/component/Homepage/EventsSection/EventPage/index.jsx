@@ -13,7 +13,7 @@ import classes from "./Event.module.css";
 import profile from "../../../Assets/profile.jpg";
 
 const getEvent = (eventId) => {
-  return axios.get(`/api/feed/Event/${eventId}`);
+  return axios.get(`https://letsmeet.onrender.com/api/feed/Event/${eventId}`);
 };
 
 const EventPage = () => {
@@ -59,9 +59,7 @@ const EventPage = () => {
     for (const applicant of data.data.applicants) {
       try {
         const response = await axios.get(`https://letsmeet.onrender.com/api/auth/getUserById/${applicant}`);
-        // console.log("response.data.user" , response.data.user)
         userfetchedInitially.push(response.data.user);
-        console.log(usersOfevent);
       } catch (err) {
         console.error(err);
       }
@@ -103,7 +101,6 @@ const EventPage = () => {
           );
           //adding new applied after click apply to event user to existing applied user
           setUsersOfevent((prevUsers) => [...prevUsers, response.data.user]);
-          console.log(usersOfevent);
         } catch (err) {
           console.error(err);
         }
@@ -130,8 +127,6 @@ const EventPage = () => {
       }
     }
   };
-
-  console.log("usersOfevent", usersOfevent);
 
   return (
     <>

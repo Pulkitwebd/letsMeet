@@ -38,6 +38,8 @@ router.put("/update", authController.updateUser )
 
 router.get("/getUserById/:user_id", authController.getUserById )
 
+router.get("/getAppliedEvents/:user_id", authController.GetAppliedEvents )
+
 router.get("/test", auth, (req, res) => {
   res.send("Request Passed");
 });
