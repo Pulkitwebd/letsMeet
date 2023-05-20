@@ -18,7 +18,7 @@ const Profile = () => {
   const togglePhototModal = () => {
     setPhotoModalStatus(!photoModalStatus);
   };
-  
+
   const [profileUpdateModal, setProfileUpdateModal] = useState(false);
 
   const openProfileUpdateModal = () => {
@@ -102,9 +102,11 @@ const Profile = () => {
         <div className={classes.activeDiv}>All Events</div>
         <UpdateProfile showModal={profileUpdateModal} toggalProfileModal={openProfileUpdateModal}/>
         <button className="btn  mt-3" onClick={openProfileUpdateModal}>
-          Edit Profile
+          <AiFillEdit style={{fontSize:30, transform: 'translate(3850%, -1070%)'}}/>
+
         </button>
       </div>
+
 
       <div className={classes.eventsHorizontalDiv}>
         <HorizontalCards />
