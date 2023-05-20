@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import classes from "./PhotoModal.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../../Redux/Auth/authSlice";
+import { updateUserPhoto } from "../../../Redux/Auth/authSlice";
 
 const PhotoModal = (props) => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const PhotoModal = (props) => {
       user_id: user.user._id,
       userPhoto: eventImageBase64,
     };
-    dispatch(updateUser(formData));
+    dispatch(updateUserPhoto(formData));
     
     props.togglePhotoModal();
   };

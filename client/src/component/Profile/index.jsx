@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { GoThumbsup, GoThumbsdown, GoClock } from "react-icons/go";
 import { AiFillEdit } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { useQuery } from "react-query";
+import loading from "../Assets/loading.gif";
+
 import classes from "./Profile.module.css";
 import HorizontalCards from "../Shared/HorizontalCards/index";
 import PhotoModal from "./PhotoModal/index";
@@ -9,21 +13,22 @@ import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
 import UpdateProfile from "./UpdateProfile/index";
 
-// const getEventOfUser = (userId) => {
-//   return axios.get(`https://letsmeet.onrender.com/api/auth/getAppliedEvents${userId}`);
-// };
+const getEventOfUser = (userId) => {
+  return axios.get(
+    `https://letsmeet.onrender.com/api/auth/getAppliedEvents/${userId}`
+  );
+};
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
 
-  console.log("logged in user", user.user);
+  const userId = user && user.user && user.user._id;
 
-  // const { isLoading, data, isError, error } = useQuery(
-  //   ["get-event", eventId],
-  //   () => (eventId ? getEventOfUser(eventId) : null)
-  // );
+  const { isLoading, data, error } = useQuery(
+    ["getAppliedEvents", userId],
+    () => (userId ? getEventOfUser(userId) : null)
+  );
 
-  // const [showToast, setShowToast] = useState(false);
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
 
   const togglePhototModal = () => {
@@ -36,8 +41,6 @@ const Profile = () => {
     setProfileUpdateModal((currentValue) => !currentValue);
   };
 
-
-
   return (
     <div>
       {/* {showToast && <ToastContainer />} */}
@@ -49,7 +52,7 @@ const Profile = () => {
         <div className={classes.userPhotoDiv}>
           <img
             alt="user"
-            src={user.user ? user.user.photo : userDummyImage}
+            src={user && user.user ? user.user.photo : userDummyImage}
             className={classes.userPhoto}
           ></img>
           <div className={classes.editImage} onClick={togglePhototModal}>
@@ -118,15 +121,19 @@ const Profile = () => {
           toggalProfileModal={openProfileUpdateModal}
         />
         <button className="btn  mt-3" onClick={openProfileUpdateModal}>
-          <AiFillEdit style={{fontSize:30, transform: 'translate(3850%, -1070%)'}}/>
-
+          <AiFillEdit
+            style={{ fontSize: 30, transform: "translate(3850%, -1070%)" }}
+          />
         </button>
       </div>
 
-
       <div className={classes.eventsHorizontalDiv}>
-        <HorizontalCards />
-        <HorizontalCards />
+        {isLoading && <img src={loading} alt="loading" />}
+        {data &&
+          data.data &&
+          data.data.map((event, id) => {
+            return <HorizontalCards event={event}/>;
+          })}
       </div>
     </div>
   );

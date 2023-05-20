@@ -34,7 +34,7 @@ router.post(
 
 router.post("/login", validator.body(loginSchema), authController.postLogin);
 
-router.put("/update", authController.updateUser )
+router.put("/updatePhoto", authController.updateUserPhoto )
 
 router.get("/getUserById/:user_id", authController.getUserById )
 

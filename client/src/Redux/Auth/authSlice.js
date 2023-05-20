@@ -44,11 +44,11 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   }
 });
 
-export const updateUser = createAsyncThunk(
-  "auth/updateUser",
+export const updateUserPhoto = createAsyncThunk(
+  "auth/updateUserPhoto",
   async (user, thunkAPI) => {
     try {
-      const updatedUser = await authService.update(user);
+      const updatedUser = await authService.updatePhoto(user);
       return updatedUser;
     } catch (error) {
       const message =
@@ -111,15 +111,15 @@ export const authSlice = createSlice({
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
       })
-      .addCase(updateUser.pending, (state) => {
+      .addCase(updateUserPhoto.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addCase(updateUserPhoto.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
       })
-      .addCase(updateUser.rejected, (state, action) => {
+      .addCase(updateUserPhoto.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
