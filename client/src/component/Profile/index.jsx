@@ -9,9 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
 import UpdateProfile from "./UpdateProfile/index";
 
-const getEventOfUser = (userId) => {
-  return axios.get(`https://letsmeet.onrender.com/api/auth/getAppliedEvents${userId}`);
-};
+// const getEventOfUser = (userId) => {
+//   return axios.get(`https://letsmeet.onrender.com/api/auth/getAppliedEvents${userId}`);
+// };
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
