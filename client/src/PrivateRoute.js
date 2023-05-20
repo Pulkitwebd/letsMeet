@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useJwt } from "react-jwt";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, reset } from "./Redux/Auth/authSlice";
+import { useSelector,  } from "react-redux";
 
 const PrivateRoute = () => {
-  const dispatch = useDispatch();
+  
   const [auth, setAuth] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
@@ -27,12 +26,6 @@ const PrivateRoute = () => {
         setAuth(!auth);
       }
     }
-    // if (isExpired) {
-    //   setAuth(false);
-    //   dispatch(logout());
-    //   dispatch(reset());
-    //   window.alert("Login to continue");
-    // }
   }, [user]);
 
 
