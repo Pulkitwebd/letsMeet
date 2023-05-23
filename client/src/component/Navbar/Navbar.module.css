@@ -87,8 +87,9 @@
     position: fixed !important;
     bottom: 0;
     z-index: 1;
-    padding: 5px 5px;
+    padding: 3px 3px;
     display: flex;
+    height: 50px;
     align-items: center;
     justify-content: space-between;
   }
@@ -100,6 +101,11 @@
   .plusLogo svg {
     height: 35px;
     width: 35px;
+  }
+  .loginButton svg{
+    height: 35px;
+    width: 35px;
+    padding-right: 10px;
   }
 }
 
@@ -152,6 +158,7 @@
     height: 20px;
     cursor: pointer;
   }
+ 
   .messageIcon svg {
     color: black;
     height: 25px;

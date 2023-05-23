@@ -5,7 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { BsList } from "react-icons/bs";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
-import { AiFillHome, AiOutlinePlusCircle } from "react-icons/ai";
+import {
+  AiFillHome,
+  AiOutlinePlusCircle,
+  AiOutlineLogin,
+} from "react-icons/ai";
 
 import { logout, reset } from "../../Redux/Auth/authSlice";
 import EventModal from "../Homepage/Modal/CreateEventModal";
@@ -38,7 +42,17 @@ const Navbar = () => {
   };
 
   const handleEventModal = () => {
-    setShowModal(!showModal);
+    if (!user) {
+      setShowToast(true);
+      toast.error("Please Login to Create Event", {
+        closeOnClick: true,
+        draggable: true,
+        pauseOnHover: false,
+        autoClose: 3000,
+      });
+    } else {
+      setShowModal(!showModal);
+    }
   };
 
   return (
@@ -154,30 +168,41 @@ const Navbar = () => {
       )}
 
       {/* mobile screen */}
-      {isMobileScreen && user && (
+      {isMobileScreen && (
         <div className={classes.mobileNavbar}>
           <div className={classes.homeLogo} onClick={() => navigate("/")}>
             <AiFillHome />
           </div>
           <div className={classes.plusLogo} onClick={handleEventModal}>
-            <EventModal showModal={showModal} />
+            {user && <EventModal showModal={showModal} />}
+
             <AiOutlinePlusCircle />
           </div>
-          <div className={classes.userPhoto}>
-            <NavLink
-              to="/profile"
-              className={`${
-                pathname === "/profile" ? classes.active : classes.link
-              }`}
+
+          {user ? (
+            <div className={classes.userPhoto}>
+              <NavLink
+                to="/profile"
+                className={`${
+                  pathname === "/profile" ? classes.active : classes.link
+                }`}
+              >
+                <div className={classes.profile}>
+                  <img
+                    src={user.user.photo ? user.user.photo : profile}
+                    alt="user"
+                  />
+                </div>
+              </NavLink>
+            </div>
+          ) : (
+            <div
+              className={classes.loginButton}
+              onClick={() => navigate("/signin")}
             >
-              <div className={classes.profile}>
-                <img
-                  src={user.user.photo ? user.user.photo : profile}
-                  alt="user"
-                />
-              </div>
-            </NavLink>
-          </div>
+              <AiOutlineLogin />
+            </div>
+          )}
         </div>
       )}
     </div>

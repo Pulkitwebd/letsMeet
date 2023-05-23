@@ -149,26 +149,14 @@ const Homepage = () => {
       <div className={classes.eventSections}>
         <div className={classes.createEventDiv}>
           <div className={classes.logoOfverticalHoriCards}>
-            <button
-              type="button"
-              className={`${gridView ? classes.activeButton : ""}`}
-              onClick={() => handleSetGridView()}
-            >
-              <FaBorderAll />
-            </button>
-            {/* hidding grid view for mobile screen */}
             {!isMobileScreen && (
-              <button
-                type="button"
-                className={`${!gridView ? classes.activeButton : ""}`}
-                onClick={() => handleSetListView()}
-              >
-                <FaBars />
-              </button>
+              <FaBorderAll onClick={() => handleSetGridView()} />
             )}
-            <button onClick={() => setIsPaneOpen(true)}>
-              <FaFilter />
-            </button>
+
+            {/* hidding grid view for mobile screen */}
+            {!isMobileScreen && <FaBars onClick={() => handleSetListView()} />}
+
+            <FaFilter onClick={() => setIsPaneOpen(true)} />
           </div>
           {!isMobileScreen && (
             <button className={classes.createEventBtn} onClick={toggleModal}>

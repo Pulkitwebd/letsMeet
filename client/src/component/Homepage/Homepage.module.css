@@ -98,12 +98,7 @@
 }
 
 .logoOfverticalHoriCards svg:first-child {
-  margin-left: 10px;
-}
-.activeButton {
-  background: black;
-  color: #fff;
-  border: 3px;
+  margin-left: 5px;
 }
 
 .logoOfverticalHoriCards svg {
@@ -197,5 +192,16 @@
   }
   .eventSection {
     max-width: 100%;
+  }
+  .paginationBox ul {
+    margin-bottom: 80px;
+    padding-left: 0px;
+    margin-top: 0px;
+  }
+  .createEventDiv{
+    justify-content: flex-end !important;
+  }
+  .logoOfverticalHoriCards button {
+    margin-right: 5px;
   }
 }
