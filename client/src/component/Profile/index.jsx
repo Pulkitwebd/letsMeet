@@ -24,9 +24,8 @@ const Profile = () => {
 
   const userId = user && user.user && user.user._id;
 
-  const { isLoading, data } = useQuery(
-    ["getAppliedEvents", userId],
-    () => (userId ? getEventOfUser(userId) : null)
+  const { isLoading, data } = useQuery(["getAppliedEvents", userId], () =>
+    userId ? getEventOfUser(userId) : null
   );
 
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
@@ -130,9 +129,9 @@ const Profile = () => {
       <div className={classes.eventsHorizontalDiv}>
         {isLoading && <img src={loading} alt="loading" />}
         {data &&
-          data.data &&
+          data.data.length > 0 &&
           data.data.map((event, id) => {
-            return <HorizontalCards event={event}/>;
+            return <HorizontalCards event={event} />;
           })}
       </div>
     </div>
