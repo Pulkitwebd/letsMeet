@@ -76,10 +76,34 @@
   width: 50px;
 }
 
-@media only screen and (min-width: 0px) and (max-width: 768px) {
-  .navlinks {
-    display: none;
+/* for mobile */
+@media only screen and (min-width: 0px) and (max-width: 576px) {
+  .navbar {
+    height: 0px !important;
   }
+  .mobileNavbar {
+    background-color: #1fab89;
+    width: 100%;
+    position: fixed !important;
+    bottom: 0;
+    z-index: 1;
+    padding: 5px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .homeLogo svg {
+    height: 40px;
+    width: 40px;
+    padding-left: 10px;
+  }
+  .plusLogo svg {
+    height: 35px;
+    width: 35px;
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 768px) {
   .navbar {
     height: 50px;
 

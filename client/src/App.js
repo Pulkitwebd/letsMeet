@@ -2,6 +2,8 @@ import React from "react";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Routes, Route, useLocation } from "react-router-dom";
+
+
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./component/Navbar/Navbar";
 import Homepage from "./component/Homepage";
@@ -24,6 +26,7 @@ const App = () => {
 
   const showNavbar = location.pathname !== "/dashboard";
 
+ 
   return (
     <QueryClientProvider client={queryClient}>
       {showNavbar && <Navbar />}
@@ -42,6 +45,9 @@ const App = () => {
         <Route exact path="/reset-password" element={<ResetPassword />} />
       </Routes>
       {/* <Footer /> */}
+      {/* {isMobileScreen && showNavbar && (
+        <Navbar style={{ position: "fixed !important", bottom : "100vh"}} />
+      )} */}
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
   );
