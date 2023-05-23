@@ -102,10 +102,14 @@
     height: 35px;
     width: 35px;
   }
-  .loginButton svg{
-    height: 35px;
-    width: 35px;
+  .loginButton svg {
+    height: 40px;
+    width: 40px;
     padding-right: 10px;
+  }
+  .profile {
+    height: 40px !important;
+    width: 40px !important;
   }
 }
 
@@ -158,7 +162,7 @@
     height: 20px;
     cursor: pointer;
   }
- 
+
   .messageIcon svg {
     color: black;
     height: 25px;
