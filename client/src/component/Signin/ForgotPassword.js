@@ -16,7 +16,7 @@ const ForgotPassword = ({ showPassPage }) => {
         initialValues={{ email: "" }}
         validationSchema={forgotPasswordValidation}
         onSubmit={(values) => {
-          Axios.post("http://localhost:3001/api/forgot-password", {
+          Axios.post("https://letsmeet.onrender.com/api/forgot-password", {
             email: values.email,
           })
             .then(function (res) {
