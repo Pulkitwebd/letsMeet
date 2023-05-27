@@ -5,6 +5,7 @@
   align-items: center;
   background-color: #1fab89;
   border-bottom: 3px solid white;
+  color: #fff;
 }
 
 .logo {
@@ -33,13 +34,29 @@
   font-size: 18px;
   letter-spacing: 0.8px;
   text-decoration: none;
+  border-bottom: 4px solid #fff;
+  margin-top:20px;
+  padding-bottom: 10px;
 }
 
 .link {
-  color: #1330ed;
+  color: #fff;
   font-size: 18px;
   letter-spacing: 0.8px;
   text-decoration: none;
+}
+
+.link a{
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+}
+.link a:hover {
+  color: #fff;
+  border-bottom: 4px solid #fff;
+  padding-bottom: 10px;
 }
 
 .loginSignup_box {
@@ -48,6 +65,18 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+.loginSignup_box a{
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+}
+.loginSignup_box a:hover{
+  color: #fff;
+  border-bottom: 4px solid #fff;
+  padding-bottom: 10px;
 }
 
 .logout_box {
