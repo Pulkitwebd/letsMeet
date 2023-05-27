@@ -7,7 +7,7 @@ import HorizontalCards from "../Shared/HorizontalCards/index";
 import PhotoModal from "./PhotoModal/index";
 import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
-import UpdateProfile from "./UpdateProfile/index";
+import UpdateProfile from "./UpdateProfile/index.jsx";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -102,7 +102,7 @@ const Profile = () => {
         <div className={classes.activeDiv}>All Events</div>
         <UpdateProfile showModal={profileUpdateModal} toggalProfileModal={openProfileUpdateModal}/>
         <button className="btn  mt-3" onClick={openProfileUpdateModal}>
-          <AiFillEdit style={{fontSize:30, transform: 'translate(3850%, -1070%)'}}/>
+          <AiFillEdit style={{fontSize:30, transform: 'translate(3850%, -1070%)'}} />
 
         </button>
       </div>
