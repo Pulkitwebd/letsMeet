@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import imageCompression from "browser-image-compression";
 import classes from "./PhotoModal.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { updateUser } from "../../../Redux/Auth/authSlice";
+import { updateUserPhoto } from "../../../Redux/Auth/authSlice";
 
 const PhotoModal = (props) => {
   const dispatch = useDispatch();
@@ -13,11 +14,14 @@ const PhotoModal = (props) => {
 
   const handleEventImg = async (event) => {
     const selectedFile = event.target.files[0];
-
-    const base64 = await convertToBase64(selectedFile);
-    setEventImageBase64(base64);
-
-    setEventImageUrl(URL.createObjectURL(selectedFile));
+    try {
+      const compressedFile = await handleImageUpload(selectedFile);
+      const base64 = await convertToBase64(compressedFile);
+      setEventImageBase64(base64);
+      setEventImageUrl(URL.createObjectURL(selectedFile));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancelButton = () => {
@@ -30,8 +34,8 @@ const PhotoModal = (props) => {
       user_id: user.user._id,
       userPhoto: eventImageBase64,
     };
-    dispatch(updateUser(formData));
-    
+    dispatch(updateUserPhoto(formData));
+
     props.togglePhotoModal();
   };
 
@@ -68,7 +72,6 @@ const PhotoModal = (props) => {
         </div>
         {eventImageBase64 && (
           <button onClick={handlePostSubmit} className={classes.postButton}>
-           
             Post
           </button>
         )}
@@ -79,10 +82,10 @@ const PhotoModal = (props) => {
 
 export default PhotoModal;
 
-const convertToBase64 = async (file) => {
+const convertToBase64 = async (compressedFile) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
+    fileReader.readAsDataURL(compressedFile);
     fileReader.onload = () => {
       resolve(fileReader.result);
     };
@@ -90,4 +93,17 @@ const convertToBase64 = async (file) => {
       reject(err);
     };
   });
+};
+
+const handleImageUpload = async (imageFile) => {
+  const options = {
+    maxSizeMB: 0.1, //100 KB
+    maxWidthOrHeight: 1920,
+  };
+  try {
+    const compressedFile = await imageCompression(imageFile, options);
+    return compressedFile;
+  } catch (error) {
+    console.log(error);
+  }
 };

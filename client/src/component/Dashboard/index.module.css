@@ -1,0 +1,133 @@
+.header {
+  height: 45px;
+  background-color: #fafcfe;
+}
+.sidebarAndMainDashboard {
+  display: flex;
+}
+
+.sideBarClose {
+  background-color: #ffffff;
+  /* position: relativ; */
+  height: 100vh;
+  width: 3vw; /*3 vw of full screen width */
+}
+
+.sidebarOpen {
+  background-color: #ffffff;
+  height: 100vh;
+  width: 15vw; /*30 vw of full screen width */
+}
+
+.arrowBox {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sidebarArrows {
+  cursor: pointer;
+}
+
+.sidebarArrows svg {
+  height: 25px;
+  width: 25px;
+  cursor: pointer;
+}
+
+.sideBarIcons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.sideBarIcons svg {
+  height: 25px;
+  width: 25px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.sideBarIconsWithName {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 20px;
+}
+
+.sideBarIconsWithName div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.sideBarIconsWithName div svg {
+  cursor: pointer;
+  height: 25px;
+  margin-right: 10px;
+  width: 25px;
+}
+
+.mainDashboardFull {
+  width: 97vw;
+  height: 100vh;
+  background-color: #f3f5f9;
+
+  padding-top: 20px;
+}
+
+.mainDashboardClose {
+  width: 85vw;
+  height: 100vh;
+  background-color: #f3f5f9;
+
+  padding-top: 20px;
+}
+
+.smallCardsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+}
+
+.smallCards {
+  background-color: #ffffff;
+  width: 20%;
+  height: 100%;
+  padding: 7px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.smallCards:first-child {
+  border-bottom: 5px solid #3459ac;
+}
+
+.smallCards:nth-child(2) {
+  border-bottom: 5px solid rgb(170, 22, 67);
+}
+
+.smallCards:nth-child(3) {
+  border-bottom: 5px solid #ffe48e;
+}
+
+.smallCards:nth-child(4) {
+  border-bottom: 5px solid #3db887;
+}
+
+.smallCards p {
+  color: rgb(161, 161, 161);
+  cursor: pointer;
+}
+
+
+
+
+

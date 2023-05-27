@@ -23,7 +23,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
     }
 
     axios
-      .get(`/api/auth/getUserById/${event.user_id}`)
+      .get(`https://letsmeet.onrender.com/api/auth/getUserById/${event.user_id}`)
       .then((response) => {
         setUserPhoto(response.data.user.photo);
       })
@@ -46,7 +46,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
 
   const handleDeleteEventApi = () => {
     axios
-      .delete("/api/feed/event", {
+      .delete("https://letsmeet.onrender.com/api/feed/event", {
         data: {
           eventId: event._id,
           user_id: user.user._id,

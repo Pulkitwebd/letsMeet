@@ -34,9 +34,11 @@ router.post(
 
 router.post("/login", validator.body(loginSchema), authController.postLogin);
 
-router.put("/update", authController.updateUser )
+router.put("/updatePhoto", authController.updateUserPhoto )
 
 router.get("/getUserById/:user_id", authController.getUserById )
+
+router.get("/getAppliedEvents/:user_id", authController.GetAppliedEvents )
 
 router.get("/test", auth, (req, res) => {
   res.send("Request Passed");

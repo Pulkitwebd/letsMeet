@@ -1,6 +1,6 @@
 const User = require("../../Schemas/user.js");
 
-const updateUser = async (req, res) => {
+const updateUserPhoto = async (req, res) => {
   try {
     const { user_id, userPhoto } = req.body;
 
@@ -20,4 +20,4 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = updateUser;
+module.exports = updateUserPhoto;

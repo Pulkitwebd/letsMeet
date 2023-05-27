@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import dayjs from "dayjs";
-import Modal from "react-modal";
+import imageCompression from "browser-image-compression";
 import { useSelector } from "react-redux";
+import Modal from "react-modal";
+import dayjs from "dayjs";
 import axios from "axios";
 
 import classes from "./Modal.module.css";
@@ -54,13 +55,14 @@ const CreateEventModal = (props) => {
     };
 
     try {
-      const response = await axios.post("/api/feed/feedPost", finalData);
+      const response = await axios.post(
+        "https://letsmeet.onrender.com/api/feed/feedPost",
+        finalData
+      );
 
       if (response.status === 201) {
         setRandomString(
-          Math.random()
-            .toString(36)
-            .substring(2, 15) + Date.now()
+          Math.random().toString(36).substring(2, 15) + Date.now()
         );
         props.toggleModal(response.status, response.data.message);
       }
@@ -88,13 +90,11 @@ const CreateEventModal = (props) => {
   };
 
   const [value, setValue] = useState(dayjs("2023-04-07"));
-  const [showModal, setShowModal] = useState(props.showModal);
-  const [loading, setLoading] = useState(false);
+  const [, setShowModal] = useState(props.showModal);
+  // const [loading, setLoading] = useState(false);
 
-  const [randomString, setRandomString] = useState(
-    Math.random()
-      .toString(36)
-      .substring(2, 15) + Date.now()
+  const [, setRandomString] = useState(
+    Math.random().toString(36).substring(2, 15) + Date.now()
   );
 
   //storign base64 content of eventImageUrl
@@ -136,10 +136,14 @@ const CreateEventModal = (props) => {
   const handleEventImg = async (event) => {
     const selectedFile = event.target.files[0];
 
-    const base64 = await convertToBase64(selectedFile);
-    setEventImageBase64(base64);
-
-    setEventImageUrl(URL.createObjectURL(selectedFile));
+    try {
+      const compressedFile = await handleImageUpload(selectedFile);
+      const base64 = await convertToBase64(compressedFile);
+      setEventImageBase64(base64);
+      setEventImageUrl(URL.createObjectURL(selectedFile));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const steps = [
@@ -186,10 +190,10 @@ const CreateEventModal = (props) => {
 
 export default CreateEventModal;
 
-const convertToBase64 = async (file) => {
+const convertToBase64 = async (compressedFile) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
+    fileReader.readAsDataURL(compressedFile);
     fileReader.onload = () => {
       resolve(fileReader.result);
     };
@@ -197,4 +201,17 @@ const convertToBase64 = async (file) => {
       reject(err);
     };
   });
+};
+
+const handleImageUpload = async (imageFile) => {
+  const options = {
+    maxSizeMB: 0.2, //100 KB
+    maxWidthOrHeight: 1920,
+  };
+  try {
+    const compressedFile = await imageCompression(imageFile, options);
+    return compressedFile;
+  } catch (error) {
+    console.log(error);
+  }
 };

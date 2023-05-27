@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import ReactPaginate from "react-paginate";
 import { FaBorderAll, FaBars, FaAngleRight, FaFilter } from "react-icons/fa";
 import SlidingPane from "react-sliding-pane";
+import { useMediaQuery } from "react-responsive";
 
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,7 +25,9 @@ import loading from "../Assets/loading.gif";
 import HorizontalCards from "../Shared/HorizontalCards/index";
 
 const getAllEvents = (pageNumber) => {
-  return axios.get(`/api/feed/allEvents?pageNumber=${pageNumber}`);
+  return axios.get(
+    `https://letsmeet.onrender.com/api/feed/allEvents?pageNumber=${pageNumber}`
+  );
 };
 
 const Homepage = () => {
@@ -33,6 +36,8 @@ const Homepage = () => {
   const [pageCount, setPageCount] = useState(10);
   const [isPaneOpen, setIsPaneOpen] = useState(false);
   const [gridView, setGridView] = useState(true);
+
+  const isMobileScreen = useMediaQuery({ query: "(max-width: 600px)" });
 
   const { isLoading, data, isError, error } = useQuery(
     [queryKey, pageNumber],
@@ -60,7 +65,7 @@ const Homepage = () => {
 
   const userlocalStorage = JSON.parse(localStorage.getItem("user"));
 
-  const { decodeToken, isExpired, reEvaluateToken } = useJwt(
+  const { isExpired, reEvaluateToken } = useJwt(
     user === null || userlocalStorage === null ? null : userlocalStorage.token
   );
 
@@ -126,7 +131,8 @@ const Homepage = () => {
         onRequestClose={() => setIsPaneOpen(false)}
         closeIcon={<FaAngleRight style={{ height: "30px", width: "30px" }} />}
         from="right"
-        width="30%">
+        width="30%"
+      >
         <div className={classes.filterSection}>
           <Category />
           <Divider />
@@ -143,31 +149,27 @@ const Homepage = () => {
       <div className={classes.eventSections}>
         <div className={classes.createEventDiv}>
           <div className={classes.logoOfverticalHoriCards}>
-            <button
-              type="button"
-              className={`${gridView ? classes.activeButton : ""}`}
-              onClick={() => handleSetGridView()}>
-              <FaBorderAll />
-            </button>
-            <button
-              type="button"
-              className={`${!gridView ? classes.activeButton : ""}`}
-              onClick={() => handleSetListView()}>
-              <FaBars />
-            </button>
-            <button onClick={() => setIsPaneOpen(true)}>
-              <FaFilter />
-            </button>
+            {!isMobileScreen && (
+              <FaBorderAll onClick={() => handleSetGridView()} />
+            )}
+
+            {/* hidding grid view for mobile screen */}
+            {!isMobileScreen && <FaBars onClick={() => handleSetListView()} />}
+
+            <FaFilter onClick={() => setIsPaneOpen(true)} />
           </div>
-          <button className={classes.createEventBtn} onClick={toggleModal}>
-            Create Event
-          </button>
+          {!isMobileScreen && (
+            <button className={classes.createEventBtn} onClick={toggleModal}>
+              Create Event
+            </button>
+          )}
         </div>
 
         <Grid
           container
           className={classes.cardGrid}
-          columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 8 }}>
+          columnSpacing={{ xs: 1, sm: 2, md: 3, lg: 8 }}
+        >
           {isLoading && (
             <div className={classes.loadingBox}>
               <img src={loading} alt="loading gif"></img>
@@ -175,7 +177,6 @@ const Homepage = () => {
           )}
           {data
             ? data.data.data.data.map((event, id) => {
-                console.log(event);
                 return gridView ? (
                   <Grid item xs={12} md={4} key={id}>
                     <Card

@@ -22,36 +22,36 @@
   letter-spacing: 0.8px;
 }
 
-.modalCloseBtn:hover{
+.modalCloseBtn:hover {
   background-color: #1fab89;
-  color : white;
+  color: white;
   border: none;
   letter-spacing: 0.8px;
 }
 
-.steps{
+.steps {
   margin-top: 20px;
 }
 
-.nextButtonCover{
+.nextButtonCover {
   display: flex;
-  justify-content:end;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.prevNextButtonsCover{
+.prevNextButtonsCover {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.prevButton{
+.prevButton {
   border-radius: 4px;
   padding: 7px 20px;
   border: none;
   letter-spacing: 0.8px;
-  border: none
+  border: none;
 }
 
 .nextButton {
@@ -62,13 +62,13 @@
   border: none;
 }
 
-.prevButton:hover{
+.prevButton:hover {
   border-radius: 4px;
   border: none;
   letter-spacing: 0.8px;
   border: none;
   background-color: #1fab89;
-  color : white;
+  color: white;
   cursor: pointer;
 }
 
@@ -78,7 +78,7 @@
   letter-spacing: 0.8px;
   border: none;
   background-color: #1fab89;
-  color : white;
+  color: white;
   cursor: pointer;
 }
 
@@ -116,4 +116,11 @@
   border: 2px solid #1fab89;
   padding: 10px 20px;
   margin: 10px 0 20px 0;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 576px) {
+  .modal {
+    width: 100vw;
+    height: 80vh;
+  }
 }

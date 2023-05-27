@@ -19,7 +19,7 @@ const BlogCard = (props) => {
     .trim();
 
   function handleCardClick(pathTitle) {
-    navigate(`/blog/${pathTitle}`, { state: {blogId : props.id} });
+    navigate(`https://letsmeet.onrender.com/blog/${pathTitle}`, { state: {blogId : props.id} });
   }
 
   return (
