@@ -23,7 +23,9 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
     }
 
     axios
-      .get(`https://letsmeet.onrender.com/api/auth/getUserById/${event.user_id}`)
+      .get(
+        `https://letsmeet.onrender.com/api/auth/getUserById/${event.user_id}`
+      )
       .then((response) => {
         setUserPhoto(response.data.user.photo);
       })
@@ -73,7 +75,19 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const handleParticularEventPage = () =>
     navigate(`/event/${event._id}`, { state: { userPhoto } });
 
-  const description = event && event.desc ? event.desc.charAt(0).toUpperCase() + event.desc.slice(1) : "";
+  // const description = event && event.desc ? event.desc.charAt(0).toUpperCase() + event.desc.slice(1) : "";
+
+  const description = event && event.desc ? event.desc : "";
+  const truncatedDescription = description
+    .replace(/(<([^>]+)>)/gi, "")
+    .split(" ")
+    .slice(0, 50)
+    .join(" ");
+
+  const truncatedDescriptionWithEllipsis =
+    description.length > 50
+      ? truncatedDescription + "..."
+      : truncatedDescription;
 
   let date = event && event.meetDate ? event.meetDate : "";
   let startIndex = date && date.indexOf("T") + 1;
@@ -116,7 +130,14 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
         <div
           className={classes.meetDate}
         >{`${requiredDateFormat} ${requiredTimeFormat}`}</div>
-        <div className={classes.EventDesc}>{description}</div>
+        <div className={classes.EventDesc}>
+          <div
+            className={classes.eventDetailsPara}
+            dangerouslySetInnerHTML={{
+              __html: truncatedDescriptionWithEllipsis,
+            }}
+          ></div>
+        </div>
         <div>Person Needed : {event.personNeeded}</div>
         <button
           onClick={handleParticularEventPage}

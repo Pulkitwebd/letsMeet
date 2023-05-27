@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 import { Grid } from "@mui/material";
 import axios from "axios";
 
+import "react-quill/dist/quill.snow.css";
 import loading from "../../../Assets/loading.gif";
 import classes from "./Event.module.css";
 import profile from "../../../Assets/profile.jpg";
@@ -58,7 +59,9 @@ const EventPage = () => {
     const userfetchedInitially = [];
     for (const applicant of data.data.applicants) {
       try {
-        const response = await axios.get(`https://letsmeet.onrender.com/api/auth/getUserById/${applicant}`);
+        const response = await axios.get(
+          `https://letsmeet.onrender.com/api/auth/getUserById/${applicant}`
+        );
         userfetchedInitially.push(response.data.user);
       } catch (err) {
         console.error(err);
@@ -97,7 +100,9 @@ const EventPage = () => {
         });
         try {
           const response = await axios.get(
-            `https://letsmeet.onrender.com/api/auth/getUserById/${user ? user.user._id : ""}`
+            `https://letsmeet.onrender.com/api/auth/getUserById/${
+              user ? user.user._id : ""
+            }`
           );
           //adding new applied after click apply to event user to existing applied user
           setUsersOfevent((prevUsers) => [...prevUsers, response.data.user]);
@@ -192,37 +197,14 @@ const EventPage = () => {
             <div className={classes.eventDetailsParaBox}>
               <h2>Details</h2>
 
-              <p className={classes.eventDetailsPara}>
-                Presenting an engaging session on SC 200 - Security &
-                Governance, an essential Microsoft Certification that is very
-                much in demand. The role of a Microsoft Security Operations
-                Analyst is a very critical one and plays a vital role in
-                configuring and deploying these technologies. Synopsis: This
-                session would enable Security Operations analysts to perform
-                their key responsibilities like threat management, monitoring,
-                and response by using a variety of security solutions across
-                their environment. It would also help them perform their role
-                which primarily investigate, responds to, and hunt for threats
-                using Microsoft Azure Sentinel, Azure Defender, Microsoft 365
-                Defender, and third-party security products. Since the security
-                operations analyst consumes the operational output of these
-                tools, they are also a critical stakeholder in the configuration
-                and deployment of these technologies. Agenda: Microsoft security
-                operations analyst collaborates with organizational stakeholders
-                to secure information technology systems for the organization.
-                Their goal is to reduce organizational risk by rapidly
-                remediating active attacks in the environment, advising on
-                improvements to threat protection practices, and referring
-                violations of organizational policies to appropriate
-                stakeholders. The core agenda would be covering key topics to
-                help the operations analyst to achieve the same. To know more
-                submit your entry here: https://forms.office.com/r/y3AmwEJvLi
-                Note: Registration is mandatory to attend the session.
-              </p>
+              <div
+                className={classes.eventDetailsPara}
+                dangerouslySetInnerHTML={{ __html: data.data.desc }}
+              ></div>
             </div>
 
             <div className={classes.attendiesBox}>
-              <h2>Attendies {data.data.applicants.length}</h2>
+              <h2>Attendies {usersOfevent.length}</h2>
 
               <Grid container spacing={3}>
                 {usersOfevent.map((user, index) => {
