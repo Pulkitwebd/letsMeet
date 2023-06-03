@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const REGISTER_URL = "/api/auth/register";
-const LOGIN_URL = "/api/auth/login";
-const UPDATE_URL = "/api/auth/update";
+const REGISTER_URL = "https://letsmeet.onrender.com/api/auth/register";
+const LOGIN_URL = "https://letsmeet.onrender.com/api/auth/login";
+const UPDATE_URL = "https://letsmeet.onrender.com/api/auth/updatePhoto";
 
 //Register user
 const register = async (userData) => {
@@ -25,16 +25,15 @@ const login = async (userData) => {
   return response.data;
 };
 
-//update user
-const update = async (userData) => {
+//Update user
+const updatePhoto = async (userData) => {
   let user;
   const response = await axios.put(UPDATE_URL, userData);
 
-  if (response.status == 201) {
+  if (response.status === 201) {
     try {
       const userJson = localStorage.getItem("user");
       const user = JSON.parse(userJson);
-
 
       const updatedUserData = response.data.updatedUser;
       user.user.photo = updatedUserData.photo;
@@ -51,11 +50,11 @@ const update = async (userData) => {
   return user;
 };
 
-//logout
+//Logout
 const logout = () => {
   localStorage.removeItem("user");
 };
 
-const authService = { register, logout, login, update };
+const authService = { register, logout, login, updatePhoto };
 
 export default authService;

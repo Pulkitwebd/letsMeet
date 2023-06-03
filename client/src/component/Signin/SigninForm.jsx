@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { Formik, Form } from "formik";
+
+import { login, reset } from "../../Redux/Auth/authSlice";
 import TextField from "../Shared/TextField";
 import classes from "./Signin.module.css";
-import { Formik, Form } from "formik";
 import { validation } from "./validation";
-import { useSelector, useDispatch } from "react-redux";
-import { login, reset } from "../../Redux/Auth/authSlice";
 
 const SigninForm = ({ showPassPage }) => {
+  const [showToast, setShowToast] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [invalidCredential, setInvalidCredential] = useState(false);
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
@@ -23,11 +27,11 @@ const SigninForm = ({ showPassPage }) => {
 
   useEffect(() => {
     if (isError) {
-      console.log("isError", isError);
-      setInvalidCredential(true)
+      setInvalidCredential(true);
     }
 
     if (isSuccess || user) {
+      setShowToast(false)
       navigate("/");
     }
 
@@ -36,6 +40,7 @@ const SigninForm = ({ showPassPage }) => {
 
   return (
     <>
+      {showToast && <ToastContainer />}
       <h1 className={classes.loginName}>Log in</h1>
       {invalidCredential ? (
         <p className={classes.invalidCred}>
@@ -48,6 +53,13 @@ const SigninForm = ({ showPassPage }) => {
         initialValues={{ email: "", password: "" }}
         validationSchema={validation}
         onSubmit={(values) => {
+          setShowToast(true);
+          toast.success("Please Wait", {
+            closeOnClick: true,
+            draggable: true,
+            pauseOnHover: false,
+            autoClose: 1000,
+          });
           dispatch(login(values));
         }}
       >

@@ -16,14 +16,16 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    if (user !== null && user.user._id == event.user_id) {
+    if (user !== null && user.user._id === event.user_id) {
       setShowThreeDots(true);
     } else {
       setShowThreeDots(false);
     }
 
     axios
-      .get(`/api/auth/getUserById/${event.user_id}`)
+      .get(
+        `https://letsmeet.onrender.com/api/auth/getUserById/${event.user_id}`
+      )
       .then((response) => {
         setUserPhoto(response.data.user.photo);
       })
@@ -46,7 +48,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
 
   const handleDeleteEventApi = () => {
     axios
-      .delete("/api/feed/event", {
+      .delete("https://letsmeet.onrender.com/api/feed/event", {
         data: {
           eventId: event._id,
           user_id: user.user._id,
@@ -73,15 +75,27 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const handleParticularEventPage = () =>
     navigate(`/event/${event._id}`, { state: { userPhoto } });
 
-  const description = event.desc.charAt(0).toUpperCase() + event.desc.slice(1);
+  // const description = event && event.desc ? event.desc.charAt(0).toUpperCase() + event.desc.slice(1) : "";
 
-  let date = event.meetDate;
-  let startIndex = date.indexOf("T") + 1;
-  let endIndex = date.indexOf(".");
-  let requiredTimeFormat = date.substring(startIndex, endIndex);
+  const description = event && event.desc ? event.desc : "";
+  const truncatedDescription = description
+    .replace(/(<([^>]+)>)/gi, "")
+    .split(" ")
+    .slice(0, 50)
+    .join(" ");
 
-  let dateString = event.meetDate;
-  let requiredSring = dateString.split(" ")[0];
+  const truncatedDescriptionWithEllipsis =
+    description.length > 50
+      ? truncatedDescription + "..."
+      : truncatedDescription;
+
+  let date = event && event.meetDate ? event.meetDate : "";
+  let startIndex = date && date.indexOf("T") + 1;
+  let endIndex = date && date.indexOf(".");
+  let requiredTimeFormat = date && date.substring(startIndex, endIndex);
+
+  let dateString = event && event.meetDate ? event.meetDate : "";
+  let requiredSring = dateString && dateString.split(" ")[0];
   let date1 = new Date(requiredSring);
   let options = { weekday: "short", month: "short", day: "2-digit" };
   let requiredDateFormat = date1.toLocaleDateString("en-US", options);
@@ -102,7 +116,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
       )}
       <div className={classes.placePhoto}>
         {imageSrc ? (
-          <img src={imageSrc} alt="Event Image" />
+          <img src={imageSrc} alt="Event" />
         ) : (
           <div>Loading image...</div>
         )}
@@ -116,7 +130,14 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
         <div
           className={classes.meetDate}
         >{`${requiredDateFormat} ${requiredTimeFormat}`}</div>
-        <div className={classes.EventDesc}>{description}</div>
+        <div className={classes.EventDesc}>
+          <div
+            className={classes.eventDetailsPara}
+            dangerouslySetInnerHTML={{
+              __html: truncatedDescriptionWithEllipsis,
+            }}
+          ></div>
+        </div>
         <div>Person Needed : {event.personNeeded}</div>
         <button
           onClick={handleParticularEventPage}

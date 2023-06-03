@@ -1,52 +1,60 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { GoThumbsup, GoThumbsdown, GoClock } from "react-icons/go";
-import { useSelector, useDispatch } from "react-redux";
 import { AiFillEdit } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useQuery } from "react-query";
+import loading from "../Assets/loading.gif";
+
 import classes from "./Profile.module.css";
 import HorizontalCards from "../Shared/HorizontalCards/index";
 import PhotoModal from "./PhotoModal/index";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
+import UpdateProfile from "./UpdateProfile/index";
+
+const getEventOfUser = (userId) => {
+  return axios.get(
+    `https://letsmeet.onrender.com/api/auth/getAppliedEvents/${userId}`
+  );
+};
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
 
-  const [showToast, setShowToast] = useState(false);
+  const userId = user && user.user && user.user._id;
+
+  const { isLoading, data } = useQuery(["getAppliedEvents", userId], () =>
+    userId ? getEventOfUser(userId) : null
+  );
+
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
 
-  const toggleModal = () => {
+  const togglePhototModal = () => {
     setPhotoModalStatus(!photoModalStatus);
   };
-  
-  // setShowToast(true);
-  // toast.success("Photo is updated successfully!", {
-  //   closeOnClick: true,
-  //   draggable: true,
-  //   pauseOnHover: false,
-  //   autoClose: 2000,
-  // });
 
+  const [profileUpdateModal, setProfileUpdateModal] = useState(false);
 
-  const openModal = () => {
-    return setPhotoModalStatus(true);
+  const openProfileUpdateModal = () => {
+    setProfileUpdateModal((currentValue) => !currentValue);
   };
 
   return (
     <div>
-      {showToast && <ToastContainer />}
+      {/* {showToast && <ToastContainer />} */}
       <PhotoModal
         photoModalStatus={photoModalStatus}
-        togglePhotoModal={toggleModal}
+        togglePhotoModal={togglePhototModal}
       />
       <div className={classes.userPhotoDesc}>
         <div className={classes.userPhotoDiv}>
           <img
             alt="user"
-            src={user.user ? user.user.photo : userDummyImage}
+            src={user && user.user ? user.user.photo : userDummyImage}
             className={classes.userPhoto}
           ></img>
-          <div className={classes.editImage} onClick={openModal}>
+          <div className={classes.editImage} onClick={togglePhototModal}>
             <AiFillEdit />
           </div>
         </div>
@@ -107,12 +115,24 @@ const Profile = () => {
 
       <div className={classes.RecentPost_RecentComments_EditAccount}>
         <div className={classes.activeDiv}>All Events</div>
-        <div>Edit Account</div>
+        <UpdateProfile
+          showModal={profileUpdateModal}
+          toggalProfileModal={openProfileUpdateModal}
+        />
+        <button className="btn  mt-3" onClick={openProfileUpdateModal}>
+          <AiFillEdit
+            style={{ fontSize: 30, transform: "translate(3850%, -1070%)" }}
+          />
+        </button>
       </div>
 
       <div className={classes.eventsHorizontalDiv}>
-        <HorizontalCards />
-        <HorizontalCards />
+        {isLoading && <img src={loading} alt="loading" />}
+        {data &&
+          data.data.length > 0 &&
+          data.data.map((event, id) => {
+            return <HorizontalCards event={event} />;
+          })}
       </div>
     </div>
   );

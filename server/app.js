@@ -1,12 +1,15 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const http = require("http");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require('dotenv');
+const bodyParser = require("body-parser");
+
 const authRoutes = require("./Routes/authRoutes.js");
 const reset_forgotPasswordRoute = require("./Routes/reset_forgotPasswordRoute.js")
-const dotenv = require('dotenv');
-const cors = require("cors");
 const feedRoutes = require("./Routes/feedRoutes.js") ;
-const bodyParser = require("body-parser")
+const blogRoutes = require("./Routes/blogRoutes.js");
+
 dotenv.config();
 
 mongoose.connect(
@@ -35,10 +38,12 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use('/api', reset_forgotPasswordRoute);
 
-// Homepage feed api 
+// Homepage feed api paths
 app.use("/api/feed", feedRoutes)
+
+// Blog api paths
+app.use("/api/blog", blogRoutes)
 
 server.listen(PORT, () => {
   console.log(`Port is running at ${PORT}`);
 });
-

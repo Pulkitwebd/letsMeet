@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
-import cardsData from "../cardJson";
 import classes from "./Blog.module.css";
 import clockicon from "../../Assets/CLOCK.webp";
 import readicon from "../../Assets/read_time_icon.jpg";
@@ -13,26 +11,36 @@ import { FcLike } from "react-icons/fc";
 import SlidingPane from "react-sliding-pane";
 import Comment from "./Comment";
 import "react-sliding-pane/dist/react-sliding-pane.css";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
 
+const getBlog = (eventId) => {
+  return axios.get(`/api/blog/${eventId}`);
+};
 
 const Blog = () => {
-  const [cards, setCards] = useState(cardsData);
   const [isLiked, setIsLiked] = useState(false);
   const [likes, setLikes] = useState(0);
   const [isPaneOpen, setIsPaneOpen] = useState(false);
 
-  const { id } = useParams();
+  const location = useLocation();
+  const blogId = location.state.blogId;
+
+  const [queryKey] = useState("get-blog");
+
+  const { data } = useQuery([queryKey, blogId], () => getBlog(blogId));
+
+  // const { id } = useParams();
 
   const handleLikeClick = () => {
     setIsLiked(!isLiked);
-    likes == 1 ? setLikes(0) : setLikes(1);
+    likes === 1 ? setLikes(0) : setLikes(1);
   };
 
-  // const handleComments = () => {
-  //   {comments}
-  // };
+  console.log("testing blogid in blog page", blogId);
+  console.log(data ? data.data.title : "no data found");
 
-  console.log(cards[id]);
   return (
     <div className={classes.container}>
       <SlidingPane
@@ -41,35 +49,36 @@ const Blog = () => {
         from="right"
         width="35%"
       >
-        {/* Content of your pane goes here */}
-        {/* heloooos */}
-        <Comment/>
+        {/* Content of  pane goes here  */}
+        <Comment />
       </SlidingPane>
-      <h2 className={classes.cardTitle}>{cards[id - 1].title}</h2>
+      <h2 className={classes.cardTitle}>{data && data.data.title}</h2>
 
       <div className={classes.blogDetailsCover}>
         <div className={classes.BlogDetails}>
-          <h4 className={classes.aName}>By {cards[id - 1].authorName}</h4>
+          <h4 className={classes.aName}>By {data && data.data.author}</h4>
 
           <div className={classes.timeDetails}>
             <img className={classes.clockicon} src={clockicon} alt="" />
             <h4 className={classes.creationDate}>
-              {cards[id - 1].creationDateAndTime}
+              {/* {cards[id - 1].creationDateAndTime} */}
             </h4>
           </div>
           <div className={classes.readDetails}>
             <img className={classes.readTimeicon} src={readicon} alt="" />
-            <h4 className={classes.readTime}>{cards[id - 1].timeToRead}</h4>
+            {/* <h4 className={classes.readTime}>{cards[id - 1].timeToRead}</h4> */}
           </div>
         </div>
       </div>
 
       <div className={classes.img_textContainer}>
         <div className={classes.imgContainer}>
-          <img src={cards[id - 1].imageUrl} alt="" />
+          {/* <img src={cards[id - 1].imageUrl} alt="" /> */}
         </div>
         <div className={classes.textContainer}>
-          <p className={classes.text}>{cards[id - 1].description}</p>
+          <p className={classes.text}>
+            {data && data.data.headings[0].paragraphs[0]}
+          </p>
         </div>
       </div>
       <div className={classes.bar}>

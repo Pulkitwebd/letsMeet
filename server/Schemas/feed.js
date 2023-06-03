@@ -6,7 +6,7 @@ const feedSchema = mongoose.Schema({
   },
 
   postingDate: {
-    type: String,
+    type: Date,
   },
 
   address: {},
@@ -33,6 +33,10 @@ const feedSchema = mongoose.Schema({
 
   organiserName: {
     type: String,
+  },
+
+  applicants: {
+    type: [String], // Array of string values representing user IDs
   },
 
   eventImage: String,

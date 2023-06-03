@@ -1,4 +1,4 @@
-const User = require("../../Schemas/userSchema.js");
+const User = require("../../Schemas/user.js");
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 
@@ -16,7 +16,7 @@ const sendResetPasswordMail = async (name, email, token) => {
       from: process.env.EMAIL,
       to: email,
       subject: "Let's meet - Reset Your Password",
-      html: `<p>Hi ${name}, Please copy the Link and <a href="http://localhost:3000/reset-password?token=${token}"> reset your password</a></p>`,
+      html: `<p>Hi ${name}, Please copy the Link and <a href="https://letsmeet.onrender.com/reset-password?token=${token}"> reset your password</a></p>`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

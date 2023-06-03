@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
-import dayjs from "dayjs";
-import Modal from "react-modal";
+import imageCompression from "browser-image-compression";
 import { useSelector } from "react-redux";
+import Modal from "react-modal";
+import dayjs from "dayjs";
 import axios from "axios";
 
 import classes from "./Modal.module.css";
 import MutliStepProgessBar from "./multiStepProgessBar/index.js";
 
-import { StepOne, StepTwo, StepThree } from './formsAllSteps/index';
+import { StepOne, StepTwo, StepThree } from "./formsAllSteps/index";
 
 const CreateEventModal = (props) => {
   // step of mutlistepbar
   const [currentStep, setCurrentStep] = useState(1);
 
-  const [eventData, setEventData] = useState({
+  //getting data of user from redux
+  const { user } = useSelector((state) => state.auth);
+  const [userDetails, setUserDetails] = useState({});
+
+  const emptyEventData = {
     organiser_user_id: user ? user.user._id : "",
     organiserName: user ? userDetails.userFullName : "",
     landmark: "",
@@ -25,9 +30,11 @@ const CreateEventModal = (props) => {
     personNeeded: "",
     desc: "",
     eventImage: "",
-  });
+  };
 
-  const makeRequest = (eventData) => {
+  const [eventData, setEventData] = useState(emptyEventData);
+
+  const makeRequest = async (eventData) => {
     let finalData = {
       organiserName: user ? userDetails.userFullName : "",
       user_id: user ? user.user._id : "",
@@ -47,23 +54,23 @@ const CreateEventModal = (props) => {
       eventImage: eventImageBase64,
     };
 
-    axios
-      .post("/api/feed/feedPost", finalData)
-      .then((response) => {
-        if (response.status == 201) {
-          setLoading(false);
-          setRandomString(
-            Math.random()
-              .toString(36)
-              .substring(2, 15) + Date.now()
-          );
-          props.toggleModal(response.status, response.data.event, randomString);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    console.log("form submitted", eventData);
+    try {
+      const response = await axios.post(
+        "https://letsmeet.onrender.com/api/feed/feedPost",
+        finalData
+      );
+
+      if (response.status === 201) {
+        setRandomString(
+          Math.random().toString(36).substring(2, 15) + Date.now()
+        );
+        props.toggleModal(response.status, response.data.message);
+      }
+    } catch (error) {
+      if (error.response.status === 429) {
+        props.toggleModal(error.response.status, error.response.data.message);
+      }
+    }
   };
 
   const handlePrevStep = (newData) => {
@@ -75,7 +82,6 @@ const CreateEventModal = (props) => {
     setEventData((prev) => ({ ...prev, ...newData }));
 
     if (final) {
-      console.log("hello");
       makeRequest(newData);
       return;
     }
@@ -84,13 +90,11 @@ const CreateEventModal = (props) => {
   };
 
   const [value, setValue] = useState(dayjs("2023-04-07"));
-  const [showModal, setShowModal] = useState(props.showModal);
-  const [loading, setLoading] = useState(false);
+  const [, setShowModal] = useState(props.showModal);
+  // const [loading, setLoading] = useState(false);
 
-  const [randomString, setRandomString] = useState(
-    Math.random()
-      .toString(36)
-      .substring(2, 15) + Date.now()
+  const [, setRandomString] = useState(
+    Math.random().toString(36).substring(2, 15) + Date.now()
   );
 
   //storign base64 content of eventImageUrl
@@ -99,13 +103,11 @@ const CreateEventModal = (props) => {
   // eventImageUrl is used here to show event image in modal
   const [eventImageUrl, setEventImageUrl] = useState(null);
 
-  const [userDetails, setUserDetails] = useState({});
-
-  //getting data of user from redux
-  const { user } = useSelector((state) => state.auth);
-
   useEffect(() => {
     setShowModal(props.showModal);
+    // when modal open formstep will be 1 and eventData key --- values will be empty
+    setEventData(emptyEventData);
+    setCurrentStep(1);
     //getting user detail from redux and store in userDetails for full name and email of user
     if (user) {
       setUserDetails({
@@ -134,10 +136,14 @@ const CreateEventModal = (props) => {
   const handleEventImg = async (event) => {
     const selectedFile = event.target.files[0];
 
-    const base64 = await convertToBase64(selectedFile);
-    setEventImageBase64(base64);
-
-    setEventImageUrl(URL.createObjectURL(selectedFile));
+    try {
+      const compressedFile = await handleImageUpload(selectedFile);
+      const base64 = await convertToBase64(compressedFile);
+      setEventImageBase64(base64);
+      setEventImageUrl(URL.createObjectURL(selectedFile));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const steps = [
@@ -184,10 +190,10 @@ const CreateEventModal = (props) => {
 
 export default CreateEventModal;
 
-const convertToBase64 = async (file) => {
+const convertToBase64 = async (compressedFile) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
+    fileReader.readAsDataURL(compressedFile);
     fileReader.onload = () => {
       resolve(fileReader.result);
     };
@@ -197,212 +203,15 @@ const convertToBase64 = async (file) => {
   });
 };
 
-
-{
-  /* <Formik
-        initialValues={{
-          organiser_user_id: user ? user.user._id : "",
-          organiserName: user ? userDetails.userFullName : "",
-          landmark: "",
-          houseNo: "",
-          area: "",
-          city: "",
-          state: "",
-          category: "",
-          personNeeded: "",
-          desc: "",
-          eventImage: "",
-        }}
-        validationSchema={validation}
-        onSubmit={(values) => {
-          let createEvent = {
-            organiserName: values.organiserName,
-            user_id: values.organiser_user_id,
-            title: values.title,
-            postingDate: formattedTimeStamp,
-            meetDate: value.$d,
-            address: {
-              houseNoflatNo: values.houseNo,
-              landmark: values.landmark,
-              area: values.area,
-              city: values.city,
-              state: values.state,
-            },
-            personNeeded: values.personNeeded,
-            category: values.category,
-            desc: values.desc,
-            eventImage: eventImageBase64,
-          };
-
-          setLoading(true);
-          axios
-            .post("/api/feed/feedPost", createEvent)
-            .then((response) => {
-              if (response.status == 201) {
-                setLoading(false);
-                setRandomString(
-                  Math.random()
-                    .toString(36)
-                    .substring(2, 15) + Date.now()
-                );
-                props.toggleModal(
-                  response.status,
-                  response.data.event,
-                  randomString
-                );
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }}
-      >
-        {(formik) => (
-          <Form onSubmit={formik.handleSubmit}>
-            <label>Schedule Event Date and time : </label>
-            <div style={{ marginTop: "5px" }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateTimePicker
-                  renderInput={(props) => <TextField {...props} />}
-                  label=""
-                  value={value}
-                  onChange={(newValue) => {
-                    setValue(newValue);
-                  }}
-                  name="Time"
-                />
-              </LocalizationProvider>
-            </div>
-
-            <CustomTextField
-              type="text"
-              name="fullName"
-              label="Full Name : "
-              placeholder={`${userDetails.userFullName}`}
-              isDisabled={true}
-              style={{ marginTop: "10px" }}
-            />
-
-            <CustomTextField
-              type="email"
-              name="email"
-              label="Email : "
-              placeholder={`${userDetails.userEmail}`}
-              isDisabled={true}
-            />
-
-            <CustomTextField
-              type="text"
-              name="title"
-              label="Title : "
-              placeholder=""
-            />
-
-            <div className={classes.categorySelect}>
-              <label>Category : </label>
-              <Select
-                name="category"
-                options={category}
-                classNamePrefix="select"
-                onChange={(category) =>
-                  formik.setFieldValue("category", category.value)
-                }
-              />
-              {formik.touched.category && formik.errors.category ? (
-                <div style={{ color: "red" }}>{formik.errors.category}</div>
-              ) : null}
-            </div>
-
-            <div>
-              <input
-                type="file"
-                name="eventImage"
-                placeholder="Choose Event Image"
-                onChange={handleEventImg}
-                accept=".jpeg, .png, .jpg"
-              />
-              <div>
-                {eventImageUrl && (
-                  <img
-                    src={eventImageUrl}
-                    className={classes.eventImg}
-                    alt="Selected"
-                  />
-                )}
-              </div>
-            </div>
-
-            <CustomTextField
-              type="number"
-              name="personNeeded"
-              label="Person Needed : "
-              placeholder=""
-            />
-
-            <CustomTextField
-              type="text"
-              name="houseNo"
-              label="Flat, House no, Building, Company, Apartment : "
-              placeholder=""
-            />
-
-            <CustomTextField
-              type="text"
-              name="area"
-              label="Area, Street, Sector, Village : "
-              placeholder=""
-            />
-
-            <CustomTextField
-              type="text"
-              name="landmark"
-              label="Land Mark : "
-              placeholder=""
-            />
-
-            <CustomTextField
-              type="textarea"
-              cols="5"
-              rows="5"
-              name="desc"
-              label="Description : "
-              placeholder=""
-            />
-
-            <div className={classes.categorySelect}>
-              <label>City : </label>
-              <Select
-                name="city"
-                options={cityNames}
-                classNamePrefix="select"
-                onChange={(city) => formik.setFieldValue("city", city.value)}
-              />
-              {formik.touched.city && formik.errors.city ? (
-                <div style={{ color: "red" }}>{formik.errors.city}</div>
-              ) : null}
-            </div>
-
-            <div className={classes.categorySelect}>
-              <label>State : </label>
-              <Select
-                name="state"
-                options={indianStates}
-                onChange={(state) => formik.setFieldValue("state", state.value)}
-                classNamePrefix="select"
-              />
-              {formik.touched.state && formik.errors.state ? (
-                <div style={{ color: "red" }}>{formik.errors.state}</div>
-              ) : null}
-            </div>
-
-            {!loading ? (
-              <button type="submit" className={classes.submitBtn}>
-                Submit
-              </button>
-            ) : (
-              <button className={classes.submitBtn}>loading</button>
-            )}
-          </Form>
-        )}
-      </Formik> */
-}
+const handleImageUpload = async (imageFile) => {
+  const options = {
+    maxSizeMB: 0.2, //100 KB
+    maxWidthOrHeight: 1920,
+  };
+  try {
+    const compressedFile = await imageCompression(imageFile, options);
+    return compressedFile;
+  } catch (error) {
+    console.log(error);
+  }
+};

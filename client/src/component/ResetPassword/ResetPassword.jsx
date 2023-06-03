@@ -26,7 +26,7 @@ const ResetPassword = () => {
           onSubmit={(values) => {
             Axios
               .post(
-                `http://localhost:3001/api/reset-password?token=${searchParams.get(
+                `https://letsmeet.onrender.com/api/reset-password?token=${searchParams.get(
                   "token"
                 )}`,
                 {

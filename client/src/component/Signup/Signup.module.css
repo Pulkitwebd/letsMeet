@@ -2,9 +2,7 @@
   width: auto;
   display: flex;
   justify-content: center;
-  /* background-color: #d8fbe9; */
   align-items: center;
-  /* z-index: -5; */
 }
 
 .rightCircle {
@@ -81,7 +79,6 @@
   justify-content: center;
   align-items: center;
   padding-top: 40px;
-  /* align-items: flex-start; */
 }
 
 .formCover form {
@@ -145,7 +142,7 @@ input:focus {
 }
 
 .leftCircle {
-  background-color:#1fab89;
+  background-color: #1fab89;
   z-index: -1;
   position: absolute;
   height: 40rem;
@@ -162,27 +159,26 @@ input:focus {
   flex-direction: column;
 }
 /*----------------------mobile---------*/
-@media only screen and (min-width:0px) and (max-width: 576px){
-  .picture{
+@media only screen and (min-width: 0px) and (max-width: 576px) {
+  .picture {
     display: none;
-   }
-  .mainSignupBox{
+  }
+  .mainSignupBox {
     height: 80vh !important;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .formMainBox{
-    width:90% !important;
+  .formMainBox {
+    width: 90% !important;
   }
 }
 /*---------------------------tablet-------------------------------*/
-@media only screen and (min-width:576px) and (max-width: 768px) {
-  .picture
-  {
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+  .picture {
     display: none;
   }
-  .mainSignupBox{
+  .mainSignupBox {
     height: 75vh !important;
     display: flex;
     align-items: center;
@@ -191,7 +187,7 @@ input:focus {
   .formCover form {
     width: 100%;
   }
-  .formMainBox{
-    width:70% !important;
+  .formMainBox {
+    width: 70% !important;
   }
 }

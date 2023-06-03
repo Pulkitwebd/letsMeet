@@ -5,7 +5,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { Formik, Form } from "formik";
 import Select from "react-select";
+import ReactQuill from "react-quill";
 
+import "react-quill/dist/quill.snow.css";
 import CustomTextField from "../../../Shared/TextField";
 import indianStates from ".././StateNames";
 import cityNames from ".././CityNames";
@@ -15,7 +17,6 @@ import { StepOneValidation, StepTwoValidation } from "./validationAllSteps";
 
 export const StepOne = (props) => {
   const handleSubmit = (values) => {
-    console.log("Step 1", values);
     props.next(values);
   };
 
@@ -44,12 +45,19 @@ export const StepOne = (props) => {
             isDisabled={true}
           />
 
-          <CustomTextField
+          <label htmlFor="title">Title: </label>
+          <input
             type="text"
-            name="title"
-            label="Title : "
-            placeholder=""
+            id="title"
+            {...formik.getFieldProps("title")}
+            className={`${classes.title} ${
+              formik.errors.title ? classes.onErrorInput : ""
+            }`}
           />
+          {formik.touched.title ||
+            (formik.errors.title && (
+              <div style={{ color: "red" }}>{formik.errors.title}</div>
+            ))}
 
           <div className={classes.categorySelect}>
             <label>Category : </label>
@@ -73,14 +81,23 @@ export const StepOne = (props) => {
             placeholder=""
           />
 
-          <CustomTextField
+          {/* <CustomTextField
             type="textarea"
             cols="5"
             rows="5"
             name="desc"
             label="Description : "
             placeholder=""
+          /> */}
+          <label>Description: </label>
+          <ReactQuill
+            value={formik.values.desc}
+            onChange={(value) => formik.setFieldValue("desc", value)}
+            placeholder="Enter description..."
           />
+          {formik.touched.desc && formik.errors.desc && (
+            <div style={{ color: "red" }}>{formik.errors.desc}</div>
+          )}
 
           <label>Schedule Event Date and time : </label>
           <div style={{ marginTop: "5px" }}>
@@ -110,7 +127,6 @@ export const StepOne = (props) => {
 
 export const StepTwo = (props) => {
   const handleSubmit = (values) => {
-    console.log("Step 2", values);
     props.next(values);
   };
 
@@ -189,7 +205,6 @@ export const StepTwo = (props) => {
 
 export const StepThree = (props) => {
   const handleSubmit = (values) => {
-    console.log("Step 3", values);
     props.next(values, true);
   };
 

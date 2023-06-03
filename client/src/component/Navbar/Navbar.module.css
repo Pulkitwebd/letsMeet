@@ -5,6 +5,7 @@
   align-items: center;
   background-color: #1fab89;
   border-bottom: 3px solid white;
+  color: #fff;
 }
 
 .logo {
@@ -33,13 +34,29 @@
   font-size: 18px;
   letter-spacing: 0.8px;
   text-decoration: none;
+  border-bottom: 4px solid #fff;
+  margin-top:20px;
+  padding-bottom: 10px;
 }
 
 .link {
-  color: #1330ed;
+  color: #fff;
   font-size: 18px;
   letter-spacing: 0.8px;
   text-decoration: none;
+}
+
+.link a{
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+}
+.link a:hover {
+  color: #fff;
+  border-bottom: 4px solid #fff;
+  padding-bottom: 10px;
 }
 
 .loginSignup_box {
@@ -48,6 +65,18 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+.loginSignup_box a{
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+}
+.loginSignup_box a:hover{
+  color: #fff;
+  border-bottom: 4px solid #fff;
+  padding-bottom: 10px;
 }
 
 .logout_box {
@@ -76,10 +105,44 @@
   width: 50px;
 }
 
-@media only screen and (min-width: 0px) and (max-width: 768px) {
-  .navlinks {
-    display: none;
+/* for mobile */
+@media only screen and (min-width: 0px) and (max-width: 576px) {
+  .navbar {
+    height: 0px !important;
   }
+  .mobileNavbar {
+    background-color: #1fab89;
+    width: 100%;
+    position: fixed !important;
+    bottom: 0;
+    z-index: 1;
+    padding: 3px 3px;
+    display: flex;
+    height: 50px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .homeLogo svg {
+    height: 40px;
+    width: 40px;
+    padding-left: 10px;
+  }
+  .plusLogo svg {
+    height: 35px;
+    width: 35px;
+  }
+  .loginButton svg {
+    height: 40px;
+    width: 40px;
+    padding-right: 10px;
+  }
+  .profile {
+    height: 40px !important;
+    width: 40px !important;
+  }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 768px) {
   .navbar {
     height: 50px;
 
@@ -128,6 +191,7 @@
     height: 20px;
     cursor: pointer;
   }
+
   .messageIcon svg {
     color: black;
     height: 25px;
