@@ -18,6 +18,7 @@ import Blogs from "./component/Blogs/index";
 import EventPage from "./component/Homepage/EventsSection/EventPage/index";
 import "./App.css";
 import Dashboard from "./component/Dashboard";
+import LandingPage from "./component/LandingPage";
 
 const queryClient = new QueryClient();
 
@@ -31,7 +32,8 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       {showNavbar && <Navbar />}
       <Routes>
-        <Route exact path="/" element={<Homepage />} />
+        <Route exact path="/" element={<LandingPage />} />
+        <Route exact path="/home" element={<Homepage />} />
         <Route exact path="/blogs" element={<Blogs />} />
         <Route exact path="/blog/:id" element={<BlogPage />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
