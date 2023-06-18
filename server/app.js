@@ -11,7 +11,6 @@ const feedRoutes = require("./Routes/feedRoutes.js") ;
 const blogRoutes = require("./Routes/blogRoutes.js");
 
 dotenv.config();
-
 mongoose.connect(
   process.env.MONGODB_URI, 
   {
