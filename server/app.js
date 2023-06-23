@@ -25,7 +25,6 @@ app.use(express.json());
 app.use(cors());
 
 dotenv.config();
-
 mongoose.connect(
   process.env.MONGODB_URI, 
   {

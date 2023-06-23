@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-.titleApplyEventbtnCover{
+.titleApplyEventbtnCover {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -15,20 +15,18 @@
   padding: 7px 10px;
   border-radius: 4px;
   letter-spacing: 0.8px;
-  border: none
-  
+  border: none;
 }
 
-.titleApplyEventbtnCover button:hover{
+.titleApplyEventbtnCover button:hover {
   background-color: #1fab89;
-  color : white;
-  cursor: pointer
+  color: white;
+  cursor: pointer;
 }
 
 .eventHeading {
   padding: 20px 0 20px 100px;
 }
-
 
 .organiserPhoto {
   border-radius: 50%;
@@ -159,4 +157,74 @@
   height: 30px;
   width: 30px;
   margin-right: 6px;
+}
+
+.commentBox {
+  width: 50vw;
+}
+
+.hrLine {
+  color: black;
+}
+
+.commentHead {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.NumOfComments {
+  font-weight: 500;
+}
+.outerBox {
+  display: flex;
+}
+
+.UserImg {
+  border-radius: 50px;
+  height: 70px;
+  width: 70px;
+  overflow: hidden;
+  float: left;
+  background-color: aqua;
+}
+
+.textareaWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 36px;
+  border-radius: 16px;
+  margin-left: 10px;
+  box-sizing: border-box;
+  border: 2px solid #dbdfe4;
+}
+.textareaWrapper textarea{
+  border: none;
+}
+
+.commentBtn {
+  padding: 10px;
+  background-color: rgb(77, 77, 250);
+  color: white;
+  border-radius: 30px;
+  border: none;
+}
+
+.likeShareGroup {
+  display: flex;
+  justify-content: space-between;
+}
+.likeShareGroup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.likeShareGroup ul li {
+  margin-right: 10px; 
+}
+
+p {
+  margin: 0;
 }
