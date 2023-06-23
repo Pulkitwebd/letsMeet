@@ -4,6 +4,9 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { IoMdPin } from "react-icons/io";
 import { FaClock } from "react-icons/fa";
+import { FcLike } from "react-icons/fc";
+import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
+import { BiBookmark } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Grid } from "@mui/material";
 import axios from "axios";
@@ -203,6 +206,8 @@ const EventPage = () => {
               ></div>
             </div>
 
+            <hr className={classes.hrLine} />
+
             <div className={classes.attendiesBox}>
               <h2>Attendies {usersOfevent.length}</h2>
 
@@ -223,6 +228,51 @@ const EventPage = () => {
                   );
                 })}
               </Grid>
+            </div>
+            <div className={classes.commentBox}>
+              <hr className={classes.hrLine} />
+              <h2 className={classes.commentHead}>COMMENTS</h2>
+              <div className={classes.NumOfComments}>
+                <h5>0 comments</h5>
+              </div>
+              <hr className={classes.hrLine} />
+              <div className={classes.outerBox}>
+                <div className={classes.UserImg}>
+                  <img src="" alt="" />
+                </div>
+                <div className={classes.textareaWrapper}>
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="10"
+                    placeholder="Write a comment..."
+                  ></textarea>
+
+                  <button className={classes.commentBtn}>Comment</button>
+                </div>
+              </div>
+              <div>
+                <div className={classes.likeShareGroup}>
+                  <ul>
+                    <li>
+                      <AiOutlineHeart />
+                    </li>
+                    <li>
+                      <AiOutlineShareAlt />
+                    </li>
+                    <li>
+                      <BiBookmark />
+                    </li>
+                  </ul>
+                  <ul>
+                    <li>Best</li>
+                    <li>Newest</li>
+                    <li>Oldest</li>
+                  </ul>
+                </div>
+              </div>
+              <hr className={classes.hrLine} />
             </div>
           </div>
         </div>
