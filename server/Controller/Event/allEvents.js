@@ -15,7 +15,7 @@ const allEvents = async (req, res) => {
 
     if (startIndex > 0) {
       result.previous = {
-        pageNumber: pageNumber - 1, 
+        pageNumber: pageNumber - 1,
         limit: limit,
       };
     }
@@ -27,16 +27,22 @@ const allEvents = async (req, res) => {
       };
     }
 
-    result.data = await Feed.find()
+    const feedData = await Feed.find()
       .sort("-_id")
       .skip(startIndex)
       .limit(limit)
+      .populate({
+        path: "user_id",
+        select: "photo",
+      }) // Populate the user_id field with user photo
       .exec();
 
+    result.data = feedData;
     result.rowsPerPage = limit;
+
     return res.json({ msg: "Posts Fetched successfully", data: result });
   } catch (error) {
-    return res.status(500).json({ msg: "Sorry, something went wrong" , error});
+    return res.status(500).json({ msg: "Sorry, something went wrong", error });
   }
 };
 

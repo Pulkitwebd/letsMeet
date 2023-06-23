@@ -5,9 +5,9 @@ const DateExtension = require("@joi/date");
 const JoiImport = require("joi");
 const Joi = JoiImport.extend(DateExtension);
 const validator = require("express-joi-validation").createValidator({});
+const auth = require("../middleware/auth");
 
 const feedSchema = Joi.object({
-  user_id: Joi.string().required(),
   postingDate: Joi.date().required(),
   meetDate: Joi.string().required(),
   address: Joi.object({
@@ -27,6 +27,7 @@ const feedSchema = Joi.object({
 
 router.post(
   "/feedPost",
+  auth,
   validator.body(feedSchema),
   feedControllers.organiseEvent
 );
@@ -35,8 +36,8 @@ router.get("/Event/:id", feedControllers.Event);
 
 router.get("/allEvents", feedControllers.allEvents);
 
-router.delete("/event", feedControllers.deleteEvent);
+router.delete("/event", auth, feedControllers.deleteEvent);
 
-router.post("/applyToEvent/", feedControllers.applyEvent)
+router.post("/applyToEvent/", auth, feedControllers.applyEvent)
 
 module.exports = router;

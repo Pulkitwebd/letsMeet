@@ -2,10 +2,12 @@ const User = require("../../Schemas/user.js");
 
 const updateUserPhoto = async (req, res) => {
   try {
-    const { user_id, userPhoto } = req.body;
+    const userId = req.user._id;
 
-    const user = await User.findOne({ _id: user_id });
-    
+    const { userPhoto } = req.body;
+
+    const user = await User.findOne({ _id: userId });
+
     if (!user) {
       res.status(500).send(`${err}, user not found`);
       return;

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "proxy" : "http://localhost:3001/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
@@ -28,6 +29,7 @@
     "mongoose": "^6.8.1",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
-    "randomstring": "^1.2.3"
+    "randomstring": "^1.2.3",
+    "socket.io": "^4.6.1"
   }
 }

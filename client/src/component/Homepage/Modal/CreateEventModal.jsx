@@ -7,6 +7,7 @@ import axios from "axios";
 
 import classes from "./Modal.module.css";
 import MutliStepProgessBar from "./multiStepProgessBar/index.js";
+import { currentlyInUseServer } from "../../../api";
 
 import { StepOne, StepTwo, StepThree } from "./formsAllSteps/index";
 
@@ -37,7 +38,6 @@ const CreateEventModal = (props) => {
   const makeRequest = async (eventData) => {
     let finalData = {
       organiserName: user ? userDetails.userFullName : "",
-      user_id: user ? user.user._id : "",
       title: eventData.title,
       postingDate: formattedTimeStamp,
       meetDate: value,
@@ -56,8 +56,8 @@ const CreateEventModal = (props) => {
 
     try {
       const response = await axios.post(
-        "https://letsmeet.onrender.com/api/feed/feedPost",
-        finalData
+        `${currentlyInUseServer}api/feed/feedPost`,
+        finalData , { headers : {authorization : user && user.token }}
       );
 
       if (response.status === 201) {

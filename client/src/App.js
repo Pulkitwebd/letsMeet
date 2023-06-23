@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { Routes, Route, useLocation } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { useJwt } from "react-jwt";
 
 import PrivateRoute from "./PrivateRoute";
 import Navbar from "./component/Navbar/Navbar";
@@ -18,15 +19,26 @@ import Blogs from "./component/Blogs/index";
 import EventPage from "./component/Homepage/EventsSection/EventPage/index";
 import "./App.css";
 import Dashboard from "./component/Dashboard";
+import { connectWithSocketServer } from "./component/RealtimeCommunication/socketConnection";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const location = useLocation();
+  const { user } = useSelector((state) => state.auth);
+  const { isExpired } = useJwt(user ? user.token : null);
+  const [isSocketConnected, setSocketConnected] = useState(false);
+
+  useEffect(() => {
+    if (user && user.user && !isExpired && !isSocketConnected) {
+      connectWithSocketServer(user);
+      setSocketConnected(true);
+    }
+    // need to close the connection when user is null and expired is true
+  }, [user, isExpired, isSocketConnected]);
 
   const showNavbar = location.pathname !== "/dashboard";
 
- 
   return (
     <QueryClientProvider client={queryClient}>
       {showNavbar && <Navbar />}
@@ -36,8 +48,8 @@ const App = () => {
         <Route exact path="/blog/:id" element={<BlogPage />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/event/:id" element={<EventPage />} />
+        <Route exact path="/profile/:id" element={<Profile />} />
         <Route exact path="/" element={<PrivateRoute />}>
-          <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/message" element={<Message />} />
         </Route>
         <Route exact path="/signup" element={<Signup />} />
@@ -45,9 +57,6 @@ const App = () => {
         <Route exact path="/reset-password" element={<ResetPassword />} />
       </Routes>
       {/* <Footer /> */}
-      {/* {isMobileScreen && showNavbar && (
-        <Navbar style={{ position: "fixed !important", bottom : "100vh"}} />
-      )} */}
       <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
     </QueryClientProvider>
   );

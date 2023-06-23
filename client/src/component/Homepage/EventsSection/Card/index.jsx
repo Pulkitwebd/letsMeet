@@ -6,32 +6,24 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import classes from "./Card.module.css";
+import { currentlyInUseServer } from "../../../../api";
 
 const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
   const { user } = useSelector((state) => state.auth);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [showThreeDots, setShowThreeDots] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
-  const [userPhoto, setUserPhoto] = useState(null);
+  // const [userPhoto, setUserPhoto] = useState(null);
   const [showToast, setShowToast] = useState(false);
 
+  const userPhoto = event.user_id.photo;
+
   useEffect(() => {
-    if (user !== null && user.user._id === event.user_id) {
+    if (user !== null && user.user._id === event.user_id._id) {
       setShowThreeDots(true);
     } else {
       setShowThreeDots(false);
     }
-
-    axios
-      .get(
-        `https://letsmeet.onrender.com/api/auth/getUserById/${event.user_id}`
-      )
-      .then((response) => {
-        setUserPhoto(response.data.user.photo);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }, [user, event]);
 
   useEffect(() => {
@@ -48,10 +40,12 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
 
   const handleDeleteEventApi = () => {
     axios
-      .delete("https://letsmeet.onrender.com/api/feed/event", {
+      .delete(`${currentlyInUseServer}api/feed/event`, {
         data: {
           eventId: event._id,
-          user_id: user.user._id,
+        },
+        headers: {
+          authorization: user && user.token,
         },
       })
       .then((resp) => {
@@ -74,8 +68,6 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
 
   const handleParticularEventPage = () =>
     navigate(`/event/${event._id}`, { state: { userPhoto } });
-
-  // const description = event && event.desc ? event.desc.charAt(0).toUpperCase() + event.desc.slice(1) : "";
 
   const description = event && event.desc ? event.desc : "";
   const truncatedDescription = description
@@ -122,7 +114,7 @@ const Card = React.memo(({ event, callApiOnDeleteCard, index }) => {
         )}
       </div>
       <div className={classes.organiserPhoto}>
-        {userPhoto && <img alt="event organiser" src={userPhoto}></img>}
+        <img alt="event organiser" src={userPhoto}></img>
       </div>
       <div className={classes.EventInfo}>
         <div className={classes.OrganiserName}>{event.organiserName}</div>

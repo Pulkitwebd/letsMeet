@@ -23,10 +23,11 @@ import CreateEventModal from "./Modal/CreateEventModal";
 import Card from "./EventsSection/Card/index";
 import loading from "../Assets/loading.gif";
 import HorizontalCards from "../Shared/HorizontalCards/index";
+import { currentlyInUseServer } from "../../api";
 
 const getAllEvents = (pageNumber) => {
   return axios.get(
-    `https://letsmeet.onrender.com/api/feed/allEvents?pageNumber=${pageNumber}`
+    `${currentlyInUseServer}api/feed/allEvents?pageNumber=${pageNumber}`
   );
 };
 

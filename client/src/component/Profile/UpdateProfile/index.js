@@ -40,7 +40,6 @@ const UpdateProfile = (props) => {
   };
   return (
     <Modal
-
       isOpen={props.showModal}
       ariaHideApp={false}
       style={customStyles}

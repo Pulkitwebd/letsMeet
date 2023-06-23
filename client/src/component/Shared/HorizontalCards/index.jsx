@@ -2,6 +2,18 @@ import React from "react";
 import classes from "./HorizontalCards.module.css";
 
 const HorizontalCards = ({ event, callApiOnDeleteCard, index }) => {
+  const description = event && event.desc ? event.desc : "";
+  const truncatedDescription = description
+    .replace(/(<([^>]+)>)/gi, "")
+    .split(" ")
+    .slice(0, 50)
+    .join(" ");
+
+  const truncatedDescriptionWithEllipsis =
+    description.length > 50
+      ? truncatedDescription + "..."
+      : truncatedDescription;
+
   return (
     <div className={classes.horizontalCardsMainBox}>
       <div className={classes.cardsImgBox}>
@@ -14,7 +26,14 @@ const HorizontalCards = ({ event, callApiOnDeleteCard, index }) => {
           <h3>Time : {event.meetDate.slice(11, 19)}</h3>
         </div>
         <h2 className={classes.title}>{event.title}</h2>
-        <div className={classes.description}>{event.desc}</div>
+        <div className={classes.description}>
+          <div
+            // className={classes.eventDetailsPara}
+            dangerouslySetInnerHTML={{
+              __html: truncatedDescriptionWithEllipsis,
+            }}
+          ></div>
+        </div>
 
         <div className={classes.colourTagDiv}>
           <div className={classes.eventMode}>

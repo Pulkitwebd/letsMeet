@@ -3,8 +3,9 @@ const User = require("../../Schemas/user.js");
 
 const feedPost = async (req, res) => {
   try {
+    const userId = req.user._id;
+
     const {
-      user_id,
       postingDate,
       meetDate,
       address,
@@ -13,10 +14,10 @@ const feedPost = async (req, res) => {
       organiserName,
       desc,
       eventImage,
-      title
+      title,
     } = req.body;
 
-    const userExists = await User.findOne({ _id: user_id });
+    const userExists = await User.findOne({ _id: userId });
 
     if (userExists) {
       const currentTime = new Date();
@@ -24,8 +25,8 @@ const feedPost = async (req, res) => {
       hourAgo.setHours(hourAgo.getHours() - 1);
 
       const eventCount = await Feed.countDocuments({
-        user_id,
-        postingDate: { $gte: hourAgo, $lte: currentTime }
+        userId,
+        postingDate: { $gte: hourAgo, $lte: currentTime },
       });
 
       if (eventCount >= 3) {
@@ -36,7 +37,7 @@ const feedPost = async (req, res) => {
       }
 
       const event = await Feed.create({
-        user_id,
+        user_id: userId,
         postingDate,
         meetDate,
         address,
@@ -45,10 +46,16 @@ const feedPost = async (req, res) => {
         organiserName,
         desc,
         title,
-        eventImage
+        eventImage,
       });
 
-      res.status(201).json({ success: true, message: "Event Is Created! Successfully", event: event });
+      res
+        .status(201)
+        .json({
+          success: true,
+          message: "Event Is Created! Successfully",
+          event: event,
+        });
     }
   } catch (error) {
     res.status(500).send(`${error}, event not created`);

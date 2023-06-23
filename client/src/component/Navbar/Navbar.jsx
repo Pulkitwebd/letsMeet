@@ -12,6 +12,8 @@ import {
 } from "react-icons/ai";
 
 import { logout, reset } from "../../Redux/Auth/authSlice";
+import { resetFriendSlice } from "../../Redux/Friends/friendSlice";
+
 import EventModal from "../Homepage/Modal/CreateEventModal";
 import classes from "./Navbar.module.css";
 import logoutImg from "../Assets/logout.png";
@@ -31,6 +33,7 @@ const Navbar = () => {
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
+    dispatch(resetFriendSlice());
     setShowToast(true);
     toast.success("User Logout Successfully", {
       closeOnClick: true,
@@ -97,7 +100,7 @@ const Navbar = () => {
             <div className={classes.logout_box}>
               <div className={classes.link}>
                 <NavLink
-                  to="/profile"
+                  to={`/profile/${user.user._id}`}
                   className={`${
                     pathname === "/profile" ? classes.active : classes.link
                   }`}

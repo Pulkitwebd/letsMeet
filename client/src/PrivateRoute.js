@@ -1,33 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useJwt } from "react-jwt";
-import { useSelector,  } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { logout } from "../src/Redux/Auth/authSlice";
 
 const PrivateRoute = () => {
-  
-  const [auth, setAuth] = useState(false);
-
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const userlocalStorage = JSON.parse(localStorage.getItem("user"));
-
-  const {isExpired, reEvaluateToken } = useJwt(
-    user === null || userlocalStorage === null ? null : userlocalStorage.token
-  );
+  const { isExpired, reEvaluateToken } = useJwt(user ? user.token : null);
 
   useEffect(() => {
     if (user) {
-      reEvaluateToken(
-        user === null || userlocalStorage === null
-          ? null
-          : userlocalStorage.token
-      );
-      if (!isExpired) {
-        setAuth(!auth);
-      }
+      reEvaluateToken(user.token || null);
+    } else {
+      dispatch(logout());
     }
   }, [user]);
-
 
   return isExpired ? <Navigate to="/signin" /> : <Outlet />;
 };

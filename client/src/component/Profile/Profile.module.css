@@ -7,6 +7,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
+    position: relative;
   }
 
   .userPhotoDiv {
@@ -116,5 +117,18 @@
     margin-left: 20px;
     margin-bottom: 20px;
   }
+  .buttonCover {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    margin-right: 10px;
+  }
+  .buttonCover button {
+    border: none;
+    border-radius: 4px;
+    padding: 7px 5px;
+  }
+  .buttonCover button:first-child {
+    margin-right: 10px;
+  }
 }
-
