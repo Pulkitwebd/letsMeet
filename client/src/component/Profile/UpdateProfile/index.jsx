@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import * as yup from "yup";
 import { Formik, Form } from "formik";
-import classes from "./update.module.css";
 import { AiFillEdit } from "react-icons/ai";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-
-
+import classes from "./update.module.css";
 
 const schema = yup.object().shape({
   firstName: yup.string().required('First name is required!'),
@@ -28,7 +26,6 @@ const schema = yup.object().shape({
     .min(21, 'Minimum age must be 21!')
     .max(120, 'Maximum age must be 120!')
     .required('Age is required!'),
-
 });
 
 const UpdateProfile = (props) => {
@@ -40,10 +37,7 @@ const UpdateProfile = (props) => {
   const [selectedPhone, setSelectedPhone] = useState(false);
   const [selectedAge, setSelectedAge] = useState(false);
 
-
-
-
-  const [editableValue, setEditableValue] = useState("");
+  const [editableValue,] = useState("");
   const { user } = useSelector((state) => state.auth);
   const customStyles = {
     content: {
@@ -62,14 +56,11 @@ const UpdateProfile = (props) => {
   };
   return (
     <Modal
-
       isOpen={props.showModal}
       ariaHideApp={false}
       style={customStyles}
-
       contentLabel="Example Modal"
     >
-
       <h1>EDIT PROFILE</h1>
       <button
         onClick={props.toggalProfileModal}
@@ -134,14 +125,9 @@ const UpdateProfile = (props) => {
                   </div>
                 )}
               </label>
-
-
-
             </div>
 
-
             <div className="row">
-
               <label htmlFor="exampleFirstName" className="form-label">
                 Last Name
                 {selectedLastName ? (
@@ -205,21 +191,14 @@ const UpdateProfile = (props) => {
                       id="exampleInputEmail1"
                       aria-describedby="emailHelp"
                       placeholder={user.user.email}
-
-
                       name="email"
                     />
-
                     <div id="emailHelp" className="form-text"></div>
                     <AiFillEdit className={classes.editIcon} onClick={() => setSelectedEmail(true)} />
                   </div>
                 )}
               </label>
-
             </div>
-
-
-
 
             <div className="row">
               <label htmlFor="exampleFirstName" className="form-label">
@@ -256,12 +235,6 @@ const UpdateProfile = (props) => {
               </label>
             </div>
 
-
-
-
-
-
-
             <div className="row">
               <label htmlFor="exampleFirstName" className="form-label">
                 Confirm Password
@@ -297,12 +270,6 @@ const UpdateProfile = (props) => {
               </label>
             </div>
 
-
-
-
-
-
-
             <div className="row">
               <label htmlFor="exampleFirstName" className="form-label">
                 Phone number
@@ -332,20 +299,11 @@ const UpdateProfile = (props) => {
                       placeholder={user.user.phone}
 
                     />
-
                     <AiFillEdit className={classes.editIcon} onClick={() => setSelectedPhone(true)} />
                   </div>
                 )}
               </label>
-
-
-
             </div>
-
-
-
-
-
 
             <div className="row">
               <label htmlFor="exampleFirstName" className="form-label">
@@ -373,23 +331,14 @@ const UpdateProfile = (props) => {
                       className="form-control"
                       id="exampleInputAge"
                       placeholder={user.user.age}
-
                     />
-
-
                     <AiFillEdit className={classes.editIcon} onClick={() => setSelectedAge(true)} />
                   </div>
                 )}
               </label>
 
-
-
-
-
-
             </div>
             <button type="submit" className="btn btn-success" >
-
               Save Changes
             </button>
           </Form>

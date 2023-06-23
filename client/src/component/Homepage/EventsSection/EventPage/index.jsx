@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { IoMdPin } from "react-icons/io";
 import { FaClock } from "react-icons/fa";
-import { FcLike } from "react-icons/fc";
 import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
 import { BiBookmark } from "react-icons/bi";
 import { useQuery } from "react-query";
@@ -25,7 +24,6 @@ const getEvent = (eventId) => {
 const EventPage = () => {
   const navigate = useNavigate();
   const [eventId, setEventId] = useState();
-  const [usersOfevent, setUsersOfevent] = useState([]);
 
   //getting current logged in user details
   const { user } = useSelector((state) => state.auth);

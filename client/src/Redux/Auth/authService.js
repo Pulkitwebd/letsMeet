@@ -1,8 +1,7 @@
 import axios from "axios";
 import { currentlyInUseServer } from "../../api";
 import {
-  sendFriendInvitation,
-  upcomingFriendInvitation,
+  sendFriendInvitation
 } from "../Friends/friendSlice";
 import store from "../Store";
 

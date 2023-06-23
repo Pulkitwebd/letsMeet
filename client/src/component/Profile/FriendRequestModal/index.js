@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Modal from "react-modal";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   BsFillHandThumbsDownFill,
   BsFillHandThumbsUpFill,
