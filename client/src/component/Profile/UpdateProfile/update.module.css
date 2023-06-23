@@ -1,0 +1,17 @@
+
+.editableInput {
+    display: flex;
+    align-items: center;
+
+
+}
+
+  .readOnlyInput {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .editIcon {
+    margin-right: 5px;
+  }

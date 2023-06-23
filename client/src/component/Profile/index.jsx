@@ -13,7 +13,7 @@ import HorizontalCards from "../Shared/HorizontalCards/index";
 import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
 import FriendRequestModal from "./FriendRequestModal/index";
-import UpdateProfile from "./UpdateProfile/index";
+import UpdateProfile from "./UpdateProfile/index.jsx";
 import PhotoModal from "./PhotoModal/index";
 import { currentlyInUseServer } from "../../api";
 
