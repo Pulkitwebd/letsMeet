@@ -1,9 +1,11 @@
 import axios from "axios";
 import { currentlyInUseServer } from "../../api";
+import { sendFriendInvitation } from "./friendSlice";
+import store from "../Store";
 
 const FetchingAllPendingFriendRequest = `${currentlyInUseServer}api/friend-invitation/getAllPendingFriendRequest`;
-// const ACCEPT_FRIEND_INVITATIONS = "";
-// const REJECT_FRIEND_INVITATIONS = "";
+const ACCEPT_FRIEND_INVITATIONS = `${currentlyInUseServer}api/friend-invitation/acceptInvitation`;
+const REJECT_FRIEND_INVITATIONS = `${currentlyInUseServer}api/friend-invitation/rejectInvitation`;
 
 // person to whom user send request
 const fetchingAllPendingFriendRequest = async (data) => {
@@ -20,7 +22,6 @@ const fetchingAllPendingFriendRequest = async (data) => {
     if (response.status === 200) {
       // Remove the previous value of receiverPendingInvitaion from localStorage
       localStorage.removeItem("receiverPendingInvitaion");
-
       // Add the received objects to the pendingFriendsInvitations array
       const receiverPendingInvitaion = [...response.data];
 
@@ -38,25 +39,33 @@ const fetchingAllPendingFriendRequest = async (data) => {
   }
 };
 
-// const acceptFriendInvitation = async (data) => {
-//   const response = await axios.post(ACCEPT_FRIEND_INVITATIONS, data);
+const acceptFriendInvitation = async (data) => {
+  const response = await axios.post(ACCEPT_FRIEND_INVITATIONS, data.id, {
+    headers: {
+      authorization: data.token,
+    },
+  });
 
-//   if (response.data) {
-//     console.log(response.data);
-//   }
-//   return response.data;
-// };
+  if (response.data) {
+    console.log(response.data);
+  }
+  return response.data;
+};
 
-// const rejectFriendInvitation = async (data) => {
-//   const response = await axios.post(REJECT_FRIEND_INVITATIONS, data);
-//   console.log(response);
-// //   return user;
-// };
+const rejectFriendInvitation = async (data) => {
+  const requiredBody = { id: data.id };
+
+  await axios.post(REJECT_FRIEND_INVITATIONS, requiredBody, {
+    headers: {
+      authorization: data.token,
+    },
+  });
+};
 
 const FriendService = {
   fetchingAllPendingFriendRequest,
-  // acceptFriendInvitation,
-  // rejectFriendInvitation,
+  acceptFriendInvitation,
+  rejectFriendInvitation,
 };
 
 export default FriendService;

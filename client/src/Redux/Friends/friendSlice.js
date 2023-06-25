@@ -32,18 +32,34 @@ export const sendFriendInvitation = createAsyncThunk(
   }
 );
 
-// export const upcomingFriendInvitation = createAsyncThunk(
-//   "friend/upcomingFriendInvitation",
-//   async (data, thunkAPI) => {
-//     try {
-//       const allupcomingFriendRequest =
-//         await friendService.fetchingAllUpcomingFriendRequest(data);
-//       return allupcomingFriendRequest;
-//     } catch (error) {
-//       throw error;
-//     }
-//   }
-// );
+export const acceptFriendInvitation = createAsyncThunk(
+  "friend/sendFriendInvitation",
+  async (data, thunkAPI) => {
+    try {
+      // request which logged in user send
+      const acceptFriendInvitation =
+        await friendService.acceptFriendInvitation(data);
+      return acceptFriendInvitation;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+
+export const rejectFriendInvitation = createAsyncThunk(
+  "friend/sendFriendInvitation",
+  async (data, thunkAPI) => {
+    try {
+      // request which logged in user send
+      const rejectFriendInvitation =
+        await friendService.rejectFriendInvitation(data);
+      return rejectFriendInvitation;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
 
 export const friendSlice = createSlice({
@@ -71,7 +87,7 @@ export const friendSlice = createSlice({
     builder.addCase(sendFriendInvitation.fulfilled, (state, action) => {
       const receiversPendingRequest = action.payload;
       if (receiversPendingRequest) {
-        state.receiverPendingInvitaion.push(...receiversPendingRequest);
+        state.receiverPendingInvitaion = [...receiversPendingRequest];
       }
     });
 

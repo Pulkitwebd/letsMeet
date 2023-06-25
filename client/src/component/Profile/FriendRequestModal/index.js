@@ -1,28 +1,25 @@
 import React from "react";
 import Modal from "react-modal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   BsFillHandThumbsDownFill,
   BsFillHandThumbsUpFill,
 } from "react-icons/bs";
 
-
-// import { sendFriendInvitation, upcomingFriendInvitation } from "../../../Redux/Friends/friendSlice";
 import classes from "./index.module.css";
+import {
+  acceptFriendInvitation,
+  rejectFriendInvitation,
+} from "../../../Redux/Friends/friendSlice";
 
 const FriendRequestModal = (props) => {
+  const dispatch = useDispatch();
+
   const { receiverPendingInvitaion, pendingFriendsInvitations } = useSelector(
     (state) => state.friend
   );
 
-  // const dispatch = useDispatch();
-
-  
-  // useEffect(() => {
-  //   // Fetch initial data when the modal mounts
-  //   dispatch(sendFriendInvitation());
-  //   dispatch(upcomingFriendInvitation());
-  // }, [dispatch]);
+  const { user } = useSelector((state) => state.auth);
 
   const customStyles = {
     content: {
@@ -38,6 +35,22 @@ const FriendRequestModal = (props) => {
     },
   };
 
+  const handleAcceptInvitation = (id) => {
+    const data = {
+      id,
+      token: user && user.token,
+    };
+    dispatch(acceptFriendInvitation(data));
+  };
+
+  const handleRejectInvitation = (id) => {
+    const data = {
+      id,
+      token: user && user.token,
+    };
+    dispatch(rejectFriendInvitation(data));
+  };
+
   return (
     <Modal
       isOpen={props.showFriendRequestModal}
@@ -50,7 +63,7 @@ const FriendRequestModal = (props) => {
 
       <span className={classes.heading}>Friend Requests</span>
       <div className={classes.friendRequetsDivCover}>
-        {receiverPendingInvitaion.map((data) => {
+        {receiverPendingInvitaion.length > 0 && receiverPendingInvitaion.map((data) => {
           return (
             <div className={classes.friendRequetsDiv}>
               <div className={classes.logo_fullname_email_cover}>
@@ -66,29 +79,30 @@ const FriendRequestModal = (props) => {
             </div>
           );
         })}
-        {pendingFriendsInvitations.map((data) => {
-          return (
-            <div className={classes.friendRequetsDiv}>
-              <div className={classes.logo_fullname_email_cover}>
-                <div className={classes.logoDiv}></div>
-                <div className={classes.fullname_email}>
-                  <div>
-                    {data.senderId.firstname} {data.senderId.lastname}
+        {pendingFriendsInvitations.length > 0 &&
+          pendingFriendsInvitations.map((data) => {
+            return (
+              <div className={classes.friendRequetsDiv}>
+                <div className={classes.logo_fullname_email_cover}>
+                  <div className={classes.logoDiv}></div>
+                  <div className={classes.fullname_email}>
+                    <div>
+                      {data.senderId.firstname} {data.senderId.lastname}
+                    </div>
+                    <div>{data.senderId.email}</div>
                   </div>
-                  <div>{data.senderId.email}</div>
+                </div>
+                <div className={classes.accept_rejectBox}>
+                  <div onClick={() => handleAcceptInvitation(data._id)}>
+                    Accept <BsFillHandThumbsUpFill />
+                  </div>
+                  <div onClick={() => handleRejectInvitation(data._id)}>
+                    Reject <BsFillHandThumbsDownFill />
+                  </div>
                 </div>
               </div>
-              <div className={classes.accept_rejectBox}>
-                <div>
-                  Accept <BsFillHandThumbsUpFill />
-                </div>
-                <div>
-                  Reject <BsFillHandThumbsDownFill />
-                </div>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </Modal>
   );
