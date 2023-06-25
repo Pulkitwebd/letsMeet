@@ -22,7 +22,6 @@ const rejectFriendInvitayion = async (req, res) => {
     return res.status(200).send("Invitation successfully rejected");
 
   } catch (error) {
-    console.log(error);
     return res.status(500).send("Something went wrong please try again");
   }
 };

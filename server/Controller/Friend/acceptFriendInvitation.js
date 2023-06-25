@@ -7,7 +7,7 @@ const acceptFriendInvitayion = async (req, res) => {
     const { id } = req.body;
     const invitation = await FriendInvitation.findById(id);
 
-    if (invitation) {
+    if (!invitation) {
       return res.status(401).send("Error occured.Please try again");
     }
 

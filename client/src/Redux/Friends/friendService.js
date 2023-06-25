@@ -38,7 +38,8 @@ const fetchingAllPendingFriendRequest = async (data) => {
 };
 
 const acceptFriendInvitation = async (data) => {
-  const response = await axios.post(ACCEPT_FRIEND_INVITATIONS, data.id, {
+  const requiredBody = {id : data.id}
+  const response = await axios.post(ACCEPT_FRIEND_INVITATIONS, requiredBody, {
     headers: {
       authorization: data.token,
     },
@@ -47,7 +48,6 @@ const acceptFriendInvitation = async (data) => {
   if (response.data) {
     console.log(response.data);
   }
-  return response.data;
 };
 
 const rejectFriendInvitation = async (data) => {
