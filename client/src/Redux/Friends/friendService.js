@@ -1,7 +1,5 @@
 import axios from "axios";
 import { currentlyInUseServer } from "../../api";
-import { sendFriendInvitation } from "./friendSlice";
-import store from "../Store";
 
 const FetchingAllPendingFriendRequest = `${currentlyInUseServer}api/friend-invitation/getAllPendingFriendRequest`;
 const ACCEPT_FRIEND_INVITATIONS = `${currentlyInUseServer}api/friend-invitation/acceptInvitation`;
