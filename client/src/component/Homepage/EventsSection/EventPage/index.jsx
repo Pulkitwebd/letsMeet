@@ -3,14 +3,13 @@ import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { IoMdPin } from "react-icons/io";
-import { FaClock } from "react-icons/fa";
+import { FaClock, FaRegCommentDots } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
 import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
-import { BiBookmark } from "react-icons/bi";
+import { BiBookmark, BiDotsVerticalRounded } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Grid } from "@mui/material";
 import axios from "axios";
-
 import "react-quill/dist/quill.snow.css";
 import loading from "../../../Assets/loading.gif";
 import classes from "./Event.module.css";
@@ -21,6 +20,16 @@ const getEvent = (eventId) => {
 };
 
 const EventPage = () => {
+  const [liked, setLiked] = useState(false);
+  const [showComments, setShowComments] = useState(true);
+
+  const handleComments = () => {
+    setShowComments(!showComments);
+  };
+
+  const handleLikeClick = () => {
+    setLiked(!liked);
+  };
   const [eventId, setEventId] = useState();
   // const [queryKey, setQueryKey] = useState("get-event");
   const [usersOfevent, setUsersOfevent] = useState([]);
@@ -60,6 +69,7 @@ const EventPage = () => {
 
   const fetchData = async () => {
     const userfetchedInitially = [];
+
     for (const applicant of data.data.applicants) {
       try {
         const response = await axios.get(
@@ -206,9 +216,8 @@ const EventPage = () => {
               ></div>
             </div>
 
-            <hr className={classes.hrLine} />
-
             <div className={classes.attendiesBox}>
+              <hr className={classes.hrLine} />
               <h2>Attendies {usersOfevent.length}</h2>
 
               <Grid container spacing={3}>
@@ -229,51 +238,58 @@ const EventPage = () => {
                 })}
               </Grid>
             </div>
-            <div className={classes.commentBox}>
-              <hr className={classes.hrLine} />
-              <h2 className={classes.commentHead}>COMMENTS</h2>
-              <div className={classes.NumOfComments}>
-                <h5>0 comments</h5>
+            <div className={classes.likeBoxWrapper}>
+              <div className={classes.LikeBox}>
+                <ul>
+                  <li onClick={handleLikeClick}>
+                    {liked ? <FcLike /> : <AiOutlineHeart />}
+                  </li>
+                  <li>
+                    <FaRegCommentDots onClick={handleComments} />
+                  </li>
+                  <li>
+                    <AiOutlineShareAlt />
+                  </li>
+                  <li>
+                    <BiBookmark />
+                  </li>
+                  <li>
+                    <BiDotsVerticalRounded />
+                  </li>
+                </ul>
               </div>
-              <hr className={classes.hrLine} />
-              <div className={classes.outerBox}>
-                <div className={classes.UserImg}>
-                  <img src="" alt="" />
-                </div>
-                <div className={classes.textareaWrapper}>
-                  <textarea
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="10"
-                    placeholder="Write a comment..."
-                  ></textarea>
-
-                  <button className={classes.commentBtn}>Comment</button>
-                </div>
-              </div>
-              <div>
-                <div className={classes.likeShareGroup}>
-                  <ul>
-                    <li>
-                      <AiOutlineHeart />
-                    </li>
-                    <li>
-                      <AiOutlineShareAlt />
-                    </li>
-                    <li>
-                      <BiBookmark />
-                    </li>
-                  </ul>
-                  <ul>
-                    <li>Best</li>
-                    <li>Newest</li>
-                    <li>Oldest</li>
-                  </ul>
-                </div>
-              </div>
-              <hr className={classes.hrLine} />
             </div>
+            {showComments ? (
+              ""
+            ) : (
+              <div className={classes.commentBox}>
+                <hr className={classes.hrLine} />
+                <h2 className={classes.commentHead}>Comments</h2>
+                <div className={classes.NumOfComments}>
+                  <h5>0 comments</h5>
+                </div>
+                <hr className={classes.hrLine} />
+                <div className={classes.outerBox}>
+                  <div className={classes.UserImg}>
+                    <img src="" alt="" />
+                  </div>
+                  <div className={classes.textareaWrapper}>
+                    <textarea
+                      name=""
+                      id=""
+                      cols="10"
+                      rows="50"
+                      placeholder="Write a comment..."
+                    ></textarea>
+                    <div>
+                      <button className={classes.commentBtn}>Comment</button>
+                    </div>
+                  </div>
+                </div>
+
+                <hr className={classes.hrLine} />
+              </div>
+            )}
           </div>
         </div>
       )}

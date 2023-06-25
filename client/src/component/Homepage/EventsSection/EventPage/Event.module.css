@@ -156,6 +156,38 @@
   width: 30px;
   margin-right: 6px;
 }
+.likeBoxWrapper {
+  padding: 10px;
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+}
+
+.LikeBox {
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 20px;
+  display: inline-block;
+}
+
+.LikeBox ul {
+  border: 2px black;
+  display: flex;
+  gap: 40px;
+  padding-right: 2rem;
+  margin-bottom: 0;
+}
+
+.LikeBox ul li {
+  list-style: none;
+  cursor: pointer;
+}
+
+.LikeBox ul li svg {
+ width: 25px;
+ height: 25px;
+}
+
 
 .commentBox {
   width: 50vw;
@@ -196,33 +228,19 @@
   box-sizing: border-box;
   border: 2px solid #dbdfe4;
 }
-.textareaWrapper textarea{
+.textareaWrapper textarea {
   border: none;
+  outline: none;
 }
 
 .commentBtn {
-  padding: 10px;
-  background-color: rgb(77, 77, 250);
+  padding: 10px 20px;
+  background-color: rgb(26, 26, 239);
   color: white;
   border-radius: 30px;
   border: none;
+  
 }
 
-.likeShareGroup {
-  display: flex;
-  justify-content: space-between;
-}
-.likeShareGroup ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
+/* LiaComment */
 
-.likeShareGroup ul li {
-  margin-right: 10px; 
-}
-
-p {
-  margin: 0;
-}
