@@ -39,6 +39,7 @@ const UpdateProfile = (props) => {
 
   const [editableValue,] = useState("");
   const { user } = useSelector((state) => state.auth);
+  
   const customStyles = {
     content: {
       top: '50%',
@@ -48,12 +49,9 @@ const UpdateProfile = (props) => {
       transform: 'translate(-50%, -50%)',
       width: '500px',
       height: '500px',
-
-
     },
-
-
   };
+
   return (
     <Modal
       isOpen={props.showModal}
