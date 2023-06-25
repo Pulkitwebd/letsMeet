@@ -1,0 +1,67 @@
+.buttonDiv {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.buttonDiv button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+}
+
+.heading {
+  font-size: 28px;
+}
+
+.friendRequetsDivCover {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.friendRequetsDiv {
+  height: 50px;
+  background-color: beige;
+  width: 100%;
+  display: flex;
+  margin-top: 20px;
+}
+
+.logo_fullname_email_cover{
+    display: flex;
+    width: 70%;
+    background-color: aquamarine;
+    align-items: center;
+}
+
+.logoDiv{
+    height: 40px;
+    width: 40px;
+    background-color: rgb(91, 110, 104);
+    border-radius: 50%;
+    margin : 0 20px 0 10px;
+}
+
+.fullname_email{
+    display: flex;
+    flex-direction: column;
+}
+
+.status{
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.accept_rejectBox{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.accept_rejectBox div {
+  cursor: pointer;
+}

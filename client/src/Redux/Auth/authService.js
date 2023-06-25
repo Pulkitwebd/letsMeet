@@ -1,8 +1,13 @@
 import axios from "axios";
+import { currentlyInUseServer } from "../../api";
+import {
+  sendFriendInvitation
+} from "../Friends/friendSlice";
+import store from "../Store";
 
-const REGISTER_URL = "https://letsmeet.onrender.com/api/auth/register";
-const LOGIN_URL = "https://letsmeet.onrender.com/api/auth/login";
-const UPDATE_URL = "https://letsmeet.onrender.com/api/auth/updatePhoto";
+const REGISTER_URL = `${currentlyInUseServer}api/auth/register`;
+const LOGIN_URL = `${currentlyInUseServer}api/auth/login`;
+const UPDATE_URL = `${currentlyInUseServer}api/auth/updatePhoto`;
 
 //Register user
 const register = async (userData) => {
@@ -21,6 +26,13 @@ const login = async (userData) => {
 
   if (response.data) {
     localStorage.setItem("user", JSON.stringify(response.data));
+    store.dispatch(
+      sendFriendInvitation({
+        // Dispatch the action to fetch pending friend requests
+        senderId: response.data.user._id,
+        token: response.data.token,
+      })
+    );
   }
   return response.data;
 };
@@ -28,7 +40,12 @@ const login = async (userData) => {
 //Update user
 const updatePhoto = async (userData) => {
   let user;
-  const response = await axios.put(UPDATE_URL, userData);
+  const body = { userPhoto: userData.userPhoto };
+  const response = await axios.put(UPDATE_URL, body, {
+    headers: {
+      authorization: userData.token,
+    },
+  });
 
   if (response.status === 201) {
     try {
@@ -53,6 +70,8 @@ const updatePhoto = async (userData) => {
 //Logout
 const logout = () => {
   localStorage.removeItem("user");
+  localStorage.removeItem("receiverPendingInvitaion");
+  localStorage.removeItem("pendingInvitations");
 };
 
 const authService = { register, logout, login, updatePhoto };

@@ -5,18 +5,22 @@ import { useLocation } from "react-router-dom";
 import { IoMdPin } from "react-icons/io";
 import { FaClock, FaRegCommentDots } from "react-icons/fa";
 import { FcLike } from "react-icons/fc";
+// import { FaClock } from "react-icons/fa";
 import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
 import { BiBookmark, BiDotsVerticalRounded } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Grid } from "@mui/material";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { currentlyInUseServer } from "../../../../api";
+
 import "react-quill/dist/quill.snow.css";
 import loading from "../../../Assets/loading.gif";
 import classes from "./Event.module.css";
 import profile from "../../../Assets/profile.jpg";
 
 const getEvent = (eventId) => {
-  return axios.get(`https://letsmeet.onrender.com/api/feed/Event/${eventId}`);
+  return axios.get(`${currentlyInUseServer}api/feed/Event/${eventId}`);
 };
 
 const EventPage = () => {
@@ -30,16 +34,15 @@ const EventPage = () => {
   const handleLikeClick = () => {
     setLiked(!liked);
   };
+  const navigate = useNavigate();
   const [eventId, setEventId] = useState();
-  // const [queryKey, setQueryKey] = useState("get-event");
-  const [usersOfevent, setUsersOfevent] = useState([]);
 
   //getting current logged in user details
   const { user } = useSelector((state) => state.auth);
 
   const [showToast, setShowToast] = useState(false);
 
-  const { isLoading, data, isError, error } = useQuery(
+  const { isLoading, data, isError, error, refetch } = useQuery(
     ["get-event", eventId],
     () => (eventId ? getEvent(eventId) : null)
   );
@@ -67,40 +70,21 @@ const EventPage = () => {
   let options = { weekday: "short", month: "short", day: "2-digit" };
   let requiredDateFormat = date1.toLocaleDateString("en-US", options);
 
-  const fetchData = async () => {
-    const userfetchedInitially = [];
-
-    for (const applicant of data.data.applicants) {
-      try {
-        const response = await axios.get(
-          `https://letsmeet.onrender.com/api/auth/getUserById/${applicant}`
-        );
-        userfetchedInitially.push(response.data.user);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    setUsersOfevent(userfetchedInitially);
-  };
-
-  useEffect(() => {
-    if (data && data.data.applicants.length > 0) {
-      fetchData();
-    }
-  }, [data]);
-
   const handleApplyEvent = async () => {
     const applyEventData = {
-      userId: user ? user.user._id : "",
       feedId: data ? data.data._id : "",
     };
 
     // sending post request for adding user to database in feed
     try {
       const response = await axios.post(
-        "https://letsmeet.onrender.com/api/feed/applyToEvent",
-        applyEventData
+        `${currentlyInUseServer}api/feed/applyToEvent`,
+        applyEventData,
+        {
+          headers: {
+            authorization: user && user.token,
+          },
+        }
       );
 
       if (response.status === 200) {
@@ -111,17 +95,8 @@ const EventPage = () => {
           pauseOnHover: false,
           autoClose: 2000,
         });
-        try {
-          const response = await axios.get(
-            `https://letsmeet.onrender.com/api/auth/getUserById/${
-              user ? user.user._id : ""
-            }`
-          );
-          //adding new applied after click apply to event user to existing applied user
-          setUsersOfevent((prevUsers) => [...prevUsers, response.data.user]);
-        } catch (err) {
-          console.error(err);
-        }
+
+        refetch();
       }
     } catch (error) {
       if (error.response.status === 500) {
@@ -143,7 +118,21 @@ const EventPage = () => {
           autoClose: 2000,
         });
       }
+
+      if (error.response.status === 403) {
+        setShowToast(true);
+        toast.error("Please login first", {
+          closeOnClick: true,
+          draggable: true,
+          pauseOnHover: false,
+          autoClose: 2000,
+        });
+      }
     }
+  };
+
+  const handleUserNavigation = (userId) => {
+    navigate(`/profile/${userId}`);
   };
 
   return (
@@ -167,7 +156,10 @@ const EventPage = () => {
               <button onClick={handleApplyEvent}>Apply to Event</button>
             </div>
             <div className={classes.organiserDetails}>
-              <div className={classes.organiserPhoto}>
+              <div
+                className={classes.organiserPhoto}
+                onClick={() => handleUserNavigation(data.data.user_id)}
+              >
                 <img src={userPhoto} alt="user" />
               </div>
               <div className={classes.organiserHeading_Photo}>
@@ -215,17 +207,17 @@ const EventPage = () => {
                 dangerouslySetInnerHTML={{ __html: data.data.desc }}
               ></div>
             </div>
-
             <div className={classes.attendiesBox}>
-              <hr className={classes.hrLine} />
-              <h2>Attendies {usersOfevent.length}</h2>
-
+              <h2>Attendies {data.data.applicants.length}</h2>
               <Grid container spacing={3}>
-                {usersOfevent.map((user, index) => {
+                {data.data.applicants.map((user, index) => {
                   return (
                     <Grid item md={4} xs={8} key={index}>
                       <div className={classes.attendiesCard}>
-                        <div className={classes.attendiesImgBox}>
+                        <div
+                          className={classes.attendiesImgBox}
+                          onClick={() => handleUserNavigation(user._id)}
+                        >
                           <img
                             src={user.photo ? user.photo : profile}
                             alt="member"
@@ -237,6 +229,7 @@ const EventPage = () => {
                   );
                 })}
               </Grid>
+                        
             </div>
             <div className={classes.likeBoxWrapper}>
               <div className={classes.LikeBox}>

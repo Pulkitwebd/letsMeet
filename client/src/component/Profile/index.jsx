@@ -1,67 +1,119 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoThumbsup, GoThumbsdown, GoClock } from "react-icons/go";
+import { useSelector, useDispatch } from "react-redux";
+import { FaUserFriends } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
-import { useSelector } from "react-redux";
-import axios from "axios";
 import { useQuery } from "react-query";
-import loading from "../Assets/loading.gif";
+import axios from "axios";
 
+import { sendFriendInvitation } from "../../Redux/Friends/friendSlice";
+import loading from "../Assets/loading.gif";
 import classes from "./Profile.module.css";
 import HorizontalCards from "../Shared/HorizontalCards/index";
-import PhotoModal from "./PhotoModal/index";
 import "react-toastify/dist/ReactToastify.css";
 import userDummyImage from "../Assets/userDummyImage.webp";
-import UpdateProfile from "./UpdateProfile/index";
+import FriendRequestModal from "./FriendRequestModal/index";
+import UpdateProfile from "./UpdateProfile/index.jsx";
+import PhotoModal from "./PhotoModal/index";
+import { currentlyInUseServer } from "../../api";
 
 const getEventOfUser = (userId) => {
   return axios.get(
-    `https://letsmeet.onrender.com/api/auth/getAppliedEvents/${userId}`
+    `${currentlyInUseServer}api/auth/userInfoWithEvents/${userId}`
   );
 };
 
 const Profile = () => {
+  const dispatch = useDispatch();
+
+  const [userId, setUserId] = useState();
   const { user } = useSelector((state) => state.auth);
 
-  const userId = user && user.user && user.user._id;
-
-  const { isLoading, data } = useQuery(["getAppliedEvents", userId], () =>
-    userId ? getEventOfUser(userId) : null
-  );
-
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
+  const [showFriendRequestModal, setShowFriendRequestModal] = useState(false);
+  const [profileUpdateModal, setProfileUpdateModal] = useState(false);
 
   const togglePhototModal = () => {
     setPhotoModalStatus(!photoModalStatus);
   };
 
-  const [profileUpdateModal, setProfileUpdateModal] = useState(false);
+  const toggleFriendRequestsModal = () => {
+    setShowFriendRequestModal(!showFriendRequestModal);
+  };
+
+  useEffect(() => {
+    // getting user id from path
+    const pathName = window.location.pathname;
+    const gettingUserIdFromPath = pathName.split("/")[2];
+    setUserId(gettingUserIdFromPath);
+  }, [window.location.pathname]);
+
+  const { isLoading, data } = useQuery(["getAppliedEvents", userId], () =>
+    userId ? getEventOfUser(userId) : null
+  );
 
   const openProfileUpdateModal = () => {
     setProfileUpdateModal((currentValue) => !currentValue);
   };
 
+  const sendFriendRequest = async () => {
+    if (data) {
+      const sendingFriendRequestData = {
+        targetMailAddress: data.data.email,
+      };
+
+      const response = await axios.post(
+        `${currentlyInUseServer}api/friend-invitation/invite`,
+        sendingFriendRequestData,
+        {
+          headers: {
+            authorization: user && user.token,
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        const fetchingUpdatedAllPendingFriendRequest = {
+          senderId: user && user.user._id,
+          token: user && user.token,
+        };
+
+        dispatch(sendFriendInvitation(fetchingUpdatedAllPendingFriendRequest));
+      }
+    }
+  };
+
   return (
     <div>
-      {/* {showToast && <ToastContainer />} */}
       <PhotoModal
         photoModalStatus={photoModalStatus}
         togglePhotoModal={togglePhototModal}
+      />
+      <FriendRequestModal
+        showFriendRequestModal={showFriendRequestModal}
+        toggleFriendRequestsModal={toggleFriendRequestsModal}
+      />
+      <UpdateProfile
+        showModal={profileUpdateModal}
+        toggalProfileModal={openProfileUpdateModal}
       />
       <div className={classes.userPhotoDesc}>
         <div className={classes.userPhotoDiv}>
           <img
             alt="user"
-            src={user && user.user ? user.user.photo : userDummyImage}
+            src={data && data.data ? data.data.photo : userDummyImage}
             className={classes.userPhoto}
           ></img>
-          <div className={classes.editImage} onClick={togglePhototModal}>
-            <AiFillEdit />
-          </div>
+          {user && user.user && user.user._id === userId && (
+            <div className={classes.editImage} onClick={togglePhototModal}>
+              {<AiFillEdit />}
+            </div>
+          )}
         </div>
         <div className={classes.userDescription}>
           <div className={classes.userName}>
             <h1>
-              {user.user.firstname} {user.user.lastname}
+              {data && data.data.firstname} {data && data.data.lastname}
             </h1>
           </div>
           <div className={classes.userDetails}>
@@ -74,11 +126,25 @@ const Profile = () => {
             gatherings.
           </div>
         </div>
-      </div>
-
-      <div className={classes.TotalPostUserLikes}>
-        <div></div>
-        <div></div>
+        {user && data && user.user && user.user._id === data.data._id && (
+          <div className={classes.buttonCover}>
+            <button onClick={openProfileUpdateModal}>
+              Edit Profile
+              <AiFillEdit style={{ fontSize: "20" }} />
+            </button>
+            <button onClick={toggleFriendRequestsModal}>
+              Friend Requests Status
+            </button>
+          </div>
+        )}
+        {user && data && user.user && user.user._id !== data.data._id && (
+          <div className={classes.buttonCover}>
+            <button onClick={sendFriendRequest}>
+              Add Frined
+              <FaUserFriends style={{ fontSize: "30" }} />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className={classes.userActivity}>
@@ -115,24 +181,21 @@ const Profile = () => {
 
       <div className={classes.RecentPost_RecentComments_EditAccount}>
         <div className={classes.activeDiv}>All Events</div>
-        <UpdateProfile
-          showModal={profileUpdateModal}
-          toggalProfileModal={openProfileUpdateModal}
-        />
-        <button className="btn  mt-3" onClick={openProfileUpdateModal}>
-          <AiFillEdit
-            style={{ fontSize: 30, transform: "translate(3850%, -1070%)" }}
-          />
-        </button>
       </div>
 
       <div className={classes.eventsHorizontalDiv}>
         {isLoading && <img src={loading} alt="loading" />}
-        {data &&
-          data.data.length > 0 &&
-          data.data.map((event, id) => {
+        {data && data.data.appliedEvents.length > 0 ? (
+          data.data.appliedEvents.map((event, id) => {
             return <HorizontalCards event={event} />;
-          })}
+          })
+        ) : (
+          <div>
+            {data &&
+              data.data.appliedEvents.length === 0 &&
+              "User has not applied to any event yet"}
+          </div>
+        )}
       </div>
     </div>
   );

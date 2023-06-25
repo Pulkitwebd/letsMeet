@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const feedSchema = mongoose.Schema({
   user_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
   },
 
   postingDate: {
@@ -35,13 +36,16 @@ const feedSchema = mongoose.Schema({
     type: String,
   },
 
-  applicants: {
-    type: [String], // Array of string values representing user IDs
-  },
+  applicants: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 
   eventImage: String,
 });
 
-const Feed = mongoose.model("feed", feedSchema);
+const Feed = mongoose.model("Feed", feedSchema);
 
 module.exports = Feed;

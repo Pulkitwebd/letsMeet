@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const Schema = mongoose.Schema;
+
 const userSchema = mongoose.Schema({
   firstname: {
     type: String,
@@ -31,16 +33,21 @@ const userSchema = mongoose.Schema({
     type: Number,
   },
 
+  friends: [{ type: Schema.Types.Object, ref: "User" }],
+
   resetPasswordToken: {
     type: String,
     default: "",
   },
 
-  appliedEvents: {
-    type: [String], // Array of string values representing event IDs
-  },
+  appliedEvents: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Feed",
+    },
+  ],
 });
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

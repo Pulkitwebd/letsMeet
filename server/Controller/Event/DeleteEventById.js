@@ -1,14 +1,16 @@
 const Feed = require("../../Schemas/feed.js");
-const User = require("../../Schemas/user.js")
+const User = require("../../Schemas/user.js");
+const mongoose = require("mongoose");
 
 const DeleteEventById = async (req, res) => {
   try {
-    const { user_id, eventId } = req.body;
+    const userId = req.user._id;
+    const eventId = mongoose.Types.ObjectId(req.body.eventId);
 
     // Delete the event from the Feed collection
     const deletedEvent = await Feed.findOneAndDelete({
       _id: eventId,
-      user_id: user_id,
+      user_id: userId,
     });
 
     if (!deletedEvent) {
@@ -17,7 +19,7 @@ const DeleteEventById = async (req, res) => {
 
     // Remove the specific event ID from the user's appliedEvents array
     await User.findOneAndUpdate(
-      { _id: user_id },
+      { _id: userId },
       { $pull: { appliedEvents: eventId } }
     );
 
@@ -30,4 +32,3 @@ const DeleteEventById = async (req, res) => {
 };
 
 module.exports = DeleteEventById;
-

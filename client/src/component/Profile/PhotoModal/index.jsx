@@ -7,6 +7,7 @@ import { updateUserPhoto } from "../../../Redux/Auth/authSlice";
 
 const PhotoModal = (props) => {
   const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
 
   const [eventImageUrl, setEventImageUrl] = useState(null);
@@ -31,7 +32,7 @@ const PhotoModal = (props) => {
 
   const handlePostSubmit = async () => {
     const formData = {
-      user_id: user.user._id,
+      token : user.token,
       userPhoto: eventImageBase64,
     };
     dispatch(updateUserPhoto(formData));
