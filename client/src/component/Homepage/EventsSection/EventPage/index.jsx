@@ -4,19 +4,16 @@ import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { IoMdPin } from "react-icons/io";
 import { FaClock } from "react-icons/fa";
-import { AiOutlineHeart, AiOutlineShareAlt } from "react-icons/ai";
-import { BiBookmark } from "react-icons/bi";
 import { useQuery } from "react-query";
 import { Grid } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { currentlyInUseServer } from "../../../../api";
-
 import "react-quill/dist/quill.snow.css";
 import loading from "../../../Assets/loading.gif";
 import classes from "./Event.module.css";
 import profile from "../../../Assets/profile.jpg";
-
+import CommentBox from "./CommentBox";
 const getEvent = (eventId) => {
   return axios.get(`${currentlyInUseServer}api/feed/Event/${eventId}`);
 };
@@ -25,7 +22,6 @@ const EventPage = () => {
   const navigate = useNavigate();
   const [eventId, setEventId] = useState();
 
-  //getting current logged in user details
   const { user } = useSelector((state) => state.auth);
 
   const [showToast, setShowToast] = useState(false);
@@ -195,12 +191,8 @@ const EventPage = () => {
                 dangerouslySetInnerHTML={{ __html: data.data.desc }}
               ></div>
             </div>
-
-            <hr className={classes.hrLine} />
-
             <div className={classes.attendiesBox}>
               <h2>Attendies {data.data.applicants.length}</h2>
-
               <Grid container spacing={3}>
                 {data.data.applicants.map((user, index) => {
                   return (
@@ -221,52 +213,9 @@ const EventPage = () => {
                   );
                 })}
               </Grid>
+                        
             </div>
-            <div className={classes.commentBox}>
-              <hr className={classes.hrLine} />
-              <h2 className={classes.commentHead}>COMMENTS</h2>
-              <div className={classes.NumOfComments}>
-                <h5>0 comments</h5>
-              </div>
-              <hr className={classes.hrLine} />
-              <div className={classes.outerBox}>
-                <div className={classes.UserImg}>
-                  <img src="" alt="" />
-                </div>
-                <div className={classes.textareaWrapper}>
-                  <textarea
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="10"
-                    placeholder="Write a comment..."
-                  ></textarea>
-
-                  <button className={classes.commentBtn}>Comment</button>
-                </div>
-              </div>
-              <div>
-                <div className={classes.likeShareGroup}>
-                  <ul>
-                    <li>
-                      <AiOutlineHeart />
-                    </li>
-                    <li>
-                      <AiOutlineShareAlt />
-                    </li>
-                    <li>
-                      <BiBookmark />
-                    </li>
-                  </ul>
-                  <ul>
-                    <li>Best</li>
-                    <li>Newest</li>
-                    <li>Oldest</li>
-                  </ul>
-                </div>
-              </div>
-              <hr className={classes.hrLine} />
-            </div>
+            <CommentBox />
           </div>
         </div>
       )}
