@@ -11,6 +11,7 @@ const feedRoutes = require("./Routes/feedRoutes.js") ;
 const blogRoutes = require("./Routes/blogRoutes.js");
 const socketServer = require("./socketServer.js");
 const FriendInvitationRoutes = require("./Routes/friendRoutes.js")
+const Comment=require("./Routes/commentRoute.js")
 
 
 const app = express();
@@ -50,6 +51,9 @@ app.use("/api/blog", blogRoutes)
 
 //friend 
 app.use("/api/friend-invitation" , FriendInvitationRoutes)
+
+//Comment
+app.use(Comment)
 
 server.listen(PORT, () => {
   console.log(`Port is running at ${PORT}`);
