@@ -113,7 +113,19 @@
   .replyDropdown.active {
     display: block;
   }
-  
+
+  .btnContainer{
+    display: flex;
+    margin-left: auto;
+    gap: 5px;
+   
+  }
+  .cancelButton{
+    border: none;
+    border-radius: 20px;
+
+
+  }
   .submitButton {
     background-color: blue;
     color: white;
@@ -127,10 +139,12 @@
     flex-direction: column;
     gap: 10px;
     margin-left: 20px;
+    width: 100%;
   }
-  .dropdown textarea {
+  .dropdown input {
     border: none;
     outline: none;
+    width: 100%;
     border-bottom: 2px solid black;
   }
   
@@ -141,8 +155,8 @@
   
   .commentReplies {
     display: flex;
+    flex-direction: column;
     gap: 5px;
-    align-items: center;
     margin-top: 10px;
     cursor: pointer;
   
@@ -152,8 +166,12 @@
     display: flex;
     flex-direction: column;
   }
+  .totalComments{
+    color: blue;
+  }
   
   .MultiComments{
     display: flex;
+    margin-left: 10px;
   }
   
