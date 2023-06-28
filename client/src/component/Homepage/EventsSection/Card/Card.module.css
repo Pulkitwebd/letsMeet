@@ -2,7 +2,8 @@
   background-color: rgba(238, 237, 237, 0.388);
   border-radius: 4px;
   position: relative;
-  margin : 10px 5px 20px 5px
+  margin : 10px 5px 20px 5px;
+  position: relative;
 }
 
 .placePhoto {
@@ -112,4 +113,84 @@
   color: rgb(150, 101, 28);
   margin : 3px 0 0 1.5px;
   letter-spacing: 1px;
+}
+
+.shareButton {
+  position: absolute;
+  box-shadow: -2px -3px 5px #FFF1FF, 5px 5px 27px rgba(0, 0, 0, 0.2), inset 6px -1px 25px rgba(113, 113, 113, 0.15), inset -6px -4px 17px rgba(255, 255, 255, 0.25);
+  background-color: #518958; 
+  width: 44px;
+  height: 44px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 50%; /* Make the button circular */
+  padding: 8px; /* Adjust the padding as needed */
+  color: #000000;
+  left: 10px;
+  top: 10px;
+  
+}
+.whatsappButton {
+  position: absolute;
+  box-shadow: -2px -3px 5px #FFF1FF, 5px 5px 27px rgba(0, 0, 0, 0.2), inset 6px -1px 25px rgba(113, 113, 113, 0.15), inset -6px -4px 17px rgba(255, 255, 255, 0.25);
+  background-color: #518958; 
+  width: 44px;
+  height: 44px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 50%; /* Make the button circular */
+  padding: 8px; /* Adjust the padding as needed */
+  color: #000000;
+  left: 57px;
+  top: 10px;
+}
+
+.twitterButton {
+  position: absolute;
+  box-shadow: -2px -3px 5px #FFF1FF, 5px 5px 27px rgba(0, 0, 0, 0.2), inset 6px -1px 25px rgba(113, 113, 113, 0.15), inset -6px -4px 17px rgba(255, 255, 255, 0.25);
+  background-color: #518958; 
+  width: 44px;
+  height: 44px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 50%; /* Make the button circular */
+  padding: 8px; /* Adjust the padding as needed */
+  color: #000000;
+  left: 104px;
+  top: 10px;
+}
+
+.pinterestButton {
+  position: absolute;
+  box-shadow: -2px -3px 5px #FFF1FF, 5px 5px 27px rgba(0, 0, 0, 0.2), inset 6px -1px 25px rgba(113, 113, 113, 0.15), inset -6px -4px 17px rgba(255, 255, 255, 0.25);
+  background-color: #518958; 
+  width: 44px;
+  height: 44px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 50%; /* Make the button circular */
+  padding: 8px; /* Adjust the padding as needed */
+  color: #000000;
+  left: 151px;
+  top: 10px;
+}
+
+.bookmarkButton {
+  position: absolute;
+  box-shadow: -2px -3px 5px #FFF1FF, 5px 5px 27px rgba(0, 0, 0, 0.2), inset 6px -1px 25px rgba(113, 113, 113, 0.15), inset -6px -4px 17px rgba(255, 255, 255, 0.25);
+  background-color: #518958; 
+  width: 44px;
+  height: 44px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  border-radius: 50%; /* Make the button circular */
+  padding: 8px; /* Adjust the padding as needed */
+  color: #000000;
+  right: 10px;
+  top: 10px;
 }

@@ -5,6 +5,7 @@ import { FaUserFriends } from "react-icons/fa";
 import { AiFillEdit } from "react-icons/ai";
 import { useQuery } from "react-query";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 import { sendFriendInvitation } from "../../Redux/Friends/friendSlice";
 import loading from "../Assets/loading.gif";
@@ -28,6 +29,8 @@ const Profile = () => {
 
   const [userId, setUserId] = useState();
   const { user } = useSelector((state) => state.auth);
+
+  const [showToast, setShowToast] = useState(false);
 
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
   const [showFriendRequestModal, setShowFriendRequestModal] = useState(false);
@@ -62,29 +65,53 @@ const Profile = () => {
         targetMailAddress: data.data.email,
       };
 
-      const response = await axios.post(
-        `${currentlyInUseServer}api/friend-invitation/invite`,
-        sendingFriendRequestData,
-        {
-          headers: {
-            authorization: user && user.token,
-          },
+      try {
+        const response = await axios.post(
+          `${currentlyInUseServer}api/friend-invitation/invite`,
+          sendingFriendRequestData,
+          {
+            headers: {
+              authorization: user && user.token,
+            },
+          }
+        );
+
+        if (response.status === 201) {
+          const fetchingUpdatedAllPendingFriendRequest = {
+            senderId: user && user.user._id,
+            token: user && user.token,
+          };
+
+          dispatch(
+            sendFriendInvitation(fetchingUpdatedAllPendingFriendRequest)
+          );
+
+          setShowToast(true);
+          toast.error(response.data.message, {
+            closeOnClick: true,
+            draggable: true,
+            pauseOnHover: false,
+            autoClose: 2000,
+          });
         }
-      );
-
-      if (response.status === 201) {
-        const fetchingUpdatedAllPendingFriendRequest = {
-          senderId: user && user.user._id,
-          token: user && user.token,
-        };
-
-        dispatch(sendFriendInvitation(fetchingUpdatedAllPendingFriendRequest));
+      } catch (error) {
+        if (error.response.status === 409) {
+          setShowToast(true);
+          toast.error(error.response.data, {
+            closeOnClick: true,
+            draggable: true,
+            pauseOnHover: false,
+            autoClose: 2000,
+          });
+        }
+        console.error("Error sending friend request: ", error);
       }
     }
   };
 
   return (
     <div>
+      {showToast && <ToastContainer />}
       <PhotoModal
         photoModalStatus={photoModalStatus}
         togglePhotoModal={togglePhototModal}

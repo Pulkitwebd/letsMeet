@@ -31,5 +31,17 @@ router.get(
   friendInvitationControllers.getAllUpcomingPendingFriendRequest
 );
 
+router.post(
+  "/rejectInvitation",
+  auth,
+  friendInvitationControllers.rejectFriendInvitation
+)
+
+router.post(
+  "/acceptInvitation",
+  auth,
+  friendInvitationControllers.acceptFriendInvitation
+)
+
 
 module.exports = router;

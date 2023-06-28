@@ -1,6 +1,6 @@
 const FriendInvitation = require("../../Schemas/friendInvitation.js");
 const User = require("../../Schemas/user.js");
-const friendsUpdates = require("../../socketHandler/updates/friend.js") 
+const friendsUpdates = require("../../socketHandler/updates/friend.js");
 
 const postInvite = async (req, res) => {
   const { targetMailAddress } = req.body;
@@ -26,13 +26,25 @@ const postInvite = async (req, res) => {
   }
 
   //check if friend request has been already sent
-  const invitationAlreadyReceived = await FriendInvitation.findOne({
+  const invitationAlreadySent = await FriendInvitation.findOne({
     senderId: _id,
     receiverId: targetUser._id,
   });
 
-  if (invitationAlreadyReceived) {
+  if (invitationAlreadySent) {
     return res.status(409).send("Invitation has been already sent");
+  }
+
+  // 👉 Check if a friend request has been already received from the target user
+  const invitationAlreadyReceived = await FriendInvitation.findOne({
+    senderId: targetUser._id,
+    receiverId: _id,
+  });
+
+  if (invitationAlreadyReceived) {
+    return res
+      .status(409)
+      .send("You have already received a request from this user");
   }
 
   //check if the user which we would like to invite is already friend

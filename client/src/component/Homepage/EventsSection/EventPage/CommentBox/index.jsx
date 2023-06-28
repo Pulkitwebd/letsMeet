@@ -31,7 +31,6 @@ const CommentBox = () => {
   const handleDropdown = () => {
     setShowReplies(!showReplies);
   };
-  const [replyDropdown, setReplyDropdown] = useState(false);
 
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -42,6 +41,7 @@ const CommentBox = () => {
   const handleLikeClick = () => {
     setLiked(!liked);
   };
+
   return (
     <>
       <div className={classes.likeBoxWrapper}>
