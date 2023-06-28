@@ -102,7 +102,12 @@ const CommentBox = () => {
               </div>
             </div>
             <div className={classes.commentPara}>
-              <p>demo</p>
+              <p>
+                Comment 1 : Lorem ipsum dolor sit amet, consectetur adipisicing
+                elit. Architecto ad maxime quidem molestiae sit a atque ducimus
+                iste ipsa ab, expedita nesciunt omnis esse blanditiis,
+                voluptatum eos! Cum, deserunt eligendi!
+              </p>
             </div>
             <div className={classes.commentReacts}>
               <div className={classes.LikesOnComments}>
@@ -124,21 +129,59 @@ const CommentBox = () => {
                 </button>
                 {showDropdown && (
                   <div className={classes.dropdown}>
-                    <textarea
+                    <input
                       className={classes.textarea}
                       placeholder="Write a reply..."
-                    ></textarea>
-                    <button className={classes.submitButton}>Submit</button>
+                    ></input>
+                    <div className={classes.btnContainer}>
+                      <button className={classes.cancelButton}>Cancel</button>
+                      <button className={classes.submitButton}>Submit</button>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
             <div className={classes.commentReplies} onClick={handleDropdown}>
-              <RiArrowDropDownLine />2 replies
+              <div className={classes.totalComments}>
+                <RiArrowDropDownLine />2 replies
+              </div>
               <div className={classes.MultiComments}>
                 {showReplies && (
                   <div className={classes.repliesContainer}>
-                    <div className={classes.reply}>Reply 1</div>
+                    <div className={classes.reply}>
+                      <div className={classes.UserInfo}>
+                        <div className={classes.userPic}>img</div>
+                        <div className={classes.user}>
+                          <h5 className={classes.Username}>Sandhya Ginare</h5>
+                          <p className={classes.dateOfComment}>Jun 22</p>
+                        </div>
+                      </div>
+                      <div className={classes.commentPara}>
+                        <p>Reply 1 : Lorem ipsum dolor sit amet, consectetur</p>
+                      </div>
+                      <div className={classes.commentReacts}>
+                        <div className={classes.LikesOnComments}>
+                          <div>
+                            <AiOutlineHeart className={classes.LikeIcon} />
+                          </div>
+                          <span>2</span>
+                        </div>
+                        <div>
+                          <button className={classes.replyButton}>Reply</button>
+                          {/* <div>
+                            <input placeholder="Write a reply..."></input>
+                            <div className={classes.btnContainer}>
+                              <button className={classes.cancelButton}>
+                                Cancel
+                              </button>
+                              <button className={classes.submitButton}>
+                                Submit
+                              </button>
+                            </div>
+                          </div> */}
+                        </div>
+                      </div>
+                    </div>
                     <div className={classes.reply}>Reply 2</div>
                   </div>
                 )}
@@ -146,7 +189,6 @@ const CommentBox = () => {
             </div>
           </div>
         </div>
-
         <hr className={classes.hrLine} />
         <div className={classes.HR}></div>
       </SlidingPane>
