@@ -12,8 +12,8 @@ import SwiperCore, { Keyboard } from "swiper/core";
 // Import Swiper styles
 // import "swiper/css";
 // import "swiper/css/pagination";
-import 'swiper/swiper-bundle.min.css'
-import 'swiper/swiper.min.css'
+// import 'swiper/swiper-bundle.min.css'
+// import 'swiper/swiper.min.css'
 
 // import required modules
 import { Autoplay, Pagination } from "swiper";
