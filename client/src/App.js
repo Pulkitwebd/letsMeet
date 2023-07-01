@@ -21,6 +21,8 @@ import "./App.css";
 import Dashboard from "./component/Dashboard";
 import { connectWithSocketServer } from "./component/RealtimeCommunication/socketConnection";
 import LandingPage from "./component/LandingPage";
+import 'swiper/swiper-bundle.min.css';
+import 'swiper/swiper.min.css';
 
 const queryClient = new QueryClient();
 
