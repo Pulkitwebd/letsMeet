@@ -33,8 +33,8 @@ const Profile = () => {
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
   const [showFriendRequestModal, setShowFriendRequestModal] = useState(false);
   const [profileUpdateModal, setProfileUpdateModal] = useState(false);
-  const [showPasswordFields, setShowPasswordFields] = useState(false);
-  const [showCancelToast, setShowCancelToast] = useState(false);
+  const [showPasswordFields] = useState(false);
+  const [, setShowCancelToast] = useState(false);
 
   const togglePhototModal = () => {
     setPhotoModalStatus(!photoModalStatus);
