@@ -6,7 +6,6 @@ import { AiFillEdit } from "react-icons/ai";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
-
 import { sendFriendInvitation } from "../../Redux/Friends/friendSlice";
 import loading from "../Assets/loading.gif";
 import classes from "./Profile.module.css";
@@ -17,24 +16,25 @@ import FriendRequestModal from "./FriendRequestModal/index";
 import UpdateProfile from "./UpdateProfile/index.jsx";
 import PhotoModal from "./PhotoModal/index";
 import { currentlyInUseServer } from "../../api";
+import { updateUser } from "../../Redux/Auth/authSlice";
 
 const getEventOfUser = (userId) => {
   return axios.get(
     `${currentlyInUseServer}api/auth/userInfoWithEvents/${userId}`
   );
 };
-
+console.log("data", getEventOfUser);
 const Profile = () => {
   const dispatch = useDispatch();
-
   const [userId, setUserId] = useState();
   const { user } = useSelector((state) => state.auth);
-
   const [showToast, setShowToast] = useState(false);
-
+  const [showUpdateToast, setShowUpdateToast] = useState(false);
   const [photoModalStatus, setPhotoModalStatus] = useState(false);
   const [showFriendRequestModal, setShowFriendRequestModal] = useState(false);
   const [profileUpdateModal, setProfileUpdateModal] = useState(false);
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
+  const [showCancelToast, setShowCancelToast] = useState(false);
 
   const togglePhototModal = () => {
     setPhotoModalStatus(!photoModalStatus);
@@ -109,6 +109,59 @@ const Profile = () => {
     }
   };
 
+  const handleCloseModal = () => {
+    setProfileUpdateModal(false);
+    setShowCancelToast(true);
+    toast.error("Profile update cancelled!", {
+      closeOnClick: true,
+      draggable: true,
+      pauseOnHover: false,
+      autoClose: 2000,
+    });
+  };
+
+  const handleUserUpdate = async (values) => {
+    console.log(values);
+    try {
+      // Exclude password fields if they are not updated
+      const updatedValues = {
+        ...values,
+        password: showPasswordFields ? values.password : undefined,
+        confirmPassword: showPasswordFields
+          ? values.confirmPassword
+          : undefined,
+      };
+      // Include phone field only if it is updated
+      if (values.phone !== (user && user.user && user.user.phone.toString())) {
+        updatedValues.phone = values.phone;
+      }
+
+      await dispatch(updateUser(updatedValues));
+      setShowUpdateToast(true);
+      toast.success("Profile updated successfully!", {
+        closeOnClick: true,
+        draggable: true,
+        pauseOnHover: false,
+        autoClose: 2000,
+      });
+
+      // getEventOfUser(userId);
+
+      setProfileUpdateModal(false);
+
+      // window.location.reload(); // Optional: reload the page after updating the user
+    } catch (error) {
+      console.log("Error updating user:", error);
+      setShowUpdateToast(true);
+      toast.error("Error updating profile. Please try again.", {
+        closeOnClick: true,
+        draggable: true,
+        pauseOnHover: false,
+        autoClose: 2000,
+      });
+    }
+  };
+
   return (
     <div>
       {showToast && <ToastContainer />}
@@ -120,9 +173,13 @@ const Profile = () => {
         showFriendRequestModal={showFriendRequestModal}
         toggleFriendRequestsModal={toggleFriendRequestsModal}
       />
+      {showUpdateToast && <ToastContainer />}
       <UpdateProfile
         showModal={profileUpdateModal}
+        setShowModal={setProfileUpdateModal}
         toggalProfileModal={openProfileUpdateModal}
+        handleUserUpdate={handleUserUpdate}
+        handleCloseModal={handleCloseModal}
       />
       <div className={classes.userPhotoDesc}>
         <div className={classes.userPhotoDiv}>
@@ -224,6 +281,7 @@ const Profile = () => {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 };

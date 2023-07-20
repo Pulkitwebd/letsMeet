@@ -7,9 +7,7 @@ import { updateUserPhoto } from "../../../Redux/Auth/authSlice";
 
 const PhotoModal = (props) => {
   const dispatch = useDispatch();
-
   const { user } = useSelector((state) => state.auth);
-
   const [eventImageUrl, setEventImageUrl] = useState(null);
   const [eventImageBase64, setEventImageBase64] = useState(null);
 

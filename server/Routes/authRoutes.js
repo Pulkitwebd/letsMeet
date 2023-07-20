@@ -26,6 +26,22 @@ const loginSchema = Joi.object({
   password: Joi.string().min(3).max(15).required(),
 });
 
+const updateSchema = Joi.object({
+  firstname: Joi.string(),
+  lastname: Joi.string(),
+  email: Joi.string().email(),
+  password: Joi.string().label("Password"),
+  confirmPassword: Joi.any()
+    .valid(Joi.ref("password"))
+    .label("Confirm password")
+    .messages({ "any.only": "{{#label}} does not match" }),
+  age: Joi.number().integer().min(18).max(99),
+  phone: Joi.string()
+    .length(10)
+    .pattern(/[6-9]{1}[0-9]{9}/),
+});
+
+
 router.post(
   "/register",
   validator.body(registerSchema),
@@ -35,6 +51,8 @@ router.post(
 router.post("/login", validator.body(loginSchema), authController.postLogin);
 
 router.put("/updatePhoto", auth, authController.updateUserPhoto )
+
+router.put("/updateUser/:user_id", validator.body(updateSchema), authController.updateUser)
 
 router.get("/getUserById/:user_id", authController.getUserById )
 
