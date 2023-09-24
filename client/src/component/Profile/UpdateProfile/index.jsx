@@ -1,54 +1,28 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import * as yup from "yup";
 import { Formik, Form } from "formik";
-import { AiFillEdit } from "react-icons/ai";
 import { useSelector } from "react-redux";
-
 import classes from "./update.module.css";
-
-const schema = yup.object().shape({
-  firstName: yup.string().required('First name is required!'),
-  lastName: yup.string().required('Last name is required!'),
-  email: yup.string().email("Invalid email").required("Email is required!"),
-  password: yup
-    .string()
-    .min(6, "Password must be at least 6 characters!")
-    .required("Password is required!"),
-  phoneNumber: yup
-    .string()
-    .matches(/^\d+$/, 'Phone number must only contain digits!')
-    .min(10, 'Phone number must be at least 10 digits!')
-    .max(10, 'Phone number can be maximum 10 digits!')
-    .required('Phone number is required!'),
-  age: yup
-    .number()
-    .min(21, 'Minimum age must be 21!')
-    .max(120, 'Maximum age must be 120!')
-    .required('Age is required!'),
-});
+import validation from "./validation";
+import { InputLabel, Input } from "@mui/material";
 
 const UpdateProfile = (props) => {
-  const [selected, setSelected] = useState('');
-  const [selectedLastName, setSelectedLastName] = useState(false);
-  const [selectedEmail, setSelectedEmail] = useState(false);
-  const [selectedPassword, setSelectedPassword] = useState(false);
-  const [selectedCurrentPassword, setSelectedCurrentPassword] = useState(false);
-  const [selectedPhone, setSelectedPhone] = useState(false);
-  const [selectedAge, setSelectedAge] = useState(false);
-
-  const [editableValue,] = useState("");
   const { user } = useSelector((state) => state.auth);
-  
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
+
+  const handleToggleChange = (e) => {
+    setShowPasswordFields(e.target.checked);
+  };
+
   const customStyles = {
     content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      transform: 'translate(-50%, -50%)',
-      width: '500px',
-      height: '500px',
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      width: "500px",
+      height: "500px",
     },
   };
 
@@ -59,284 +33,172 @@ const UpdateProfile = (props) => {
       style={customStyles}
       contentLabel="Example Modal"
     >
-      <h1>EDIT PROFILE</h1>
+      <h4 className={classes.heading}>EDIT PROFILE</h4>
       <button
-        onClick={props.toggalProfileModal}
+        onClick={props.handleCloseModal}
         className="btn btn-secondary"
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 10,
-          right: 10
+          right: 10,
         }}
       >
         Close
       </button>
+
       <Formik
         initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
+          firstname: (user && user.user && user.user.firstname) || "",
+          lastname: (user && user.user && user.user.lastname) || "",
+          email: (user && user.user && user.user.email) || "",
           password: "",
-          phone: "",
-          age: "",
-          phoneNumber: '',
+          confirmPassword: "",
+          age: (user && user.user && user.user.age) || "",
+          phone: (user && user.user && user.user.phone.toString()) || "",
         }}
-        validationSchema={schema}
-        onSubmit={(values) => {
-          console.log("inside submit", values);
-        }}
+        validationSchema={validation}
+        onSubmit={props.handleUserUpdate}
       >
         {(formik) => (
-          <Form onSubmit={formik.handleSubmit} className={classes.form} >
-
-            <div className="row">
-
-              <label htmlFor="exampleFirstName" className="form-label">
-                First Name
-                {selected ? (
-                  <div className={classes.editableInput}>
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelected(true)} />
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="First name"
-                      aria-label="First name"
-                      value={editableValue}
-                      name="firstName"
-                      {...formik.getFieldProps("firstName")}
-                    />
-                     {formik.touched.firstName && formik.errors.firstName && (
-                      <div style={{ color: '#cc0000' }}>{formik.errors.firstName}</div>
-                    )}
-                  </div>
-                ) : (
-                  <div className={classes.readOnlyInput}>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder={user.user.firstname}
-                      readOnly
-                      aria-label="First name"
-                      {...formik.getFieldProps("firstName")}
-                    />
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelected(true)} />
+          <Form className={classes.mainForm} onSubmit={formik.handleSubmit}>
+            <div className={classes.inputFields}>
+              <InputLabel htmlFor="exampleFirstName" className="form-label">
+                First Name :
+              </InputLabel>
+              <div className={classes.inputBox}>
+                <Input
+                  type="text"
+                  name="firstname"
+                  placeholder="First Name"
+                  value={formik.values.firstname}
+                  onChange={formik.handleChange}
+                />
+                {formik.touched.firstname && formik.errors.firstname && (
+                  <div style={{ color: "#cc0000" }}>
+                    {formik.errors.firstname}
                   </div>
                 )}
-              </label>
+              </div>
             </div>
-
-            <div className="row">
-              <label htmlFor="exampleFirstName" className="form-label">
-                Last Name
-                {selectedLastName ? (
-                  <div className={classes.editableInput}>
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedLastName(true)} />
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Last name"
-                      aria-label="Last name"
-                      value={editableValue}
-                      name="lastName"
-                      {...formik.getFieldProps("lastName")}
-                    />
-                     {formik.touched.lastName && formik.errors.lastName && (
-                      <div style={{ color: '#cc0000' }}>{formik.errors.lastName}</div>
-                    )}
-                  </div>
-                ) : (
-                  <div className={classes.readOnlyInput}>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder={user.user.lastname}
-                      readOnly
-                      aria-label="Last name"
-                      {...formik.getFieldProps("lastname")}
-                    />
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedLastName(true)} />
+            <div className={classes.inputFields}>
+              <InputLabel htmlFor="" className="form-label">
+                Last Name :
+              </InputLabel>
+              <div className={classes.inputBox}>
+                <Input
+                  type="text"
+                  name="lastname"
+                  placeholder="Last Name"
+                  aria-label="Last name"
+                  value={formik.values.lastname}
+                  onChange={formik.handleChange}
+                />
+                {formik.touched.lastname && formik.errors.lastname && (
+                  <div style={{ color: "#cc0000" }}>
+                    {formik.errors.lastname}
                   </div>
                 )}
-              </label>
+              </div>
             </div>
-
-            <div className="row">
-              <label htmlFor="exampleFirstName" className="form-label">
-                Email
-                {selectedEmail ? (
-                  <div className={classes.editableInput}>
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedEmail(true)} />
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="enter new email"
-                      value={editableValue}
-                      name="email"
-                      {...formik.getFieldProps("email")}
-                    />
-                    {formik.touched.email && formik.errors.email && (
-                      <div style={{ color: '#cc0000' }}>{formik.errors.email}</div>
-
-                    )}
-                  </div>
-                ) : (
-                  <div className={classes.readOnlyInput}>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder={user.user.email}
-                      name="email"
-                    />
-                    <div id="emailHelp" className="form-text"></div>
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedEmail(true)} />
-                  </div>
+            <div className={classes.inputFields}>
+              <InputLabel htmlFor="">Email :</InputLabel>
+              <div className={classes.inputBox}>
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                />
+                {formik.touched.email && formik.errors.email && (
+                  <div style={{ color: "#cc0000" }}>{formik.errors.email}</div>
                 )}
-              </label>
+              </div>
             </div>
-
-            <div className="row">
-              <label htmlFor="exampleFirstName" className="form-label">
-                Password
-                {selectedPassword ? (
-                  <div className={classes.editableInput}>
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedPassword(true)} />
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="enter new password"
-                      value={editableValue}
-                      {...formik.getFieldProps("password")}
-
-                    />
+            <div className={classes.inputFields}>
+              <InputLabel htmlFor="" className="form-label">
+                Age :
+              </InputLabel>
+              <div className={classes.inputBox}>
+                <Input
+                  type="text"
+                  name="age"
+                  placeholder="Age"
+                  value={formik.values.age}
+                  onChange={formik.handleChange}
+                />
+                {formik.touched.age && formik.errors.age && (
+                  <div style={{ color: "#cc0000" }}>{formik.errors.age}</div>
+                )}
+              </div>
+            </div>
+            <div className={classes.inputFields}>
+              <InputLabel htmlFor="">Phone :</InputLabel>
+              <div className={classes.inputBox}>
+                <Input
+                  type="tel"
+                  name="phone"
+                  placeholder="Mobile Number"
+                  value={formik.values.phone}
+                  onChange={formik.handleChange}
+                />
+                {formik.touched.phone && formik.errors.phone && (
+                  <div style={{ color: "#cc0000" }}>{formik.errors.phone}</div>
+                )}
+              </div>
+            </div>
+            <div>
+              <div>
+                <p className={classes.passChange}>Change password</p>
+                <label className={`${classes.switch} ${classes.round}`}>
+                  <input type="checkbox" onChange={handleToggleChange} />
+                  <span className={classes.slider}></span>
+                </label>
+              </div>
+              {showPasswordFields && (
+                <>
+                  <div className={classes.inputFields}>
+                    <InputLabel htmlFor="">Password : </InputLabel>
+                    <div className={classes.inputBox}>
+                      <Input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                      />
                       {formik.touched.password && formik.errors.password && (
-                      <div style={{ color: '#cc0000' }}>{formik.errors.password}</div>
-                    )}
+                        <div style={{ color: "#cc0000" }}>
+                          {formik.errors.password}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                ) : (
-                  <div className={classes.readOnlyInput}>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="exampleInputPassword1"
-                      placeholder={user.user.password}
-
-                    />
-
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedPassword(true)} />
+                  <div className={classes.inputFields}>
+                    <InputLabel htmlFor="">Confirm Password :</InputLabel>
+                    <div className={classes.inputBox}>
+                      <Input
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                        value={formik.values.confirmPassword}
+                        onChange={formik.handleChange}
+                      />
+                      {formik.touched.confirmPassword &&
+                        formik.errors.confirmPassword && (
+                          <div style={{ color: "#cc0000" }}>
+                            {formik.errors.confirmPassword}
+                          </div>
+                        )}
+                    </div>
                   </div>
-                )}
-              </label>
+                </>
+              )}
             </div>
-
-            <div className="row">
-              <label htmlFor="exampleFirstName" className="form-label">
-                Confirm Password
-                {selectedCurrentPassword ? (
-                  <div className={classes.editableInput}>
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedCurrentPassword(true)} />
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="enter new password"
-                      value={editableValue}
-                      {...formik.getFieldProps("password")}
-
-                    />
-                       {formik.touched.password && formik.errors.password && (
-                      <div style={{ color: '#cc0000' }}>{formik.errors.password}</div>
-                    )}
-                  </div>
-                ) : (
-                  <div className={classes.readOnlyInput}>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="exampleInputPassword1"
-                      placeholder={user.user.password}
-
-                    />
-
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedCurrentPassword(true)} />
-                  </div>
-                )}
-              </label>
-            </div>
-
-            <div className="row">
-              <label htmlFor="exampleFirstName" className="form-label">
-                Phone number
-                {selectedPhone ? (
-                  <div className={classes.editableInput}>
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedPhone(true)} />
-                    <input
-                      type="phone"
-                      className="form-control"
-                      id="exampleInputPhone"
-                      placeholder="0000000000"
-                      value={editableValue}
-                      {...formik.getFieldProps('phoneNumber')}
-
-
-                    />
-                     {formik.touched.phoneNumber && formik.errors.phoneNumber && (
-                      <div style={{ color: '#cc0000' }}>{formik.errors.phoneNumber}</div>
-                    )}
-                  </div>
-                ) : (
-                  <div className={classes.readOnlyInput}>
-                    <input
-                      type="phone"
-                      className="form-control"
-                      id="exampleInputPhone"
-                      placeholder={user.user.phone}
-
-                    />
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedPhone(true)} />
-                  </div>
-                )}
-              </label>
-            </div>
-
-            <div className="row">
-              <label htmlFor="exampleFirstName" className="form-label">
-                Age
-                {selectedAge ? (
-                  <div className={classes.editableInput}>
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedAge(true)} />
-                    <input
-                      type="age"
-                      className="form-control"
-                      id="exampleInputAge"
-                      placeholder="Enter your age"
-                      value={editableValue}
-                      {...formik.getFieldProps('age')}
-
-                    />
-                     {formik.touched.age && formik.errors.age && (
-                      <div style={{ color: '#cc0000' }}>{formik.errors.age}</div>
-                    )}
-                  </div>
-                ) : (
-                  <div className={classes.readOnlyInput}>
-                    <input
-                      type="age"
-                      className="form-control"
-                      id="exampleInputAge"
-                      placeholder={user.user.age}
-                    />
-                    <AiFillEdit className={classes.editIcon} onClick={() => setSelectedAge(true)} />
-                  </div>
-                )}
-              </label>
-
-            </div>
-            <button type="submit" className="btn btn-success" >
+            <button
+              type="submit"
+              className={`${classes.submitButton} btn btn-success`}
+            >
               Save Changes
             </button>
           </Form>
@@ -345,4 +207,5 @@ const UpdateProfile = (props) => {
     </Modal>
   );
 };
+
 export default UpdateProfile;
